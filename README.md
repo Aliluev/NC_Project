@@ -1,6 +1,6 @@
 # NC_Project
 
-##Entyties
+## Entyties
 * User
 * Roles
 * Product
