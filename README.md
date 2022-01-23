@@ -1,5 +1,7 @@
 # NC_Project
 
+![Entyties](https://github.com/Aliluev/NC_Project/blob/main/Entyties.jpg)
+
 ## Entyties
 * User
 * Roles
