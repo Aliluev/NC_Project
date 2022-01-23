@@ -20,7 +20,7 @@
 * email
 
 ### Roles
-* userID
+* user
 * role (Guest, Admin, Manager)
 
 ### Product 
@@ -29,15 +29,13 @@
 * category
 
 ### Order
-* id
+* bucket
 * user
 * data(--.--.20--)
 * update
 * status
-* bucketID
 
 ### Strorage
-* id
 * product
 * status(available, unavailable)
 * count
@@ -48,9 +46,8 @@
 
 ### Bucket
 * id
-* userID
-* productID
-* count
+* user
+* details
 
 
 
