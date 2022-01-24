@@ -1,6 +1,6 @@
 # NC_Project
 
-![Entyties](https://github.com/Aliluev/NC_Project/blob/main/Entyties.png)
+![Entyties](https://github.com/Aliluev/NC_Project/blob/main/Entyties2.png)
 
 ## Entyties
 * User
