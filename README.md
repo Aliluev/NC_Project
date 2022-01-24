@@ -20,20 +20,24 @@
 
 ### Roles
 * id
-* role (Guest, Admin, Manager)
+* name (Guest, Admin, Manager)
 
 ### Product 
 * id
+* name
 * price
 
 ### Order
 * id
-* user
-* status
+* userID
+* statusID
+* data
 
 ### Strorage
-* product
+* id
+* productID
 * count
+* address
 
 ### Category
 * id
@@ -41,7 +45,7 @@
 
 ### Status
 * id
-* status
+* name
 
 ### User-Role(composite key)
 * userID
