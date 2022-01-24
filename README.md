@@ -9,46 +9,52 @@
 * Order
 * Storage
 * Category(Product)
-* Bucket
+* Status
 
 ### User
 * id
 * username
 * password
-* role
 * phone
 * email
 
 ### Roles
-* user
+* id
 * role (Guest, Admin, Manager)
 
 ### Product 
 * id
 * price
-* category
 
 ### Order
-* bucket
+* id
 * user
-* data(--.--.20--)
-* update
 * status
 
 ### Strorage
 * product
-* status(available, unavailable)
 * count
 
 ### Category
 * id
 * name 
 
-### Bucket
+### Status
 * id
-* user
-* details
+* status
 
+### User-Role(composite key)
+* userID
+* roleID
+
+### OrderList(composite key)
+* orderID
+* productID
+* count
+
+### Product-Category(composite key)
+* productID
+* categoryID
 
 
 # It's to be continued...
