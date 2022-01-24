@@ -1,4 +1,4 @@
-# NC_Project
+# NC_Project 2
 
 ![Entyties](https://github.com/Aliluev/NC_Project/blob/main/Entities2.png)
 
