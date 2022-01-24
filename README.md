@@ -2,7 +2,7 @@
 
 ![Entyties](https://github.com/Aliluev/NC_Project/blob/main/Entyties2.png)
 
-## Entyties
+## Entities
 * User
 * Roles
 * Product
