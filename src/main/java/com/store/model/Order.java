@@ -1,5 +1,5 @@
 package com.store.model;
-
+/*
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,4 +25,9 @@ public class Order {
 
 
 
+
+
 }
+
+
+ */
