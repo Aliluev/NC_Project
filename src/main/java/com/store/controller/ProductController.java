@@ -1,28 +1,29 @@
 package com.store.controller;
 
 import com.store.exception.ResourceNotFoundException;
+import com.store.model.Product;
 import com.store.model.Role;
-import com.store.repository.RoleRepository;
+import com.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
 @RestController
-public class RoleController {
+public class ProductController {
 
     @Autowired
-    RoleRepository repository;
+    ProductRepository repository;
 
-    @PostMapping("/role/create")
-    public void createUser(@RequestBody Role role){
-        repository.save(role);
+    @PostMapping("/product/create")
+    public void createProduct(@RequestBody Product product){
+        repository.save(product);
     }
 
-    @DeleteMapping("/role/delete/{id}")
-    public HashMap<String,Boolean> deleteRole(@PathVariable(value = "id") Integer id )throws ResourceNotFoundException{
+    @DeleteMapping("/product/delete/{id}")
+    public HashMap<String,Boolean> deleteProduct(@PathVariable(value = "id") Integer id )throws ResourceNotFoundException {
 
-        Role role=repository.findById(id).orElseThrow(
+        Product product=repository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException("Role not found"+ id)
         );
         repository.deleteById(id);
@@ -31,7 +32,6 @@ public class RoleController {
         responce.put("Deleted",true);
         return responce;
     }
-
 
 
 }

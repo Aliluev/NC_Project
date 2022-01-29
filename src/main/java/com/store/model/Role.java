@@ -22,7 +22,9 @@ public class Role {
     private Integer id;
 
     @Column(name = "name")
-    private String name;
+   // @Enumerated(EnumType.STRING)
+    private String string;
+    //private  RoleName roleName; как подключить ENUM к бд?!
 
 
     @ManyToMany
