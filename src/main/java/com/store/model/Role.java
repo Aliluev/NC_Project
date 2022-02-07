@@ -18,8 +18,9 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
-    @JoinTable(name="users_roles",
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(  name="users_roles",
             joinColumns = @JoinColumn(name="roleid"),
           inverseJoinColumns = @JoinColumn(name = "userid"))
     private List<User> users;

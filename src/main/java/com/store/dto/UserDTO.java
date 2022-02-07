@@ -4,14 +4,16 @@ package com.store.dto;
 import com.store.model.Role;
 import com.store.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UserDTO {
 
     private String username;
     private String phone;
     private String email;
-    private List<Role> roles;
+    private List<Integer> roles;
 
     public UserDTO(){}
 
@@ -19,16 +21,24 @@ public class UserDTO {
         this.username = user.getUsername();
         this.phone = user.getPhone();
         this.email = user.getEmail();
-        this.roles = user.getRoles();
+        int i=0;
+        roles=new ArrayList<>();
+        for (Role role: user.getRoles()) {
+            this.roles.add(role.getId());
+            i++;
+        }
+
+
     }
 
-    public List<Role> getRoles() {
+    public List<Integer> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<Integer> roles) {
         this.roles = roles;
     }
+
 
     public String getUsername() {
         return username;
@@ -54,4 +64,16 @@ public class UserDTO {
         this.email = email;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(username, userDTO.username) && Objects.equals(phone, userDTO.phone) && Objects.equals(email, userDTO.email) && Objects.equals(roles, userDTO.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, phone, email, roles);
+    }
 }
