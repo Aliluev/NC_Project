@@ -21,11 +21,10 @@ public class UserDTO {
         this.username = user.getUsername();
         this.phone = user.getPhone();
         this.email = user.getEmail();
-        int i=0;
+
         roles=new ArrayList<>();
         for (Role role: user.getRoles()) {
             this.roles.add(role.getId());
-            i++;
         }
 
 
