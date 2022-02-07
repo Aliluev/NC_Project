@@ -1,9 +1,6 @@
 package com.store.model;
 
-import lombok.*;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,10 +27,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ManyToMany
     @JoinTable(name="users_roles",
             joinColumns = @JoinColumn(name = "userid"),
             inverseJoinColumns = @JoinColumn(name="roleid")
