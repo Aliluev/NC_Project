@@ -15,15 +15,31 @@
     </table>
 
     <h1>Input User</h1>
+    <h3>Username</h3>
 <input type="text" name="userName" [(ngModel)]="user.username" >
+<h3>User Phone</h3>
 <input type="text" name="userPhone" [(ngModel)]="user.phone" >
+<h3>User email</h3>
 <input type="text" name="email" [(ngModel)]="user.email" >
-<input type="text" name="userName" [(ngModel)]="user.roles" >
 <button (click)="methodPostUser(user)">Отправить</button>
 
 <h1>Delete User By ID</h1>
 <input type="text" name="UserID" [(ngModel)]="id" >
-<button (click)="methodDeleteUser(id)">Отправить</button>
+<button (click)="methodDeleteUser(id)">Удалить</button>
+
+
+<h1>Update User</h1>
+<h3>User ID</h3>
+<input type="text" name="UserID" [(ngModel)]="id" >
+<h3>Username</h3>
+<input type="text" name="userName" [(ngModel)]="user.username" >
+<h3>User phone</h3>
+<input type="text" name="userPhone" [(ngModel)]="user.phone" >
+<h3>User email</h3>
+<input type="text" name="email" [(ngModel)]="user.email" >
+<h3> Roles </h3>
+<input type="text" name="userName" [(ngModel)]="user.roles" >
+<button (click)="methodUpdateUser(id, user)">Изменить</button>
 
 <h1>User-Role</h1>
 

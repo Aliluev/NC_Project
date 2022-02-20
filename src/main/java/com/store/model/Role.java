@@ -59,6 +59,10 @@ public class Role {
     public Role() {
     }
 
+    public Role(int id){
+        this.id=id;
+    }
+
     public Role(String name) {
         this.name = name;
         this.id=1;// При создании всегда задаётся admin=1

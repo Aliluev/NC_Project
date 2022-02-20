@@ -96,6 +96,33 @@ public class UserController {
 
      */
 
+    @PutMapping("/update-user/{id}")
+    public void updateUser(@PathVariable(value = "id") Integer id, @RequestBody UserDTO userDTO){
+        User user=repository.getById(id);
+        if(userDTO.getUsername().equals(new String(""))==false){
+            user.setUsername(userDTO.getUsername());
+        }
+        if(userDTO.getPhone().equals(new String(""))==false){
+            user.setPhone(userDTO.getPhone());
+        }
+        if(userDTO.getEmail().equals(new String(""))==false){
+            user.setEmail(userDTO.getEmail());
+        }
+        if(userDTO.getRoles().equals(new String(""))==false){
+
+            List<Role> listRole=new ArrayList<>();
+            String[] strRoles=userDTO.getRoles().split(",");
+            for(String str: strRoles){
+               // Integer.
+                listRole.add(new Role(Integer.getInteger(str)));
+            }
+            user.setRoles(listRole);
+        }
+
+        repository.save(user);
+
+    }
+
 
 
 }

@@ -30,8 +30,11 @@ export class AdminRole {
     // params: new HttpParams().set('', id)}
     ).subscribe((data:any) => {console.log("ok")},
     (error: any)=> console.log("eror"));
-    
-    
+  }
+
+  methodUpdateUser(id: number | string, user: User| undefined){
+    this.http.put('http://localhost:8080/user/update-user/'+id,user).subscribe((data:any) => {console.log("ok")},
+    (error: any)=> console.log("eror"));
   }
   
  constructor(private http: HttpClient){ }
