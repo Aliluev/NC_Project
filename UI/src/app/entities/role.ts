@@ -1,6 +1,6 @@
 export class Role{
     constructor(
-        public name: string,
-        public users: bigint[]
+        public id: number,
+        public name: string
     ){}
 }

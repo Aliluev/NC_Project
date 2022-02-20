@@ -14,6 +14,16 @@
     </tr>
     </table>
 
+    <h1>Input User</h1>
+<input type="text" name="userName" [(ngModel)]="user.username" >
+<input type="text" name="userPhone" [(ngModel)]="user.phone" >
+<input type="text" name="email" [(ngModel)]="user.email" >
+<input type="text" name="userName" [(ngModel)]="user.roles" >
+<button (click)="methodPostUser(user)">Отправить</button>
+
+<h1>Delete User By ID</h1>
+<input type="text" name="UserID" [(ngModel)]="id" >
+<button (click)="methodDeleteUser(id)">Отправить</button>
 
 <h1>User-Role</h1>
 
@@ -32,11 +42,11 @@
 
 <table border="1">
     <tr>
+        <th>id</th>
         <th>name</th>
-        <th>users</th>
     </tr>
     <tr *ngFor="let item of roles| async">
+        <th>{{item.id}}</th>
         <th>{{item.name}}</th>
-        <th>{{item.users}}</th>
     </tr>
     </table>
