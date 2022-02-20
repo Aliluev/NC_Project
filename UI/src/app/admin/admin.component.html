@@ -1,6 +1,13 @@
-<ul>
-    <li *ngFor="let item of users| async">
-        <p><b>{{item.username}} </b>, <i> {{item.roles}}</i></p>  
-    </li>
-</ul>
 
+<h1>User-Role</h1>
+
+<table border="1">
+<tr>
+    <th>name</th>
+    <th>role</th>
+</tr>
+<tr *ngFor="let item of users| async">
+    <th>{{item.username}}</th>
+    <th>{{item.roles}}</th>
+</tr>
+</table>
