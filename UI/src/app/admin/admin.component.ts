@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { UserService } from "./user.service";
 import {HttpClient} from '@angular/common/http';
 import { User } from '../entities/user';
+import { Role } from "../entities/role";
 
 
 @Component({
@@ -10,16 +10,11 @@ import { User } from '../entities/user';
 })
 
 export class AdminRole {
-  //userRole: UserRole | undefined;
   
   users= this.http.get<User[]>('http://localhost:8080/user-role/get-all-user-role');
-
- // constructor(public userService: UserService){}
-
+  
+  roles= this.http.get<Role[]>('http://localhost:8080/role/get-all-role');
+  
  constructor(private http: HttpClient){ }
-
-  //ngOnInit(){
- //   this.http.get('http://localhost:8080/role/1').subscribe((data:any) => this.role=new Role(data.name, data.users));
- // }
 
 } 
