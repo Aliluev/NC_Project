@@ -1,6 +1,7 @@
 package com.store.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,6 +85,7 @@ public class User {
         this.roles = roles;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,5 +97,14 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, username, password, phone, email, roles);
+    }
+
+    public User(String username, String phone, String email) {
+        this.username = username;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    public User() {
     }
 }

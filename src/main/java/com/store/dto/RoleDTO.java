@@ -1,16 +1,27 @@
 package com.store.dto;
-
 import com.store.model.Role;
-import com.store.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class RoleDTO {
+    private Integer id;
     private String name;
-    private List<Integer> users;
+   // private List<Integer> users;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public RoleDTO(Role role){
+        this.name=role.getName();
+        this.id=role.getId();
+    }
 
 
+/*
     public RoleDTO(Role role){
         this.name=role.getName();
         users=new ArrayList<>();
@@ -18,6 +29,8 @@ public class RoleDTO {
             this.users.add(user.getId());
         }
     }
+
+ */
 
     public String getName() {
         return name;
@@ -27,6 +40,7 @@ public class RoleDTO {
         this.name = name;
     }
 
+    /*
     public List<Integer> getUsers() {
         return users;
     }
@@ -35,6 +49,8 @@ public class RoleDTO {
         this.users = users;
     }
 
+
+     */
 
 
 

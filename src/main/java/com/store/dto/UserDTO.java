@@ -13,7 +13,9 @@ public class UserDTO {
     private String username;
     private String phone;
     private String email;
-    private List<Integer> roles;
+    //private List<Integer> roles;
+    private String roles;
+
 
     public UserDTO(){}
 
@@ -22,13 +24,30 @@ public class UserDTO {
         this.phone = user.getPhone();
         this.email = user.getEmail();
 
-        roles=new ArrayList<>();
+        StringBuilder strRoles=new StringBuilder();
+       // roles=new ArrayList<>();
+        int i=0;
         for (Role role: user.getRoles()) {
-            this.roles.add(role.getId());
+            if(i!=0){
+                strRoles.append(",");
+            }
+            strRoles.append(role.getId());
+            i++;
+            //this.roles.add(role.getId());
         }
+        roles=strRoles.toString();
 
 
     }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+/*
 
     public List<Integer> getRoles() {
         return roles;
@@ -38,6 +57,8 @@ public class UserDTO {
         this.roles = roles;
     }
 
+
+     */
 
     public String getUsername() {
         return username;
