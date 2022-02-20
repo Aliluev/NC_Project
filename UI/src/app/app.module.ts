@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { HttpClientModule }   from '@angular/common/http';
 import { FormsModule }   from '@angular/forms';
 import { UserComponent } from './user/user.component';
+import { AdminRole } from './admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent
+    UserComponent,
+    AdminRole
     
   ],
   imports: [

@@ -11,14 +11,14 @@ import { HttpParams } from '@angular/common/http'
 })
 export class UserComponent implements OnInit { 
     user: User | undefined;
-    user2: User=new User("","","",[]) ;
+    user2: User=new User("","","","") ;
     roles: number=0 ;
     role: Role | undefined; 
 
    methodPost(user2: User,roles:number){
-       user2.roles.push(roles);
-       this.http.post('http://localhost:8080/user/create',user2).subscribe((data:any) => {console.log("ok")},
-       (error: any)=> console.log("eror"));
+     //  user2.roles.push(roles);
+    //   this.http.post('http://localhost:8080/user/create',user2).subscribe((data:any) => {console.log("ok")},
+     //  (error: any)=> console.log("eror"));
     }
 
     constructor(private http: HttpClient){}

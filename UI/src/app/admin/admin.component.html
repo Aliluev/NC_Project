@@ -1,5 +1,6 @@
 <ul>
-    <li *ngFor="let item of userRole; let indx=index">
-        
+    <li *ngFor="let item of users| async">
+        <p><b>{{item.username}} </b>, <i> {{item.roles}}</i></p>  
     </li>
 </ul>
+
