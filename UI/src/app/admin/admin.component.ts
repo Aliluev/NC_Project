@@ -7,6 +7,7 @@ import { Role } from "../entities/role";
 @Component({
     selector: 'admin-role',
     templateUrl: './admin.component.html',
+    styleUrls:['./admin.component.css']
 })
 
 export class AdminRole {

@@ -9,7 +9,7 @@ import { HttpParams } from '@angular/common/http'
     selector: 'my-appp',
     templateUrl: './user.component.html',
 })
-export class UserComponent implements OnInit { 
+export class UserComponentTest implements OnInit { 
     user: User | undefined;
     user2: User=new User("","","","") ;
     roles: number=0 ;
