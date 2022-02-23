@@ -1,8 +1,9 @@
-<h1>Input User</h1>
-<h3>Username</h3>
-<input type="text" name="userName" [(ngModel)]="user.username" >
-<h3>User Phone</h3>
-<input type="text" name="userPhone" [(ngModel)]="user.phone" >
-<h3>User email</h3>
-<input type="text" name="email" [(ngModel)]="user.email" >
+<h1>Введите</h1>
+<div class="input-border">
+<input type="text" class="input-text" placeholder="Name" name="userName" [(ngModel)]="user.username" >
+
+<input type="text" placeholder="Phone" name="userPhone" [(ngModel)]="user.phone" >
+
+<input type="text" placeholder="Email" name="email" [(ngModel)]="user.email" >
 <button (click)="methodPostUser(user)">Отправить</button>
+</div>

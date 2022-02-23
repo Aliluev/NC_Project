@@ -9,24 +9,52 @@ import { User } from "src/app/entities/user";
 })
 export class UserComponent{
 
-    canAddUser=false;
-    butt="";
-    methodCanAddUser(){
-        if(this.canAddUser==false){
-            this.canAddUser=true;
-            this.butt="/add"
-        }else{
-            this.canAddUser=false;
-            this.butt="/"
-        }
+ 
 
+    buttonAdd="/add";
+    buttonDelete="/delete";
+    buttonUpdate="/update";
+
+    methodCanAddUser(){
+        if(this.buttonAdd=="/add"){
+            this.buttonAdd="/";
+            this.buttonDelete="/delete";
+            this.buttonUpdate="/update";
+        }else{
+            this.buttonAdd="/add";
+            this.buttonDelete="/delete";
+            this.buttonUpdate="/update";
+        }
+        
     }
 
+    methodDeleteUser(){
+        if(this.buttonDelete=="/delete"){
+            this.buttonDelete="/";
+            this.buttonAdd="/add";
+            this.buttonUpdate="/update";
+        }else{
+            this.buttonDelete="/delete";
+            this.buttonAdd="/add";
+            this.buttonUpdate="/update";
+        }
+    }
+
+    methodUpdateUser(){
+        if(this.buttonUpdate=="/update"){
+            this.buttonUpdate="/";
+            this.buttonAdd="/add";
+            this.buttonDelete="/delete";
+        }else{
+            this.buttonUpdate="/update";
+            this.buttonAdd="/add";
+            this.buttonDelete="/delete";
+        }
+    }
 
    
 
     users= this.http.get<User[]>('http://localhost:8080/user-role/get-all-user-role');
     constructor(private http: HttpClient){ 
-        this.methodCanAddUser();
     }
 }

@@ -16,7 +16,9 @@
     <div class="container">
         <nav >
           <ul class="navbar">
-            <li (click)="methodCanAddUser()" ><a routerLink={{butt}}>Пользователи</a></li>
+            <li routerLinkActive="active" (click)="methodCanAddUser()" class="left" ><a routerLink={{buttonAdd}}>Добавить</a></li>
+            <li routerLinkActive="active" (click)="methodDeleteUser()" ><a routerLink={{buttonDelete}}>Удалить</a></li>
+            <li routerLinkActive="active" (click)="methodUpdateUser()" class="right"><a routerLink={{buttonUpdate}}>Изменить</a></li>
           </ul>
         </nav>
     </div>

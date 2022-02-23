@@ -11,6 +11,8 @@ import { AdminRole } from './admin/admin.component';
 import { RoleComponent } from './admin/role/role.component';
 import { UserComponent } from './admin/user/user.component';
 import { UserAddPage } from './admin/user/add-page/user-add-page.component';
+import { UserDeletePage } from './admin/user/delete-page/user-delete-page.component';
+import { UserUpdatePage } from './admin/user/update-page/user-update-page.component';
 
 
 
@@ -22,7 +24,9 @@ import { UserAddPage } from './admin/user/add-page/user-add-page.component';
     AdminRole,
     RoleComponent,
     UserComponent,
-    UserAddPage
+    UserAddPage,
+    UserDeletePage,
+    UserUpdatePage
     
   ],
   imports: [
