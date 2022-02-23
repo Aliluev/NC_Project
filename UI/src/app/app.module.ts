@@ -11,6 +11,9 @@ import { AdminRole } from './admin/admin.component';
 import { RoleComponent } from './admin/role/role.component';
 import { UserComponent } from './admin/user/user.component';
 
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,8 @@ import { UserComponent } from './admin/user/user.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

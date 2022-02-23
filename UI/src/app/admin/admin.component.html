@@ -1,14 +1,13 @@
 <div class="container">
     <nav >
       <ul class="navbar">
-        <li class="active"><a href="">Пользователи</a></li>
-        <li class="right"><a href="role">Роли</a> </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="left" ><a routerLink="/">Пользователи</a></li>
+        <li routerLinkActive="active" class="right"><a routerLink="/role">Роли</a> </li>
       </ul>
     </nav>
 </div>
 <div class="data">
-    <user-component ></user-component>
-    <role-component></role-component>
+    <router-outlet></router-outlet>
 
 </div>
 

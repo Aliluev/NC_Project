@@ -1,1 +1,14 @@
-<h3>user component</h3>
+<table border="1">
+    <tr class="hedder">
+        <th>name</th>
+        <th>phone</th>
+        <th>email</th>
+        <th>roles</th>
+    </tr>
+    <tr *ngFor="let item of users| async">
+        <th>{{item.username}}</th>
+        <th>{{item.phone}}</th>
+        <th>{{item.email}}</th>
+        <th>{{item.roles}}</th>
+    </tr>
+    </table>
