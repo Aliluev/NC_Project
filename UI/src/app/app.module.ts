@@ -10,6 +10,7 @@ import { UserComponentTest } from './user/user.component';
 import { AdminRole } from './admin/admin.component';
 import { RoleComponent } from './admin/role/role.component';
 import { UserComponent } from './admin/user/user.component';
+import { UserAddPage } from './admin/user/add-page/user-add-page.component';
 
 
 
@@ -20,7 +21,8 @@ import { UserComponent } from './admin/user/user.component';
     UserComponentTest,
     AdminRole,
     RoleComponent,
-    UserComponent
+    UserComponent,
+    UserAddPage
     
   ],
   imports: [

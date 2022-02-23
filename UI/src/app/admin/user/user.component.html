@@ -12,3 +12,14 @@
         <th>{{item.roles}}</th>
     </tr>
     </table>
+
+    <div class="container">
+        <nav >
+          <ul class="navbar">
+            <li (click)="methodCanAddUser()" ><a routerLink={{butt}}>Пользователи</a></li>
+          </ul>
+        </nav>
+    </div>
+    <div class="data">
+        <router-outlet></router-outlet>
+    </div>
