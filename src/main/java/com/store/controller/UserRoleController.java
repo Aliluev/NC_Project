@@ -1,14 +1,9 @@
 package com.store.controller;
-
 import com.store.dto.UserDTO;
-import com.store.exception.ResourceNotFoundException;
 import com.store.model.User;
-
 import com.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +16,7 @@ public class UserRoleController {
     UserRepository repository;
 
     @GetMapping("/get-all-user-role")
-    public List<UserDTO> getAllUserDTO()throws ResourceNotFoundException {
+    public List<UserDTO> getAllUserDTO() {
      //   return (repository.getAllByUsernameAndRoles());
        List<User> list= repository.findAll();
        List<UserDTO> userDTOS=new ArrayList<>();
