@@ -5,7 +5,12 @@ import com.store.model.Role;
 public class RoleDTO {
     private Integer id;
     private String name;
-   // private List<Integer> users;
+
+    public RoleDTO(Role role){
+        this.name=role.getName();
+        this.id=role.getId();
+    }
+
 
     public Integer getId() {
         return id;
@@ -15,23 +20,6 @@ public class RoleDTO {
         this.id = id;
     }
 
-    public RoleDTO(Role role){
-        this.name=role.getName();
-        this.id=role.getId();
-    }
-
-
-/*
-    public RoleDTO(Role role){
-        this.name=role.getName();
-        users=new ArrayList<>();
-        for(User user: role.getUsers()){
-            this.users.add(user.getId());
-        }
-    }
-
- */
-
     public String getName() {
         return name;
     }
@@ -39,6 +27,7 @@ public class RoleDTO {
     public void setName(String name) {
         this.name = name;
     }
+
 
     /*
     public List<Integer> getUsers() {
@@ -53,6 +42,16 @@ public class RoleDTO {
      */
 
 
+    /*
+    public RoleDTO(Role role){
+        this.name=role.getName();
+        users=new ArrayList<>();
+        for(User user: role.getUsers()){
+            this.users.add(user.getId());
+        }
+    }
+
+ */
 
 
 }

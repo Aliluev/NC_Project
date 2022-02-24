@@ -1,11 +1,6 @@
 package com.store.dto;
-
-
 import com.store.model.Role;
 import com.store.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class UserDTO {
@@ -13,7 +8,6 @@ public class UserDTO {
     private String username;
     private String phone;
     private String email;
-    //private List<Integer> roles;
     private String roles;
 
 

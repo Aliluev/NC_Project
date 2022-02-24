@@ -1,7 +1,6 @@
 package com.store.model;
-
+import com.store.dto.UserDTO;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -104,6 +103,14 @@ public class User {
         this.phone = phone;
         this.email = email;
     }
+
+    public User(UserDTO userDTO){
+        this.username=userDTO.getUsername();
+        this.phone=userDTO.getPhone();
+        this.email=userDTO.getEmail();
+    }
+
+
 
     public User() {
     }
