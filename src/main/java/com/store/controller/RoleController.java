@@ -28,7 +28,7 @@ public class RoleController {
         Role role =repository.getById(id);
 
         RoleDTO roleDTO=new RoleDTO(role);
-        return ResponseEntity.ok().body(roleDTO);
+        return ResponseEntity.ok(roleDTO);
     }
 
 
