@@ -1,0 +1,38 @@
+
+.container{
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.navbar a{
+    text-decoration: none;
+    display: inline-block; 
+    color: #5757a0;
+    background-color: rgb(250,245,230);
+    border-bottom: 5px solid #5757a0;
+    padding: 10px 20px;
+    border: 2px solid #fff; 
+    
+}
+
+
+.left a{
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    
+}
+.right a{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.navbar li{
+    
+    display: inline;
+}
+
+
+.active a{
+    color: rgb(192, 157, 1);
+}
+

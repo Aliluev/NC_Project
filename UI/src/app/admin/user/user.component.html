@@ -1,0 +1,66 @@
+<div>
+<table border="1">
+    <tr class="hedder">
+        <th>№</th>
+        <th>name</th>
+        <th>phone</th>
+        <th>email</th>
+        <th>roles</th>
+    </tr>
+    <tr *ngFor="let item of users| async; let idx=index">
+       <th>{{idx+1}}</th>
+        <th>{{item.username}}</th>
+        <th>{{item.phone}}</th>
+        <th>{{item.email}}</th>
+        <th>{{item.roles}}</th>
+    </tr>
+    </table>
+    </div>
+
+    <div class="container">
+        <nav >
+          <ul class="navbar">
+            <li routerLinkActive="active" (click)="methodCanAddUser()" class="left" ><button>Добавить</button></li>
+            <li routerLinkActive="active" (click)="methodDeleteUser()" ><button>Удалить</button></li>
+            <li routerLinkActive="active" (click)="methodUpdateUser()" class="right"><button>Изменить</button></li>
+          </ul>
+        </nav>
+    </div>
+    <!--
+    <div class="data">
+        <router-outlet></router-outlet>
+    </div>
+-->
+
+    <div *ngIf="buttonAdd" class="add-element">
+        <h1>Добавление</h1>
+        <div class="input-border">
+        <input type="text" class="input-text" placeholder="Name" name="userName" [(ngModel)]="user.username" >
+        
+        <input type="text" placeholder="Phone" name="userPhone" [(ngModel)]="user.phone" >
+        
+        <input type="text" placeholder="Email" name="email" [(ngModel)]="user.email" >
+        <button (click)="postUser(user)">Отправить</button>
+        </div>  
+    </div>
+
+    
+    <div *ngIf="buttonDelete" class="delete-border">
+        <div class="input-border">
+            <h1>Удаление</h1>
+            <input type="text" class="input-text" placeholder="ID" name="UserID" [(ngModel)]="id" >
+            <button (click)="deleteUser(id)">Удалить</button>
+            </div>
+    </div>
+
+    <div class="update-element">
+<div *ngIf="buttonUpdate" class="input-border">
+    <h1>Обновление</h1>
+<input type="text" placeholder="ID" name="UserID" [(ngModel)]="id" >
+<input type="text" placeholder="Name" name="userName" [(ngModel)]="user.username" >
+<input type="text" placeholder="Phone" name="userPhone" [(ngModel)]="user.phone" >
+<input type="text" placeholder="Email" name="email" [(ngModel)]="user.email" >
+<input type="text" placeholder="Roles" name="userName" [(ngModel)]="user.roles" >
+<button (click)="updateUser(id, user)">Изменить</button>
+</div>
+    </div>

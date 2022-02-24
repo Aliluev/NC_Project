@@ -1,0 +1,10 @@
+<table border="1">
+    <tr class="hedder">
+        <th>id</th>
+        <th>name</th>
+    </tr>
+    <tr *ngFor="let item of roles| async">
+        <th>{{item.id}}</th>
+        <th>{{item.name}}</th>
+    </tr>
+    </table>
