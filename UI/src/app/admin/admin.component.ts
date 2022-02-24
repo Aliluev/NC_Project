@@ -12,7 +12,7 @@ import { Role } from "../entities/role";
 
 export class AdminRole {
   id="";
-  users= this.http.get<User[]>('http://localhost:8080/user-role/get-all-user-role');
+  users= this.http.get<User[]>('http://localhost:8080/user/get-all');
   
   roles= this.http.get<Role[]>('http://localhost:8080/role/get-all-role');
   

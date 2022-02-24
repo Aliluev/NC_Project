@@ -85,7 +85,7 @@ export class UserComponent{
 
    
 
-    users= this.http.get<User[]>('http://localhost:8080/user-role/get-all-user-role');
+    users= this.http.get<User[]>('http://localhost:8080/user/get-all');
     constructor(private http: HttpClient){ 
     }
 

@@ -20,57 +20,37 @@ public class UserController {
     UserRepository repository;
 
 
+    @GetMapping("/get-all")
+    public ResponseEntity<List<UserDTO>> getAllUserDTO() {
+        List<User> list= repository.findAll();
+        List<UserDTO> userDTOS=new ArrayList<>();
+
+        for(User user: list){
+            userDTOS.add(new UserDTO(user));
+        }
+
+        return ResponseEntity.ok(userDTOS);
+
+    }
+
     @PostMapping("/create")
     public User createUser(@RequestBody UserDTO userDTO){
 
-        User user = new User(userDTO.getUsername(), userDTO.getPhone(), userDTO.getEmail());
+        User user = new User(userDTO);
         Role role=new Role("guest");
         List<Role> listRole= new ArrayList<Role>();
         listRole.add(role);
         user.setRoles(listRole);
-        /*
-        User user =new User();
-        user.setId(15);
-        user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
-        user.setPhone(userDTO.getPhone());
-       // user.setRoles(userDTO.getRoles());
-
-        Role role=new Role()
-        List<Role> roles=new ArrayList<Role>();
-        for(Integer integer:userDTO.getRoles()){
-            roles.add(integer)
-        }
-       user.setRoles(userDTO.getRoles());
-
-
-
-         */
-
-
-       repository.save(user);
-       return user;
+        repository.save(user);
+        return user;
     }
-
-
-
-    /*
-    @PostMapping("/create")
-    public User createUser(@RequestBody Model model){
-        User user=new User();
-        user.setId(15);
-        user.setUsername(model.);
-    }
-
-     */
-
 
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable(value = "id") Integer id){
        User user =repository.getById(id);
        UserDTO userDTO=new UserDTO(user);
-       return ResponseEntity.ok().body(userDTO);
+       return ResponseEntity.ok(userDTO);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -93,6 +73,8 @@ public class UserController {
     @PutMapping("/update-user/{id}")
     public void updateUser(@PathVariable(value = "id") Integer id, @RequestBody UserDTO userDTO){
         User user=repository.getById(id);
+
+        // !!!!  Использовать Objects.nonNull(); !!!!
         if(userDTO.getUsername().equals(new String(""))==false){
             user.setUsername(userDTO.getUsername());
         }
@@ -115,7 +97,7 @@ public class UserController {
 
         repository.save(user);
 
-        // Использовать Objects.nonNull();
+
     }
 
 
