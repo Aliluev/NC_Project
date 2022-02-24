@@ -1,10 +1,9 @@
 package com.store.model;
 
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -30,10 +29,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="users_roles",
             joinColumns = @JoinColumn(name = "userid"),
             inverseJoinColumns = @JoinColumn(name="roleid")
@@ -90,4 +86,25 @@ public class User {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone) && Objects.equals(email, user.email) && Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, phone, email, roles);
+    }
+
+    public User(String username, String phone, String email) {
+        this.username = username;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    public User() {
+    }
 }

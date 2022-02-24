@@ -1,9 +1,6 @@
 package com.store.model;
 
-import lombok.*;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,12 +16,11 @@ public class Role {
     private Integer id;
 
     @Column(name = "name")
-    private String string;
+    private String name;
 
 
-
-    @ManyToMany
-    @JoinTable(name="users_roles",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(  name="users_roles",
             joinColumns = @JoinColumn(name="roleid"),
           inverseJoinColumns = @JoinColumn(name = "userid"))
     private List<User> users;
@@ -37,14 +33,14 @@ public class Role {
         this.id = id;
     }
 
-    public String getString() {
-        return string;
+
+    public String getName() {
+        return name;
     }
 
-    public void setString(String string) {
-        this.string = string;
+    public void setName(String name) {
+        this.name = name;
     }
-
 
     public List<User> getUsers() {
         return users;
@@ -54,5 +50,26 @@ public class Role {
         this.users = users;
     }
 
+    public Role(Integer id, String name, List<User> users) {
+        this.id = id;
+        this.name = name;
+        this.users = users;
+    }
 
+    public Role() {
+    }
+
+    public Role(int id){
+        this.id=id;
+    }
+
+    public Role(String name) {
+        this.name = name;
+        this.id=1;// При создании всегда задаётся admin=1
+    }
+
+    public Role(String name, List<User> users) {
+        this.name = name;
+        this.users = users;
+    }
 }
