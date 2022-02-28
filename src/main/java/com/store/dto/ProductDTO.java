@@ -46,8 +46,10 @@ public class ProductDTO {
                stringBuilder.append(",");
            }
             stringBuilder.append(category.getName());
+           // stringBuilder.append((category.getId()));
            i++;
         }
+        category=stringBuilder.toString();
     }
 
     public ProductDTO(){}

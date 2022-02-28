@@ -6,6 +6,7 @@ package com.store.model;
 import com.store.dto.ProductDTO;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -61,6 +62,7 @@ public class Product {
     public void setCategory(String string){
         Category category=new Category(string);
         category.setName(string);
+        this.category=new ArrayList<>();
         this.category.add(category);
     }
 
