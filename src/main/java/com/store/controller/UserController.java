@@ -4,6 +4,7 @@ import com.store.model.Role;
 import com.store.model.User;
 import com.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,9 +55,9 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteUser(@PathVariable(value = "id") Integer id ){
+    public ResponseEntity deleteUser(@PathVariable(value = "id") Integer id ){
         repository.deleteById(id);
-        ResponseEntity.ok();
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     /*

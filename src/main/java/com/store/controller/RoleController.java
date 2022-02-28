@@ -1,6 +1,7 @@
 package com.store.controller;
 import com.store.dto.RoleDTO;
 import com.store.model.Role;
+import com.store.model.User;
 import com.store.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,10 @@ public class RoleController {
     RoleRepository repository;
 
     @PostMapping("/create")
-    public void createUser(@RequestBody Role role){
+    public Role createUser(@RequestBody RoleDTO roleDTO){
+        Role role=new Role(roleDTO);
         repository.save(role);
+        return role;
     }
 
     @GetMapping("/{id}")

@@ -3,6 +3,8 @@ package com.store.model;
 
 
 
+import com.store.dto.ProductDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class Product {
     @JoinTable(name="product_category",
             joinColumns = @JoinColumn(name="productid"),
             inverseJoinColumns = @JoinColumn(name = "categoryid"))
-    private List<Product> product;
+    private List<Category> category;
 
     public Integer getId() {
         return id;
@@ -48,13 +50,28 @@ public class Product {
         this.price = price;
     }
 
-    public List<Product> getProduct() {
-        return product;
+    public List<Category> getCategory() {
+        return category;
     }
 
-    public void setProduct(List<Product> product) {
-        this.product = product;
+    public void setCategory(List<Category> category) {
+        this.category = category;
     }
+
+    public void setCategory(String string){
+        Category category=new Category(string);
+        category.setName(string);
+        this.category.add(category);
+    }
+
+    public Product(){}
+
+    public Product(ProductDTO productDTO){
+        this.name=productDTO.getName();
+        this.price=Integer.parseInt(productDTO.getPrice());
+    }
+
+
 }
 
 

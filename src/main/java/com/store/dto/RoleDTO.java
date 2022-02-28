@@ -11,6 +11,9 @@ public class RoleDTO {
         this.id=role.getId();
     }
 
+    public RoleDTO(){
+
+    }
 
     public Integer getId() {
         return id;

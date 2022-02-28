@@ -1,5 +1,7 @@
 package com.store.model;
 
+import com.store.dto.RoleDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -57,6 +59,11 @@ public class Role {
     }
 
     public Role() {
+    }
+
+    public Role(RoleDTO roleDTO){
+        this.id=roleDTO.getId();
+        this.name=roleDTO.getName();
     }
 
     public Role(int id){
