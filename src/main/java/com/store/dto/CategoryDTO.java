@@ -25,7 +25,7 @@ public class CategoryDTO {
         this.product = product;
     }
 
-    CategoryDTO(Category category){
+    public CategoryDTO(Category category){
         this.name= category.getName();
         StringBuilder stringBuilder=new StringBuilder();
         int i=0;
@@ -34,7 +34,9 @@ public class CategoryDTO {
                 stringBuilder.append(",");
             }
             stringBuilder.append(product.getName());
+            i++;
         }
+        product=stringBuilder.toString();
     }
 
     CategoryDTO(){}

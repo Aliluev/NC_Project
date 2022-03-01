@@ -1,7 +1,6 @@
 package com.store.controller;
 import com.store.dto.RoleDTO;
 import com.store.model.Role;
-import com.store.model.User;
 import com.store.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,18 @@ public class RoleController {
 
     @Autowired
     RoleRepository repository;
+
+    @GetMapping("/get-all-role")
+    public ResponseEntity<List<RoleDTO>> getAllRoleDTO(){
+        List<Role> list= repository.findAll();
+        List<RoleDTO> roleDTOS=new ArrayList<>();
+
+        for(Role role: list){
+            roleDTOS.add(new RoleDTO(role));
+        }
+        return ResponseEntity.ok(roleDTOS);
+
+    }
 
     @PostMapping("/create")
     public Role createUser(@RequestBody RoleDTO roleDTO){
@@ -36,23 +47,14 @@ public class RoleController {
 
 
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteRole(@PathVariable(value = "id") Integer id ){
-        repository.deleteById(id);
+    @DeleteMapping("/delete/{name}")
+    public void deleteRole(@PathVariable(value = "name") String name ){
+        List<Role> list= repository.findAll();
+        repository.delete(list.get(0));
         ResponseEntity.ok();
     }
 
-    @GetMapping("/get-all-role")
-    public List<RoleDTO> getAllRoleDTO(){
-        List<Role> list= repository.findAll();
-        List<RoleDTO> roleDTOS=new ArrayList<>();
 
-        for(Role role: list){
-            roleDTOS.add(new RoleDTO(role));
-        }
-        return roleDTOS;
-
-    }
 
 
 }

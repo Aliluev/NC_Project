@@ -1,5 +1,7 @@
 package com.store.model;
 
+import com.store.dto.CategoryDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -44,6 +46,10 @@ public class Category {
     }
 
     public Category(){};
+
+    public Category(CategoryDTO categoryDTO ){
+        this.name=categoryDTO.getName();
+    }
 
     public Category(String string){
         this.name=string;
