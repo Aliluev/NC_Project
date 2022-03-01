@@ -1,6 +1,6 @@
 package com.store.model;
 
-/*
+
 
 
 import javax.persistence.*;
@@ -23,4 +23,4 @@ public class Storage {
 }
 
 
- */
+

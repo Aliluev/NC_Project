@@ -3,6 +3,7 @@ import com.store.dto.RoleDTO;
 import com.store.model.Role;
 import com.store.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,10 +49,10 @@ public class RoleController {
 
 
     @DeleteMapping("/delete/{name}")
-    public void deleteRole(@PathVariable(value = "name") String name ){
-        List<Role> list= repository.findAll();
-        repository.delete(list.get(0));
-        ResponseEntity.ok();
+    public ResponseEntity  deleteRole(@PathVariable(value = "name") String name ){
+        List<Role> roleList= repository.findByName(name);
+        repository.delete(roleList.get(0));
+       return ResponseEntity.ok(HttpStatus.OK);
     }
 
 

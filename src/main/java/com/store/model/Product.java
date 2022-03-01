@@ -27,6 +27,17 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "categoryid"))
     private List<Category> category;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Storage> storage;
+
+    public List<Storage> getStorage() {
+        return storage;
+    }
+
+    public void setStorage(List<Storage> storage) {
+        this.storage = storage;
+    }
+
     public Integer getId() {
         return id;
     }
