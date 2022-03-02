@@ -40,19 +40,26 @@ public class RoleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<RoleDTO> getRoleById(@PathVariable(value="id") Integer id){
+        try{
         Role role =repository.getById(id);
-
         RoleDTO roleDTO=new RoleDTO(role);
         return ResponseEntity.ok(roleDTO);
+        }catch (RuntimeException exception){
+            return new ResponseEntity<>(new RoleDTO(),HttpStatus.NOT_FOUND);
+        }
     }
 
 
 
     @DeleteMapping("/delete/{name}")
     public ResponseEntity  deleteRole(@PathVariable(value = "name") String name ){
-        List<Role> roleList= repository.findByName(name);
-        repository.delete(roleList.get(0));
-       return ResponseEntity.ok(HttpStatus.OK);
+        try {
+            List<Role> roleList = repository.findByName(name);
+            repository.delete(roleList.get(0));
+            return ResponseEntity.ok(HttpStatus.OK);
+        }catch (RuntimeException exception){
+            return new ResponseEntity<>(new RoleDTO(),HttpStatus.NOT_FOUND);
+        }
     }
 
 

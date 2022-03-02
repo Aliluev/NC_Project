@@ -54,10 +54,15 @@ public class UserController {
        return ResponseEntity.ok(userDTO);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteUser(@PathVariable(value = "id") Integer id ){
-        repository.deleteById(id);
-        return ResponseEntity.ok(HttpStatus.OK);
+    @DeleteMapping("/delete/{name}")
+    public ResponseEntity deleteUser(@PathVariable(value = "name") String name ){
+        try{
+            List<User> userList=repository.findByUsername(name);
+            repository.delete(userList.get(0));
+            return ResponseEntity.ok(HttpStatus.OK);
+        }catch (RuntimeException runtimeException){
+            return new ResponseEntity<>(new UserDTO(),HttpStatus.NOT_FOUND);
+        }
     }
 
     /*
@@ -71,33 +76,37 @@ public class UserController {
 
      */
 
-    @PutMapping("/update-user/{id}")
-    public void updateUser(@PathVariable(value = "id") Integer id, @RequestBody UserDTO userDTO){
-        User user=repository.getById(id);
+    @PutMapping("/update-user/{name}")
+    public ResponseEntity updateUser(@PathVariable(value = "name") String name, @RequestBody UserDTO userDTO){
 
-        // !!!!  Использовать Objects.nonNull(); !!!!
-        if(userDTO.getUsername().equals(new String(""))==false){
-            user.setUsername(userDTO.getUsername());
-        }
-        if(userDTO.getPhone().equals(new String(""))==false){
-            user.setPhone(userDTO.getPhone());
-        }
-        if(userDTO.getEmail().equals(new String(""))==false){
-            user.setEmail(userDTO.getEmail());
-        }
-        if(userDTO.getRoles().equals(new String(""))==false){
+       try {
+           User user = repository.findByUsername(name).get(0);
+           // !!!!  Использовать Objects.nonNull(); !!!!
+           if (userDTO.getUsername().equals(new String("")) == false) {
+               user.setUsername(userDTO.getUsername());
+           }
+           if (userDTO.getPhone().equals(new String("")) == false) {
+               user.setPhone(userDTO.getPhone());
+           }
+           if (userDTO.getEmail().equals(new String("")) == false) {
+               user.setEmail(userDTO.getEmail());
+           }
+           if (userDTO.getRoles().equals(new String("")) == false) {
 
-            List<Role> listRole=new ArrayList<>();
-            String[] strRoles=userDTO.getRoles().split(",");
-            for(String str: strRoles){
-               // Integer.
-                listRole.add(new Role(Integer.getInteger(str)));
-            }
-            user.setRoles(listRole);
-        }
+               List<Role> listRole = new ArrayList<>();
+               String[] strRoles = userDTO.getRoles().split(",");
+               for (String str : strRoles) {
+                   // Integer.
+                   listRole.add(new Role(Integer.getInteger(str)));
+               }
+               user.setRoles(listRole);
+           }
 
-        repository.save(user);
-
+           repository.save(user);
+           return ResponseEntity.ok(HttpStatus.OK);
+       }catch (RuntimeException runtimeException){
+           return new ResponseEntity<>(new UserDTO(),HttpStatus.NOT_FOUND);
+       }
 
     }
 

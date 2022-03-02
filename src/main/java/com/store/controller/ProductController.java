@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class ProductController {
 
     @Autowired
     CategoryRepository categoryRepository;
+
 
     @GetMapping("/get-all")
     public ResponseEntity<List<ProductDTO>> getAllUserDTO(){
@@ -38,27 +40,41 @@ public class ProductController {
     @PostMapping("/create")
     public void createProduct(@RequestBody ProductDTO productDTO){
         List<Category> findCategory=categoryRepository.findByName(productDTO.getCategory());
+        Product product=new Product(productDTO);
        // if((findCategory.size()==1)&&!(productDTO.equals(findCategory.get(0).getName()))){
         if(findCategory.size()==1){
-            Product product=new Product(productDTO);
+           // Product product=new Product(productDTO);
             product.setCategory(findCategory);
-            repository.save(product);
+         //   repository.save(product);
         }else {
             Category category = new Category(productDTO.getCategory());
             categoryRepository.save(category);
             List<Category> saveCategory = categoryRepository.findByName(productDTO.getCategory());
-            Product product = new Product(productDTO);
+           // Product product = new Product(productDTO);
             product.setCategory(saveCategory);
-            repository.save(product);
+           // repository.save(product);
         }
+        /*
+        //Установить магазин
+        String[] strStore=productDTO.getStorage().split(",");
+        List<Storage> storages=new ArrayList<>();
+        for(String string:strStore){
+            storages.add(storageRepository.findByName(string).get(0));
+        }
+         */
+        repository.save(product);
     }
 
     //Удаление по названию
     @DeleteMapping("/delete/{name}")
     public ResponseEntity deleteProduct(@PathVariable(value = "name") String name ) {
-        List<Product> productList = repository.findByName(name);
-        repository.delete(productList.get(0));
-       return ResponseEntity.ok(HttpStatus.OK);
+        try {
+            List<Product> productList = repository.findByName(name);
+            repository.delete(productList.get(0));
+           return (ResponseEntity.ok(HttpStatus.OK));
+        }catch (RuntimeException exception){
+            return new ResponseEntity<>(new ProductDTO(), HttpStatus.NOT_FOUND);
+        }
     }
 
 
@@ -95,13 +111,14 @@ public class ProductController {
             }
 
         }
-        System.out.println("Зашли");
         List<Product> findProduct=repository.findByName(productDTO.getName());
         //Если имя не новое
         if(findProduct.size()>0) {
             Product product = findProduct.get(0);
             product.setPrice(Integer.parseInt(productDTO.getPrice()));
+            product.setCount(Integer.parseInt(productDTO.getCount()));
             product.setCategory(categories);
+            product.setImage(productDTO.getImage());
             repository.save(product);
         }else{
             Product product=new Product(productDTO);

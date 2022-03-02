@@ -1,8 +1,7 @@
+
+/*
+
 package com.store.model;
-
-
-
-
 import javax.persistence.*;
 
 @Entity
@@ -20,7 +19,41 @@ public class Storage {
     private Integer count;
 
     private String address;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
 
+
+ */
 
 

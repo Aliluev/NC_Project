@@ -21,12 +21,33 @@ public class Product {
 
     private Integer price;
 
+    private Integer count;
+
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     @ManyToMany
     @JoinTable(name="product_category",
             joinColumns = @JoinColumn(name="productid"),
             inverseJoinColumns = @JoinColumn(name = "categoryid"))
     private List<Category> category;
 
+    /*
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Storage> storage;
 
@@ -37,6 +58,10 @@ public class Product {
     public void setStorage(List<Storage> storage) {
         this.storage = storage;
     }
+
+
+     */
+
 
     public Integer getId() {
         return id;
@@ -82,6 +107,8 @@ public class Product {
     public Product(ProductDTO productDTO){
         this.name=productDTO.getName();
         this.price=Integer.parseInt(productDTO.getPrice());
+        this.count=Integer.parseInt(productDTO.getCount());
+        this.image=productDTO.getImage();
     }
 
 

@@ -39,5 +39,5 @@ public class CategoryDTO {
         product=stringBuilder.toString();
     }
 
-    CategoryDTO(){}
+   public  CategoryDTO(){}
 }

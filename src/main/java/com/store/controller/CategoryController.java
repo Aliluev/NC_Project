@@ -45,9 +45,13 @@ public class CategoryController {
 
     @DeleteMapping("/delete/{name}")
     public ResponseEntity deleteCategory(@PathVariable(value = "name") String name ){
-        List<Category> categories =categoryRepository.findByName(name);
-        categoryRepository.delete(categories.get(0));
-        return ResponseEntity.ok(HttpStatus.OK);
+       try {
+           List<Category> categories = categoryRepository.findByName(name);
+           categoryRepository.delete(categories.get(0));
+           return ResponseEntity.ok(HttpStatus.OK);
+       }catch (RuntimeException exception){
+           return new ResponseEntity<>(new CategoryDTO(), HttpStatus.NOT_FOUND);
+       }
     }
 
 }
