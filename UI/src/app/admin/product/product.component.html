@@ -1,0 +1,66 @@
+<div>
+    <table border="1">
+        <tr class="hedder">
+            <th>№</th>
+            <th>name</th>
+            <th>price</th>
+            <th>category</th>
+            <th>count</th>
+            <th>image</th>
+        </tr>
+        <tr *ngFor="let item of products2; let idx=index">
+           <th>{{idx+1}}</th>
+            <th>{{item.name}}</th>
+            <th>{{item.price}}</th>
+            <th>{{item.category}}</th>
+            <th>{{item.count}}</th>
+            <th>{{item.image}}</th>
+        </tr>
+        </table>
+        </div>
+    
+        <div class="container">
+            <nav >
+              <ul class="navbar">
+                <li routerLinkActive="active" (click)="methodCanAddProduct()" class="left" ><button>Добавить</button></li>
+                <li routerLinkActive="active" (click)="methodDeleteProduct()" ><button>Удалить</button></li>
+                <li routerLinkActive="active" (click)="methodUpdateProduct()" class="right"><button>Изменить</button></li>
+              </ul>
+            </nav>
+        </div>
+
+        <div *ngIf="buttonAdd" class="add-element">
+            <h1>Добавление</h1>
+            <div class="input-border">
+            <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="product.name" >
+            
+            <input type="text" placeholder="Price" name="Price" [(ngModel)]="product.price" >
+            
+            <input type="text" placeholder="Category" name="Category" [(ngModel)]="product.category" >
+            <input type="text" placeholder="Count" name="Count" [(ngModel)]="product.count" >
+            <input type="text" placeholder="Image" name="Image" [(ngModel)]="product.image" >
+            <button (click)="postProduct(product)">Отправить</button>
+            </div>  
+        </div>
+    
+        
+        <div *ngIf="buttonDelete" class="delete-border">
+            <div class="input-border">
+                <h1>Удаление</h1>
+                <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="name" >
+                <button (click)="deleteProduct(name)" >Удалить</button>
+                </div>
+        </div>
+    
+        <div class="update-element">
+    <div *ngIf="buttonUpdate" class="input-border">
+        <h1>Обновление</h1>
+        <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="product.name" >   
+        <input type="number" placeholder="Price" name="Price" [(ngModel)]="product.price" >
+        <input type="text" placeholder="Category" name="Category" [(ngModel)]="product.category" >
+        <input type="number" placeholder="Count" name="Count" [(ngModel)]="product.count" >
+        <input type="text" placeholder="Image" name="Image" [(ngModel)]="product.image" >
+    <button (click)="updateProduct(product)">Изменить</button>
+    </div>
+        </div>
+    

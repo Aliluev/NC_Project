@@ -7,6 +7,8 @@ import { FormsModule }   from '@angular/forms';
 import { AdminRole } from './admin/admin.component';
 import { RoleComponent } from './admin/role/role.component';
 import { UserComponent } from './admin/user/user.component';
+import { ProductComponent } from './admin/product/product.component';
+import { CategoriesComponent } from './admin/categories/categories.component';
 
 
 
@@ -15,7 +17,9 @@ import { UserComponent } from './admin/user/user.component';
     AppComponent,
     AdminRole,
     RoleComponent,
-    UserComponent
+    UserComponent,
+    ProductComponent,
+    CategoriesComponent
     
   ],
   imports: [

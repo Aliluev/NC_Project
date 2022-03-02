@@ -1,0 +1,42 @@
+<div>
+    <table border="1">
+        <tr class="hedder">
+            <th>№</th>
+            <th>name</th>
+            <th>products</th>
+        </tr>
+        <tr *ngFor="let item of categories; let idx=index">
+           <th>{{idx+1}}</th>
+            <th>{{item.name}}</th>
+            <th>{{item.product}}</th>
+        </tr>
+        </table>
+        </div>
+
+
+        <div class="container">
+            <nav >
+              <ul class="navbar">
+                <li routerLinkActive="active" (click)="methodCanAddCategory()" class="left" ><button>Добавить</button></li>
+                <li routerLinkActive="active" (click)="methodDeleteCategory()" ><button>Удалить</button></li>
+              </ul>
+            </nav>
+        </div>
+
+        <div *ngIf="buttonAdd" class="add-element">
+            <h1>Добавление</h1>
+            <div class="input-border">
+            <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="templateCategory.name" >
+            <button (click)="postCategory(templateCategory)">Отправить</button>
+            </div>  
+        </div>
+    
+        
+        <div *ngIf="buttonDelete" class="delete-border">
+            <div class="input-border">
+                <h1>Удаление</h1>
+                <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="name" >
+                <button (click)="deleteCategory(name)" >Удалить</button>
+                </div>
+        </div>
+ 

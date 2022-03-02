@@ -1,3 +1,4 @@
+<div>
 <table border="1">
     <tr class="hedder">
         <th>id</th>
@@ -8,3 +9,30 @@
         <th>{{item.name}}</th>
     </tr>
     </table>
+</div>
+
+<div class="container">
+    <nav >
+      <ul class="navbar">
+        <li routerLinkActive="active" (click)="methodCanAddRole()" class="left" ><button>Добавить</button></li>
+        <li routerLinkActive="active" (click)="methodDeleteRole()" ><button>Удалить</button></li>   
+    </ul>
+    </nav>
+</div>
+
+<div *ngIf="buttonAdd" class="add-element">
+    <h1>Добавление</h1>
+    <div class="input-border">
+    <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="role.name" >
+    <button (click)="postRole(role)">Отправить</button>
+    </div>  
+</div>
+
+    
+<div *ngIf="buttonDelete" class="delete-border">
+    <div class="input-border">
+        <h1>Удаление</h1>
+        <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="name" >
+        <button (click)="deleteRole(name)">Удалить</button>
+        </div>
+</div>
