@@ -97,6 +97,7 @@ public class UserController {
 
      */
 
+    /*
     @PutMapping("/update-user/{name}")
     public ResponseEntity updateUser(@PathVariable(value = "name") String name, @RequestBody UserDTO userDTO){
 
@@ -131,6 +132,44 @@ public class UserController {
 
     }
 
+     */
+
+    @PutMapping("/update")
+    public ResponseEntity updateUser(@RequestBody UserDTO userDTO) {
+
+       // User user=new User(userDTO);
+        String[] strings=userDTO.getRoles().split(",");
+        List<Role> roleList=new ArrayList<>();
+        for(String string:strings){
+            List<Role> roles=roleRepository.findByName(string);
+            if(roles.size()==1){
+                roleList.add(roles.get(0));
+            }else{
+                Role role=new Role(string);
+                roleRepository.save(role);
+                roleList.add(roleRepository.findByName(string).get(0));
+            }
+        }
+
+        List<User> findUser=repository.findByUsername(userDTO.getUsername());
+        //Если имя не новое
+        if(findUser.size()>0){
+            User user=findUser.get(0);
+            user.setUsername(userDTO.getUsername());
+            user.setPhone(userDTO.getPhone());
+            user.setEmail(userDTO.getEmail());
+            user.setRoles(roleList);
+            repository.save(user);
+        }else{
+            User user=new User(userDTO);
+            user.setRoles(roleList);
+            repository.save(user);
+        }
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 
 
-}
+
+    
+    }
