@@ -38,22 +38,27 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public void createProduct(@RequestBody ProductDTO productDTO){
-        List<Category> findCategory=categoryRepository.findByName(productDTO.getCategory());
+    public ResponseEntity<HttpStatus> createProduct(@RequestBody ProductDTO productDTO){
+
         Product product=new Product(productDTO);
-       // if((findCategory.size()==1)&&!(productDTO.equals(findCategory.get(0).getName()))){
-        if(findCategory.size()==1){
-           // Product product=new Product(productDTO);
-            product.setCategory(findCategory);
-         //   repository.save(product);
-        }else {
-            Category category = new Category(productDTO.getCategory());
-            categoryRepository.save(category);
-            List<Category> saveCategory = categoryRepository.findByName(productDTO.getCategory());
-           // Product product = new Product(productDTO);
-            product.setCategory(saveCategory);
-           // repository.save(product);
+        String[] strings=productDTO.getCategory().split(",");
+        //List<Category> findCategory=categoryRepository.findByName(productDTO.getCategory());
+        List<Category> categoryList=new ArrayList<>();
+        for(String string:strings) {
+            List<Category> findCategory=categoryRepository.findByName(string);
+            if (findCategory.size() == 1) {
+                categoryList.add(findCategory.get(0));
+            } else {
+                Category category = new Category(productDTO.getCategory());
+                categoryRepository.save(category);
+                List<Category> saveCategory = categoryRepository.findByName(productDTO.getCategory());
+                categoryList.add(saveCategory.get(0));
+            }
         }
+
+        product.setCategory(categoryList);
+        repository.save(product);
+        return ResponseEntity.ok(HttpStatus.OK);
         /*
         //Установить магазин
         String[] strStore=productDTO.getStorage().split(",");
@@ -62,7 +67,7 @@ public class ProductController {
             storages.add(storageRepository.findByName(string).get(0));
         }
          */
-        repository.save(product);
+
     }
 
     //Удаление по названию
