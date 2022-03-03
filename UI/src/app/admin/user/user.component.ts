@@ -85,30 +85,49 @@ export class UserComponent{
 
    
 
-    users= this.http.get<User[]>('http://localhost:8080/user/get-all');
+  //  users= this.http.get<User[]>('http://localhost:8080/user/get-all');
+
+  users: User[]=[];
+  templateUser:User=new User("","","","");
+  name="";
+
+  getUsers(){
+    return this.http.get<User[]>('http://localhost:8080/user/get-all');
+  }
+
+  loadUsers(){
+    
+    this.getUsers().subscribe((data: User[])=>this.users=data); 
+}
     
     constructor(private http: HttpClient){ 
+        this.loadUsers();
     }
 
-    updateUser(id: number | string, user: User| undefined){
+    updateUser(user: User){
      
-        this.http.put('http://localhost:8080/user/update-user/'
-        +id,user).subscribe((data:any) => {console.log("ok")},
+        this.http.put('http://localhost:8080/user/update',user).subscribe((data:any) => {console.log("ok")},
         (error: any)=> console.log("eror"));
+        let temUser=new User(user.username,user.phone,user.email,user.roles);
+        this.users=this.users.filter(c =>(c.username!==user.username));
+        this.users.push(temUser);
       }
 
       postUser(user: User){
         this.http.post('http://localhost:8080/user/create',user).subscribe((data:any) => {console.log("ok")},
           (error: any)=> console.log("eror"));
+          let temUser=new User(user.username,user.phone,user.email,user.roles);
+          this.users.push(temUser);
       }
 
          
-  deleteUser(id: number | string){
-    this.http.delete('http://localhost:8080/user/delete/'+id
+  deleteUser(name: string | string){
+    this.http.delete('http://localhost:8080/user/delete/'+name
     //{
     // params: new HttpParams().set('', id)}
     ).subscribe((data:any) => {console.log("ok")},
     (error: any)=> console.log("eror"));
+    this.users=this.users.filter(c =>(c.username!==name));
   }
 
   

@@ -4,8 +4,8 @@
         <th>id</th>
         <th>name</th>
     </tr>
-    <tr *ngFor="let item of roles| async">
-        <th>{{item.id}}</th>
+    <tr *ngFor="let item of roles; let idx=index">
+        <th>{{idx+1}}</th>
         <th>{{item.name}}</th>
     </tr>
     </table>
@@ -23,8 +23,8 @@
 <div *ngIf="buttonAdd" class="add-element">
     <h1>Добавление</h1>
     <div class="input-border">
-    <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="role.name" >
-    <button (click)="postRole(role)">Отправить</button>
+    <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="templateRole.name" >
+    <button (click)="postRole(templateRole)">Отправить</button>
     </div>  
 </div>
 
