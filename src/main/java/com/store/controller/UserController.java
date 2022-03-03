@@ -1,7 +1,9 @@
 package com.store.controller;
 import com.store.dto.UserDTO;
+import com.store.model.Category;
 import com.store.model.Role;
 import com.store.model.User;
+import com.store.repository.RoleRepository;
 import com.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,9 @@ public class UserController {
     @Autowired
     UserRepository repository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
 
     @GetMapping("/get-all")
     public ResponseEntity<List<UserDTO>> getAllUserDTO() {
@@ -35,23 +40,39 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public User createUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity createUser(@RequestBody UserDTO userDTO){
 
-        User user = new User(userDTO);
-        Role role=new Role("guest");
-        List<Role> listRole= new ArrayList<Role>();
-        listRole.add(role);
-        user.setRoles(listRole);
+        User user=new User(userDTO);
+        String[] strings=userDTO.getRoles().split(",");
+        List<Role> roleList=new ArrayList<>();
+        for(String string:strings){
+            List<Role> roles=roleRepository.findByName(string);
+            if(roles.size()==1){
+                roleList.add(roles.get(0));
+            }else{
+                Role role=new Role(string);
+                roleRepository.save(role);
+                roleList.add(roleRepository.findByName(string).get(0));
+            }
+        }
+
+       // User user=new User(userDTO);
+        user.setRoles(roleList);
         repository.save(user);
-        return user;
+        return ResponseEntity.ok(HttpStatus.OK);
+
     }
 
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable(value = "id") Integer id){
-       User user =repository.getById(id);
-       UserDTO userDTO=new UserDTO(user);
-       return ResponseEntity.ok(userDTO);
+      try {
+          User user = repository.getById(id);
+          UserDTO userDTO = new UserDTO(user);
+          return ResponseEntity.ok(userDTO);
+      }catch (RuntimeException exception){
+          return new ResponseEntity<>(new UserDTO(),HttpStatus.NOT_FOUND);
+      }
     }
 
     @DeleteMapping("/delete/{name}")

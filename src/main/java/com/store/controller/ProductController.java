@@ -88,26 +88,15 @@ public class ProductController {
         int i=0;
         for(String string:strings){
             List<Category> findCategory=categoryRepository.findByName(strings[i]);
-           // if((findCategory.size()==1)&&!(productDTO.equals(findCategory.get(0).getName()))){
             if(findCategory.size()==1){
                 categories.add(findCategory.get(0));
                 i++;
             }else {
-                Category category = new Category(productDTO.getCategory());
+                Category category = new Category(string);
                 categoryRepository.save(category);
-                List<Category> findNewCategory=categoryRepository.findByName(productDTO.getCategory());
+                List<Category> findNewCategory=categoryRepository.findByName(string);
                 categories.add(findNewCategory.get(0));
                 i++;
-                /*
-                Product product=new Product(productDTO);
-                product.setCategory(strings[i]);
-                repository.save(product);
-                //вытащить id чтобы
-                List<Category> findNewCategory=categoryRepository.findByName(strings[i]);
-                categories.add(findNewCategory.get(0));
-                i++;
-
-                 */
             }
 
         }
@@ -118,6 +107,7 @@ public class ProductController {
             product.setPrice(Integer.parseInt(productDTO.getPrice()));
             product.setCount(Integer.parseInt(productDTO.getCount()));
             product.setCategory(categories);
+
             product.setImage(productDTO.getImage());
             repository.save(product);
         }else{

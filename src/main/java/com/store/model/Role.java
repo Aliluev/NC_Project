@@ -72,7 +72,7 @@ public class Role {
 
     public Role(String name) {
         this.name = name;
-        this.id=1;// При создании всегда задаётся admin=1
+        //this.id=1;// При создании всегда задаётся admin=1
     }
 
     public Role(String name, List<User> users) {
