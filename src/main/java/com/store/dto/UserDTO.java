@@ -25,7 +25,8 @@ public class UserDTO {
             if(i!=0){
                 strRoles.append(",");
             }
-            strRoles.append(role.getId());
+            //strRoles.append(role.getId());
+            strRoles.append(role.getName());
             i++;
             //this.roles.add(role.getId());
         }
