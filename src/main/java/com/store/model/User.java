@@ -9,8 +9,6 @@ import java.util.Objects;
 @Table(name = "users")
 public class User {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -34,6 +32,17 @@ public class User {
             inverseJoinColumns = @JoinColumn(name="roleid")
     )
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "userid",cascade = CascadeType.ALL)
+    private List<Order> order;
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
+    }
 
     public Integer getId() {
         return id;
