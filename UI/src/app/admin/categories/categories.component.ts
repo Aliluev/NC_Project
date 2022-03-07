@@ -13,6 +13,34 @@ export class CategoriesComponent{
     buttonDelete=false;
     
 
+    selectedFile :File|undefined;
+
+    onFileSelected(event: any){
+        this.selectedFile = <File>event.target.files[0];
+        const fd = new FormData();
+        fd.append('file',this.selectedFile, this.selectedFile?.name );
+        this.http.post('http://localhost:8080/image/save',fd).subscribe((data:any) => {console.log("ok")},
+        (error: any)=> console.log("eror"));
+    }
+
+    image:any;
+
+    loadImage(){
+        this.http.get('http://localhost:8080/image/1',this.image).subscribe((data:any) => {console.log("ok")},
+        (error: any)=> console.log("eror"));
+      //  var a = document.createElement("a");
+       // this.image=3;
+        
+    }
+
+    /*
+    onUpload(){
+        const fd = new FormData();
+        fd.append('image',this.selectedFile, this.selectedFile?.name )
+        this.http.post('http://localhost:8080/image/save',this.selectedFile)
+    }
+    */
+
 
     methodDeleteCategory(){
         if(this.buttonDelete==false){
@@ -46,6 +74,7 @@ export class CategoriesComponent{
 
     constructor(private http: HttpClient){ 
         this.loadCategories();
+        this.loadImage();
     }
 
     deleteCategory(name: string | string){
