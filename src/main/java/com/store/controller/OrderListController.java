@@ -1,6 +1,7 @@
 package com.store.controller;
 
 import com.store.dto.OrderListDTO;
+import com.store.dto.ProductDTO;
 import com.store.model.Order;
 import com.store.model.OrderList;
 import com.store.model.Product;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController
@@ -42,6 +44,16 @@ public class OrderListController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    //Удаление по id
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteProduct(@PathVariable(value = "id") Integer id ) {
+        try {
+            orderListRepository.delete( orderListRepository.getById(id));
+            return (ResponseEntity.ok(HttpStatus.OK));
+        }catch (RuntimeException exception){
+            return new ResponseEntity<>(new ProductDTO(), HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 }

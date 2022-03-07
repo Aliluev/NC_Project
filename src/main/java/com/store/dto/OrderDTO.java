@@ -1,5 +1,7 @@
 package com.store.dto;
 
+import com.store.model.Order;
+
 public class OrderDTO {
 
     private String userID;
@@ -15,6 +17,12 @@ public class OrderDTO {
         this.userID = userID;
         this.statusID = statusID;
         this.date = data;
+    }
+
+    public OrderDTO(Order order) {
+        this.userID=order.getUserid().getUsername();
+        this.statusID=order.getStatusid().getName();
+        this.date= order.getDate();
     }
 
     public String getUserID() {

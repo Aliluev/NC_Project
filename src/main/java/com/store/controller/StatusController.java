@@ -1,6 +1,8 @@
 package com.store.controller;
 
+import com.store.dto.ProductDTO;
 import com.store.dto.StatusDTO;
+import com.store.model.Product;
 import com.store.model.Status;
 import com.store.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,17 @@ public class StatusController {
         Status status=new Status(statusDTO);
     statusRepository.save(status);
     return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    //Удаление по названию
+    @DeleteMapping("/delete/{name}")
+    public ResponseEntity deleteProduct(@PathVariable(value = "name") String name ) {
+        try {
+            statusRepository.delete(statusRepository.findByName(name).get(0));
+            return (ResponseEntity.ok(HttpStatus.OK));
+        }catch (RuntimeException exception){
+            return new ResponseEntity<>(new ProductDTO(), HttpStatus.NOT_FOUND);
+        }
     }
 
 
