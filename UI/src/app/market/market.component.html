@@ -1,0 +1,34 @@
+<!-- 
+<div class="products">
+    <div *ngFor = 'let lst of  stringIdList' class="ng"> 
+    <ul class="product"> 
+       <li>
+         <a routerLink="/">
+           <img src={{lst}} width="200" height="200">
+         </a>
+           <h3>описание товара</h3>
+       </li>  
+    </ul> 
+    <div *ngFor = 'let lst of  stringIdList' class="ng"> 
+ 
+ </div>
+
+ текст -->
+
+ 
+ <div class="products">
+  <div *ngFor = 'let lst of  products2' class="ng"> 
+  <ul class="product"> 
+     <li>
+       <a routerLink="/">
+         <img src={{lst.image}} width="200" height="200">
+       </a>
+         <h3>{{lst.name}}</h3>
+         <h3>{{lst.price}}</h3>
+         <h3>{{lst.category}}</h3>
+         <h3>{{lst.count}}</h3>
+     </li>  
+  </ul> 
+  <div *ngFor = 'let lst of  stringIdList' class="ng"> 
+
+</div>

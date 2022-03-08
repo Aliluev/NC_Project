@@ -1,0 +1,19 @@
+
+.products{
+    font-family: sans-serif;
+    text-align: center;
+}
+
+ul.product li  {
+    display: inline;
+    margin: 10px;
+}
+
+ul.product img{
+    display: inline-block; 
+    border: 2px solid #fff; 
+}
+
+.ng{
+    float: left;
+}

@@ -13,6 +13,18 @@ export class ProductComponent{
     buttonDelete=false;
     buttonUpdate=false;
 
+    selectedFile :File|undefined;
+    
+    onFileSelected(event: any){
+        this.selectedFile = <File>event.target.files[0];
+        const fd = new FormData();
+        fd.append('file',this.selectedFile, this.selectedFile?.name );
+        this.http.post('http://localhost:8080/image/save',fd).subscribe((data:any) => {console.log("ok")},
+        (error: any)=> console.log("eror"));
+    }
+
+    image:any;
+
 
     methodDeleteProduct(){
         if(this.buttonDelete==false){
