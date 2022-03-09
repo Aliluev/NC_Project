@@ -20,13 +20,16 @@
   <div *ngFor = 'let lst of  products2' class="ng"> 
   <ul class="product"> 
      <li>
-       <a routerLink="/">
+       <div class="product-content">
          <img src={{lst.image}} width="200" height="200">
-       </a>
+      
          <h3>{{lst.name}}</h3>
-         <h3>{{lst.price}}</h3>
-         <h3>{{lst.category}}</h3>
-         <h3>{{lst.count}}</h3>
+         <div class="product-text">
+         <p>Цена: {{lst.price}}</p>
+         <p>Категория: {{lst.category}}</p>
+         <p>Количество: {{lst.count}}</p>
+        </div>
+        </div>
      </li>  
   </ul> 
   <div *ngFor = 'let lst of  stringIdList' class="ng"> 

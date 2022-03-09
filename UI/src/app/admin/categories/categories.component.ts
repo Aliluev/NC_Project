@@ -87,6 +87,8 @@ export class CategoriesComponent{
    postCategory(category: Category){
     this.http.post('http://localhost:8080/category/create',category).subscribe((data:any) => {console.log("ok")},
       (error: any)=> console.log("eror"));
+      
+      
       //this.loadProducts();
       let temCategory=new Category(category.name,category.product);
       this.categories.push(temCategory);

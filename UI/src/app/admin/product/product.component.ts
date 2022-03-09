@@ -83,6 +83,7 @@ export class ProductComponent{
           (error: any)=> console.log("eror"));
           //this.loadProducts();
           let temProduct=new Product(product.name,product.price,product.category,product.count,product.image);
+          this.http.get<number>('http://localhost:8080/image/get-last-image').subscribe((data: number)=>temProduct.image="http://localhost:8080/image/"+data);
           this.products2.push(temProduct);
       }
 
