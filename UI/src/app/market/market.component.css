@@ -1,0 +1,41 @@
+
+.products{
+    font-family: sans-serif;
+    text-align: center;
+    
+    
+}
+
+
+ul.product{
+    margin: 0%;
+  
+}
+
+
+ul.product li  {
+    
+    display: inline;
+  
+    
+    
+}
+
+ul.product img{
+    display: inline-block; 
+    border: 2px solid #fff; 
+}
+
+.ng{
+    float: left;
+}
+
+.product-content{
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #c0c0c0;
+    display: inline-block; 
+    margin-top: 10px;
+    background-color: rgb(240, 220, 184);
+    
+}

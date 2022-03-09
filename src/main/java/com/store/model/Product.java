@@ -25,6 +25,7 @@ public class Product {
 
     private String image;
 
+
     public String getImage() {
         return image;
     }
@@ -46,6 +47,26 @@ public class Product {
             joinColumns = @JoinColumn(name="productid"),
             inverseJoinColumns = @JoinColumn(name = "categoryid"))
     private List<Category> category;
+
+    /*
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "order_list",
+            joinColumns = @JoinColumn(name = "productid"),
+            inverseJoinColumns = @JoinColumn(name = "orderid")
+    )
+
+     */
+    @OneToMany(mappedBy = "productID",cascade = CascadeType.ALL)
+    private List<OrderList> orderList;
+
+    public List<OrderList> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<OrderList> orderList) {
+        this.orderList = orderList;
+    }
+
 
     /*
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

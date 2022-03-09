@@ -9,6 +9,7 @@ import { RoleComponent } from './admin/role/role.component';
 import { UserComponent } from './admin/user/user.component';
 import { ProductComponent } from './admin/product/product.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
+import { MarketComponent } from './market/market.component';
 
 
 
@@ -19,7 +20,8 @@ import { CategoriesComponent } from './admin/categories/categories.component';
     RoleComponent,
     UserComponent,
     ProductComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    MarketComponent
     
   ],
   imports: [
