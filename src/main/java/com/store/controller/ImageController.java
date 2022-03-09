@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/image")
@@ -21,15 +23,9 @@ public class ImageController {
 
     @PostMapping("/save")
     public void uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
-  //  public void uploadImage(@RequestParam("image") byte[] image) throws Exception {
-    //Long uploadImage() throws Exception {
-   //     MultipartFile multipartImage=new MultiparFile();
         Image dbImage = new Image();
-        dbImage.setName(file.getName());
+        dbImage.setName(file.getOriginalFilename());
         dbImage.setContent(file.getBytes());
-   //         Image dbImage = new Image();
-   //        dbImage.setName("pictuere.jpeg");
-   //         dbImage.setContent(image);
         imageDbRepository.save(dbImage);
        // return imageDbRepository.save(dbImage)
             //    .getId();
@@ -54,8 +50,9 @@ public class ImageController {
 
  */
 
-    @GetMapping(value = "/image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
-    ByteArrayResource downloadImage(@PathVariable Integer imageId) {
+    @GetMapping(value = "/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
+ //   @GetMapping(value = "/{imageId}")
+   public ByteArrayResource downloadImage(@PathVariable Integer imageId) {
 
         Image image2=imageDbRepository.getById(imageId);
         byte[] image = imageDbRepository.findById(imageId)
@@ -64,5 +61,25 @@ public class ImageController {
 
         return new ByteArrayResource(image2.getContent());
     }
+
+    @GetMapping(value = "/get-all-count-products")
+    public int[] countProducts() {
+        List<Image> imageList=imageDbRepository.findAll();
+        int[] massiv=new int[imageList.size()];
+        int i=0;
+        for(Image image:imageList){
+            massiv[i]=image.getId();
+            i++;
+        }
+        return massiv;
+    }
+
+    @GetMapping(value = "/get-last-image")
+    public int lastImage() {
+        List<Image> imageList=imageDbRepository.findAll();
+        return (imageList.size());
+    }
+
+
 
 }

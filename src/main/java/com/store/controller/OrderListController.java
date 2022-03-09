@@ -48,6 +48,9 @@ public class OrderListController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteProduct(@PathVariable(value = "id") Integer id ) {
         try {
+            OrderList orderList=orderListRepository.getById(id);
+            orderList.setProductID(null);
+            orderListRepository.save(orderList);
             orderListRepository.delete( orderListRepository.getById(id));
             return (ResponseEntity.ok(HttpStatus.OK));
         }catch (RuntimeException exception){

@@ -25,6 +25,7 @@ public class Product {
 
     private String image;
 
+
     public String getImage() {
         return image;
     }
@@ -55,7 +56,7 @@ public class Product {
     )
 
      */
-    @OneToMany(mappedBy = "productID")
+    @OneToMany(mappedBy = "productID",cascade = CascadeType.ALL)
     private List<OrderList> orderList;
 
     public List<OrderList> getOrderList() {

@@ -1,8 +1,10 @@
 package com.store.controller;
 import com.store.dto.ProductDTO;
 import com.store.model.Category;
+import com.store.model.Image;
 import com.store.model.Product;
 import com.store.repository.CategoryRepository;
+import com.store.repository.ImageDbRepository;
 import com.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,9 @@ public class ProductController {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    ImageDbRepository imageDbRepository;
+
 
     @GetMapping("/get-all")
     public ResponseEntity<List<ProductDTO>> getAllUserDTO(){
@@ -41,6 +46,9 @@ public class ProductController {
     public ResponseEntity<HttpStatus> createProduct(@RequestBody ProductDTO productDTO){
 
         Product product=new Product(productDTO);
+        List<Image> imageList=imageDbRepository.findAll();
+        Image image=imageList.get(imageList.size()-1);
+        product.setImage("http://localhost:8080/image/"+image.getId());
         String[] strings=productDTO.getCategory().split(",");
         //List<Category> findCategory=categoryRepository.findByName(productDTO.getCategory());
         List<Category> categoryList=new ArrayList<>();
