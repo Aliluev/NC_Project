@@ -7,16 +7,16 @@ public class SignupRequest {
     private String username;
     private String password;
     private String email;
-    private List<String> roles;
+   // private List<String> roles;
 
     public SignupRequest() {
     }
 
-    public SignupRequest(String username, String password, String email, List<String> roles) {
+    public SignupRequest(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.roles = roles;
+     //   this.roles = roles;
     }
 
     public String getUsername() {
@@ -43,11 +43,11 @@ public class SignupRequest {
         this.email = email;
     }
 
-    public List<String> getRoles() {
-        return roles;
-    }
+  //  public List<String> getRoles() {
+  //      return roles;
+  //  }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
+  //  public void setRoles(List<String> roles) {
+  //      this.roles = roles;
+  //  }
 }

@@ -119,6 +119,12 @@ public class User {
         this.email=userDTO.getEmail();
     }
 
+    public User(SignupRequest signupRequest){
+
+        this.username=signupRequest.getUsername();
+        //this.password Пароль установить с шифрованием с помощью сервиса!!!
+        this.email=signupRequest.getEmail();
+    }
 
 
     public User() {

@@ -1,13 +1,10 @@
 package com.store.controller;
 
 import com.store.configs.JwtUtils;
-import com.store.model.JwtResponse;
-import com.store.model.LoginRequest;
-import com.store.model.Role;
-import com.store.model.User;
+import com.store.dto.UserDTO;
+import com.store.model.*;
 import com.store.repository.RoleRepository;
 import com.store.repository.UserRepository;
-import com.store.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -72,5 +69,56 @@ public class AuthController {
      //           userDetails.getEmail(),
                 roles));
     }
+
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
+        if (userRespository.existsByUsername(signupRequest.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Username is exist"));
+        }
+
+        User user=new User(signupRequest);
+        user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
+
+        List<Role> roleList=new ArrayList<>();
+
+        String string="ROLE_USER";
+        List<Role> roles=roleRepository.findByName(string);
+        if(roles.size()==1){
+            roleList.add(roles.get(0));
+        }else{
+            Role role=new Role(string);
+            roleRepository.save(role);
+            roleList.add(roleRepository.findByName(string).get(0));
+        }
+        /*
+        for(String string:signupRequest.getRoles()){
+            List<Role> roles=roleRepository.findByName(string);
+            if(roles.size()==1){
+                roleList.add(roles.get(0));
+            }else{
+                Role role=new Role(string);
+                roleRepository.save(role);
+                roleList.add(roleRepository.findByName(string).get(0));
+            }
+        }
+
+         */
+        user.setRoles(roleList);
+        userRespository.save(user);
+
+        return ResponseEntity.ok().body(new UserDTO(user));
+
+
+
+
+
+    }
+
+
+
+
 
 }
