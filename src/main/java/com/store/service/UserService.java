@@ -1,5 +1,8 @@
 package com.store.service;
 
+
+
+
 import com.store.model.Role;
 import com.store.model.User;
 import com.store.repository.UserRepository;
@@ -17,7 +20,7 @@ import java.util.stream.Collectors;
 
 //Серивс для того чтобы перегнать наших User'ов, которых понимает Spring
 @Service
-public class UserService implements UserDetailsService {
+public class  UserService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
@@ -44,3 +47,6 @@ public class UserService implements UserDetailsService {
 
 
 }
+
+
+
