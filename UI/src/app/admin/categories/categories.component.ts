@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
+import { Observable } from "rxjs";
 import { Category } from "src/app/entities/category";
 
 @Component({
@@ -12,6 +13,8 @@ export class CategoriesComponent{
     buttonAdd=false;
     buttonDelete=false;
     
+    username="";
+    password="";
 
     selectedFile :File|undefined;
 
@@ -28,6 +31,43 @@ export class CategoriesComponent{
     loadImage(){
         this.http.get('http://localhost:8080/image/1',this.image).subscribe((data:any) => {console.log("ok")},
         (error: any)=> console.log("eror"));
+      //  var a = document.createElement("a");
+       // this.image=3;
+        
+    }
+
+    clickBackend( username: string,password:string){
+        this.http.post('http://localhost:8080/login/login',{username,password}).subscribe((data:any) => {console.log("ok")},
+        (error: any)=> console.log("eror"));
+    }
+
+    Pampam(){
+    this.http.post<Observable<boolean>>("http://localhost:8080/api/auth/signin", {
+        username: this.username,
+        password: this.password
+    }).subscribe((data:any) => {console.log("ok")},
+    (error: any)=> console.log("eror"));
+    /*
+    .subscribe(isValid => {
+        if (isValid) {
+            sessionStorage.setItem(
+              'token', 
+              btoa(this.username + ':' + this.password)
+            );
+        } else {
+            alert("Authentication failed.")
+        }
+
+    });
+    */
+}
+
+
+
+    perem="";
+    Uploadd(){
+        this.http.get<string>('http://localhost:8080/user').subscribe((data: string)=>this.perem=data); 
+       
       //  var a = document.createElement("a");
        // this.image=3;
         

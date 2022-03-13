@@ -10,6 +10,9 @@ import { UserComponent } from './admin/user/user.component';
 import { ProductComponent } from './admin/product/product.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { MarketComponent } from './market/market.component';
+import { AuthorizationComponent } from './authorization/authorization.component';
+import { httpInterceptorProviders } from './authorization/auth-interceptor';
+import { PageComponent } from './page/page.component';
 
 
 
@@ -21,7 +24,9 @@ import { MarketComponent } from './market/market.component';
     UserComponent,
     ProductComponent,
     CategoriesComponent,
-    MarketComponent
+    MarketComponent,
+    AuthorizationComponent,
+    PageComponent
     
   ],
   imports: [
@@ -31,7 +36,7 @@ import { MarketComponent } from './market/market.component';
     FormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
