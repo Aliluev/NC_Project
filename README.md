@@ -28,6 +28,7 @@ Entity Shop removed and added count to Product Entity
 * id
 * name
 * price
+* count
 
 ### Order
 * id
@@ -35,11 +36,6 @@ Entity Shop removed and added count to Product Entity
 * statusID
 * data
 
-### Strorage
-* id
-* productID
-* count
-* address
 
 ### Category
 * id
