@@ -1,5 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
+import { Mussor } from "../entities/mussor";
+import { OrderList } from "../entities/orderList";
 import { Product } from "../entities/product";
 
 
@@ -11,8 +13,32 @@ import { Product } from "../entities/product";
 })
 export class MarketComponent{
 
+    clickBucket=false;
+    addBucket(){
+        if(this.clickBucket==false){
+            this.clickBucket=true;
+        }else{
+            this.clickBucket=false;
+        }
+    }
+
+   // count=new Mussor("");
+    //counts
+   count=new Array();
+    
     //imageIdList: number[] | undefined;
     imageIdList: number[]=[];
+    orderList:OrderList=new OrderList("","","");
+    onSubmit(products2:Product,count:string){
+        this.orderList.userName="Tema";
+        this.orderList.productName=products2.name;
+        this.orderList.count=count;
+        this.http.post('http://localhost:8080/order-list/add-product',this.orderList).subscribe((data:any) => {console.log("ok");
+        this.count=new Array();},
+        (error: any)=> console.log("eror"));
+//http://localhost:4200/order-list/add-product
+
+    }
 /*
     imageList= this.http.get('http://localhost:8080/image/save').subscribe((data:any) => {console.log("ok")},
     (error: any)=> console.log("eror"));
@@ -25,6 +51,7 @@ export class MarketComponent{
 
     getCountImages(){
         return this.http.get<number[]>('http://localhost:8080/image/get-all-count-products');
+ 
       }
 
       loadCategories(){
@@ -32,6 +59,8 @@ export class MarketComponent{
        // this.getCountImages().subscribe((data: number[])=>this.imageIdList=data); 
        this.getCountImages().subscribe((data: number[])=>{
         for(let i=0; i<data.length;i++){
+            //this.count[i]="";
+      //      this.count.push("");
             this.stringIdList.push(this.num+data[i]);
             this.imageIdList=data;
         }});

@@ -1,28 +1,28 @@
 package com.store.dto;
 
-public class OrderListDTO {
+public class AddProductDTO {
 
-    private String orderID;
+    private String userName;
 
     private String productName;
 
     private String count;
 
-    public OrderListDTO() {
-    }
-
-    public OrderListDTO(String orderID, String productName, String count) {
-        this.orderID = orderID;
+    public AddProductDTO(String userName, String productName, String count) {
+        this.userName = userName;
         this.productName = productName;
         this.count = count;
     }
 
-    public String getOrderID() {
-        return orderID;
+    public AddProductDTO() {
     }
 
-    public void setOrderID(String orderID) {
-        this.orderID = orderID;
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getProductName() {

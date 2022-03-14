@@ -15,9 +15,13 @@
 
  текст -->
 
+ <button (click)="addBucket()">Корзина</button>
+<div *ngIf="clickBucket">
+<bucket-component></bucket-component>
+</div>
  
  <div class="products">
-  <div *ngFor = 'let lst of  products2' class="ng"> 
+  <div *ngFor = 'let lst of  products2 ;let idx=index' class="ng"> 
   <ul class="product"> 
      <li>
        <div class="product-content">
@@ -28,10 +32,13 @@
          <p>Цена: {{lst.price}}</p>
          <p>Категория: {{lst.category}}</p>
          <p>Количество: {{lst.count}}</p>
+         <input type="text" name="count" placeholder="Количество" [(ngModel)]="count[idx]">
+         <button (click)="onSubmit(lst,count[idx])">Купить</button>
         </div>
         </div>
      </li>  
   </ul> 
-  <div *ngFor = 'let lst of  stringIdList' class="ng"> 
+  </div>
 
 </div>
+

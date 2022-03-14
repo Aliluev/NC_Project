@@ -14,6 +14,7 @@ import { AuthorizationComponent } from './authorization/authorization.component'
 import { httpInterceptorProviders } from './authorization/auth-interceptor';
 import { PageComponent } from './page/page.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { BucketComponent } from './bucket/bucket.component';
 
 
 
@@ -28,7 +29,8 @@ import { RegistrationComponent } from './registration/registration.component';
     MarketComponent,
     AuthorizationComponent,
     PageComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    BucketComponent
     
   ],
   imports: [

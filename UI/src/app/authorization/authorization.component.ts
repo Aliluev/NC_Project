@@ -45,13 +45,6 @@ export class AuthorizationComponent implements OnInit{
    
       this.authService.attemptAuth(this.loginInfo).subscribe(
         data => {
-            /*
-          console.log('1111111111');
-          console.log(data);
-          console.log(data.token);
-          console.log(data.username);
-          console.log(data.roles);
-          */
           this.tokenStorage.saveToken(data.token);
           this.tokenStorage.saveUsername(data.username);
           this.tokenStorage.saveAuthorities(data.roles);

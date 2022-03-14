@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminRole } from './admin/admin.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { ProductComponent } from './admin/product/product.component';
 import { RoleComponent } from './admin/role/role.component';
@@ -10,14 +11,19 @@ import { PageComponent } from './page/page.component';
 import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes  = [
-  {path:'', component: UserComponent},
+  {path:'admin', component: AdminRole ,
+children:[
+  {path:'user', component:UserComponent},
   {path:'role', component:RoleComponent},
   {path:'product', component:ProductComponent},
   {path:'category', component:CategoriesComponent},
+  {path:'market', component:MarketComponent}
+]
+},
+{path:'', component:AuthorizationComponent},
   {path:'market', component:MarketComponent},
   {path:"auth", component:AuthorizationComponent},
-  {path:"page", component:PageComponent},
-  {path:"registration", component:RegistrationComponent}
+  {path:"registration", component:RegistrationComponent},
 ];
 
 

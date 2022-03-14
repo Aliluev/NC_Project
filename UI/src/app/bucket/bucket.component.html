@@ -1,0 +1,15 @@
+<div>
+    <table border="1">
+        <tr class="hedder">
+            <th>№</th>
+            <th>Продукт</th>
+            <th>Количество</th>
+        </tr>
+        <tr *ngFor="let item of bucket; let idx=index">
+           <th>{{idx+1}}</th>
+            <th>{{item.productName}}</th>
+            <th>{{item.count}}</th>
+        </tr>
+        </table>
+        </div>
+    
