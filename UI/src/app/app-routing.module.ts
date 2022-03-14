@@ -7,6 +7,7 @@ import { UserComponent } from './admin/user/user.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { MarketComponent } from './market/market.component';
 import { PageComponent } from './page/page.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes  = [
   {path:'', component: UserComponent},
@@ -15,7 +16,8 @@ const routes: Routes  = [
   {path:'category', component:CategoriesComponent},
   {path:'market', component:MarketComponent},
   {path:"auth", component:AuthorizationComponent},
-  {path:"page", component:PageComponent}
+  {path:"page", component:PageComponent},
+  {path:"registration", component:RegistrationComponent}
 ];
 
 

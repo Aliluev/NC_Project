@@ -13,6 +13,7 @@ import { MarketComponent } from './market/market.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { httpInterceptorProviders } from './authorization/auth-interceptor';
 import { PageComponent } from './page/page.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 
 
@@ -26,7 +27,8 @@ import { PageComponent } from './page/page.component';
     CategoriesComponent,
     MarketComponent,
     AuthorizationComponent,
-    PageComponent
+    PageComponent,
+    RegistrationComponent
     
   ],
   imports: [
