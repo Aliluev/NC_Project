@@ -9,6 +9,7 @@ import { AuthorizationComponent } from './authorization/authorization.component'
 import { MarketComponent } from './market/market.component';
 import { PageComponent } from './page/page.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { BucketComponent } from './bucket/bucket.component';
 
 const routes: Routes  = [
   {path:'admin', component: AdminRole ,
@@ -21,6 +22,10 @@ children:[
 ]
 },
 {path:'', component:AuthorizationComponent},
+
+  {path:'bucket', component:BucketComponent},
+
+
   {path:'market', component:MarketComponent},
   {path:"auth", component:AuthorizationComponent},
   {path:"registration", component:RegistrationComponent},

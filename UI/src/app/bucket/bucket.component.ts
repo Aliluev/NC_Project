@@ -30,6 +30,16 @@ export class BucketComponent{
       getBucket(){
         this.http.get<Bucket[]>('http://localhost:8080/order-list/get-order-list/'+this.tokenStorage.getUsername()).subscribe((data: Bucket[])=>this.bucket=data); 
       }
+      
+      deleteProduct(orderListId:string){
+        this.http.delete('http://localhost:8080/order-list/delete/'+orderListId
+        ).subscribe((data:any) => {console.log("ok")},
+        (error: any)=> console.log("eror"));
+        this.bucket=this.bucket.filter(c =>(c.orderListId!==orderListId));
+      }
+ 
+      
+    
 
-  
+
 }

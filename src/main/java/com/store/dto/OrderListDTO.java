@@ -4,17 +4,29 @@ public class OrderListDTO {
 
     private String orderID;
 
+    private String orderListId;
+
     private String productName;
 
     private String count;
 
+
     public OrderListDTO() {
     }
 
-    public OrderListDTO(String orderID, String productName, String count) {
+    public OrderListDTO(String orderID, String productName, String count, String orderListId) {
         this.orderID = orderID;
         this.productName = productName;
         this.count = count;
+        this.orderListId=orderListId;
+    }
+
+    public String getOrderListId() {
+        return orderListId;
+    }
+
+    public void setOrderListId(String orderListId) {
+        this.orderListId = orderListId;
     }
 
     public String getOrderID() {

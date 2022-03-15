@@ -30,7 +30,7 @@ import { BucketComponent } from './bucket/bucket.component';
     AuthorizationComponent,
     PageComponent,
     RegistrationComponent,
-    BucketComponent
+    BucketComponent,
     
   ],
   imports: [

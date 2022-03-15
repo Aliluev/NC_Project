@@ -4,12 +4,17 @@
             <th>№</th>
             <th>Продукт</th>
             <th>Количество</th>
+            <th>Удалить</th>
         </tr>
         <tr *ngFor="let item of bucket; let idx=index">
            <th>{{idx+1}}</th>
             <th>{{item.productName}}</th>
             <th>{{item.count}}</th>
+            <th><button (click)="deleteProduct(item.orderListId)">Удалить</button></th>
         </tr>
         </table>
         </div>
     
+        <div class="rout">
+        <a routerLink="/">к товарам</a>
+        </div>

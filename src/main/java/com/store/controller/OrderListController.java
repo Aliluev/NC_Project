@@ -88,6 +88,7 @@ public class OrderListController {
         for(OrderList orderList1: orderLists){
             OrderListDTO orderListDTO=new OrderListDTO();
             orderListDTO.setOrderID(orderList1.getOrderID().getId().toString());
+            orderListDTO.setOrderListId(orderList1.getId().toString());
             orderListDTO.setProductName(orderList1.getProductID().getName());
             orderListDTO.setCount(orderList1.getCount().toString());
             orderListDTOS.add(orderListDTO);
@@ -105,9 +106,10 @@ public class OrderListController {
     public ResponseEntity deleteProduct(@PathVariable(value = "id") Integer id ) {
         try {
             OrderList orderList=orderListRepository.getById(id);
-            orderList.setProductID(null);
-            orderListRepository.save(orderList);
-            orderListRepository.delete( orderListRepository.getById(id));
+            orderListRepository.delete(orderList);
+          // orderList.setProductID(null);
+           // orderListRepository.save(orderList);
+         //   orderListRepository.delete( orderListRepository.getById(id));
             return (ResponseEntity.ok(HttpStatus.OK));
         }catch (RuntimeException exception){
             return new ResponseEntity<>(new ProductDTO(), HttpStatus.NOT_FOUND);

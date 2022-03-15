@@ -14,12 +14,16 @@
  </div>
 
  текст -->
-
+<!-- 
  <button (click)="addBucket()">Корзина</button>
 <div *ngIf="clickBucket">
 <bucket-component></bucket-component>
 </div>
- 
+-->
+
+<div class="rout">
+<a routerLink="/bucket">корзина</a>
+</div>
  <div class="products">
   <div *ngFor = 'let lst of  products2 ;let idx=index' class="ng"> 
   <ul class="product"> 
@@ -33,7 +37,7 @@
          <p>Категория: {{lst.category}}</p>
          <p>Количество: {{lst.count}}</p>
          <input type="text" name="count" placeholder="Количество" [(ngModel)]="count[idx]">
-         <button (click)="onSubmit(lst,count[idx])">Купить</button>
+         <button (click)="onSubmit(lst,count[idx])">В корзину</button>
         </div>
         </div>
      </li>  

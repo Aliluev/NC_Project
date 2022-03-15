@@ -35,7 +35,7 @@ public class Order {
 
 
 
-    @OneToMany(mappedBy = "orderID")
+    @OneToMany(mappedBy = "orderID",cascade = CascadeType.ALL)
     private List<OrderList> orderLists;
 
 

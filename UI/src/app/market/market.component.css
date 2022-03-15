@@ -39,3 +39,9 @@ ul.product img{
     background-color: rgb(240, 220, 184);
     
 }
+
+.rout{
+    text-align: right; 
+    margin-right: 200px; 
+    margin-top: 40px;
+  }
