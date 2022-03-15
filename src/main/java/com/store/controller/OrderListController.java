@@ -56,12 +56,13 @@ public class OrderListController {
  */
 
     @PostMapping("/add-product")
-    public ResponseEntity addProductfromOrderList(@RequestBody AddProductDTO addProductDTO) {
+    public ResponseEntity.BodyBuilder addProductfromOrderList(@RequestBody AddProductDTO addProductDTO) {
         OrderList orderList=new OrderList();
         Product product=productRepository.findByName(addProductDTO.getProductName()).get(0);
         User user=userRepository.findByUsername(addProductDTO.getUserName()).get(0);
       //  Order order=orderRepository.findByUserid(user.getId());
         Order order=orderRepository.findByUserid(user).get(0);
+
       // Order order=new Order();
         if(order==null){
             order=new Order();
@@ -70,11 +71,25 @@ public class OrderListController {
             orderRepository.save(order);
             order=orderRepository.findByUserid(user).get(0);
         }
-       orderList.setOrderID(order);
-        orderList.setProductID(product);
-        orderList.setCount(Integer.parseInt(addProductDTO.getCount()));
-        orderListRepository.save(orderList);
-        return ResponseEntity.ok(HttpStatus.OK);
+
+        List<OrderList> orderListOsmotr=orderListRepository.findByProductID(product);
+        if(orderListOsmotr.size()==1){
+            OrderList orderList1=orderListOsmotr.get(0);
+            orderList1.setCount(orderList1.getCount()+Integer.parseInt(addProductDTO.getCount()));
+            if(orderList1.getCount()>product.getCount()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST);
+            }
+            orderListRepository.save(orderList1);
+        }else {
+            orderList.setOrderID(order);
+            orderList.setProductID(product);
+            orderList.setCount(Integer.parseInt(addProductDTO.getCount()));
+            if(orderList.getCount()>product.getCount()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST);
+            }
+            orderListRepository.save(orderList);
+        }
+        return ResponseEntity.status(HttpStatus.OK);
     }
 
     @GetMapping("/get-order-list/{name}")
