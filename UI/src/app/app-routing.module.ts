@@ -10,6 +10,7 @@ import { MarketComponent } from './market/market.component';
 import { PageComponent } from './page/page.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { BucketComponent } from './bucket/bucket.component';
+import { OrdersComponent } from './admin/orders/orders.component';
 
 const routes: Routes  = [
   {path:'admin', component: AdminRole ,
@@ -18,6 +19,7 @@ children:[
   {path:'role', component:RoleComponent},
   {path:'product', component:ProductComponent},
   {path:'category', component:CategoriesComponent},
+  {path:'orders',component:OrdersComponent},
   {path:'market', component:MarketComponent}
 ]
 },

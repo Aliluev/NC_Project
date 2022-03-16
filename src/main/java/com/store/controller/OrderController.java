@@ -32,13 +32,29 @@ public class OrderController {
     @Autowired
     StatusRepository statusRepository;
 
-
+/*
     @GetMapping("/get-all")
     public ResponseEntity<List<OrderDTO>> getAllOrderDTO(){
         List<Order> list= orderRepository.findAll();
         List<OrderDTO> orderDTOS=new ArrayList<>();
 
         for(Order order: list){
+            orderDTOS.add(new OrderDTO(order));
+        }
+
+        return ResponseEntity.ok(orderDTOS);
+    }
+
+ */
+
+    @GetMapping("/get-ordered-order")
+    public ResponseEntity<List<OrderDTO>> getOrderedOrder(){
+
+        Status status=statusRepository.getByName("ordered").get(0);
+        List<Order> orderList=orderRepository.getByStatusid(status);
+        List<OrderDTO> orderDTOS=new ArrayList<>();
+
+        for(Order order: orderList){
             orderDTOS.add(new OrderDTO(order));
         }
 

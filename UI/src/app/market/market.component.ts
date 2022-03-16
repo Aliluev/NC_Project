@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
+import { TokenStorageService } from "../authorization/token-storage.service";
 import { Mussor } from "../entities/mussor";
 import { OrderList } from "../entities/orderList";
 import { Product } from "../entities/product";
@@ -30,12 +31,12 @@ export class MarketComponent{
     imageIdList: number[]=[];
     orderList:OrderList=new OrderList("","","");
     onSubmit(products2:Product,count:string){
-        this.orderList.userName="Tema";
+        this.orderList.userName=this.userName;
         this.orderList.productName=products2.name;
         this.orderList.count=count;
         this.http.post('http://localhost:8080/order-list/add-product',this.orderList).subscribe((data:any) => {console.log("ok");
         this.count=new Array();},
-        (error: any)=> console.log("eror"));
+        (error: any)=> {console.log("eror"); this.count=new Array();});
 //http://localhost:4200/order-list/add-product
 
     }
@@ -76,10 +77,19 @@ export class MarketComponent{
 
     }
 
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient,private tokenStorage: TokenStorageService){
         this.loadCategories();
         this.loadProducts();
      }
+
+     userName: string="";
+
+     ngOnInit() {
+        if (this.tokenStorage.getToken()) {
+          this.userName = <string>this.tokenStorage.getUsername();
+        }
+      }
+  
     	
      stringIdList: string[]=[];
     num:string="http://localhost:8080/image/";

@@ -38,6 +38,14 @@ export class BucketComponent{
         this.bucket=this.bucket.filter(c =>(c.orderListId!==orderListId));
       }
  
+
+
+
+      ordered(){
+        this.http.post('http://localhost:8080/status/status-ordered',this.tokenStorage.getUsername()).subscribe((data:any) => {console.log("ok");this.bucket=[];},
+          (error: any)=> console.log("eror"));
+          this.getBucket();
+      }
       
     
 

@@ -4,6 +4,8 @@ import com.store.model.Order;
 
 public class OrderDTO {
 
+    private String orderID;
+
     private String userID;
 
     private String statusID;
@@ -13,16 +15,26 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(String userID, String statusID, String data) {
+    public OrderDTO(String userID, String statusID, String data,String orderID) {
         this.userID = userID;
         this.statusID = statusID;
         this.date = data;
+        this.orderID=orderID;
     }
 
     public OrderDTO(Order order) {
+        this.orderID=order.getId().toString();
         this.userID=order.getUserid().getUsername();
         this.statusID=order.getStatusid().getName();
         this.date= order.getDate();
+    }
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
 
     public String getUserID() {

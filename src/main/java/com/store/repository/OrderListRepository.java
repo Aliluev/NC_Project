@@ -14,4 +14,5 @@ public interface OrderListRepository extends JpaRepository<OrderList,Integer> {
     List<OrderList> findByOrderID(Order order);
 
     List<OrderList> findByProductID(Product product);
+    List<OrderList> findByOrderIDAndProductID(Order order, Product product);
 }

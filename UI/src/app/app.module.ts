@@ -15,6 +15,7 @@ import { httpInterceptorProviders } from './authorization/auth-interceptor';
 import { PageComponent } from './page/page.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { BucketComponent } from './bucket/bucket.component';
+import { OrdersComponent } from './admin/orders/orders.component';
 
 
 
@@ -31,6 +32,7 @@ import { BucketComponent } from './bucket/bucket.component';
     PageComponent,
     RegistrationComponent,
     BucketComponent,
+    OrdersComponent
     
   ],
   imports: [
