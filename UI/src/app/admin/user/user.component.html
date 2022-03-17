@@ -3,14 +3,14 @@
     <tr class="hedder">
         <th>№</th>
         <th>name</th>
-        <th>phone</th>
+     <!--    <th>phone</th> -->
         <th>email</th>
         <th>roles</th>
     </tr>
     <tr *ngFor="let item of users; let idx=index">
        <th>{{idx+1}}</th>
         <th>{{item.username}}</th>
-        <th>{{item.phone}}</th>
+    <!--    <th>{{item.phone}}</th> -->
         <th>{{item.email}}</th>
         <th>{{item.roles}}</th>
     </tr>

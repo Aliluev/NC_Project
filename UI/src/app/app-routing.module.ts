@@ -7,7 +7,6 @@ import { RoleComponent } from './admin/role/role.component';
 import { UserComponent } from './admin/user/user.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { MarketComponent } from './market/market.component';
-import { PageComponent } from './page/page.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { BucketComponent } from './bucket/bucket.component';
 import { OrdersComponent } from './admin/orders/orders.component';
@@ -20,7 +19,7 @@ children:[
   {path:'product', component:ProductComponent},
   {path:'category', component:CategoriesComponent},
   {path:'orders',component:OrdersComponent},
-  {path:'market', component:MarketComponent}
+//  {path:'market', component:MarketComponent}
 ]
 },
 {path:'', component:AuthorizationComponent},

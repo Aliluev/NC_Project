@@ -1,3 +1,5 @@
+<div *ngIf="allowedToEnter;else noRights">
+
 <div class="container">
     <nav>
       <ul class="navbar">
@@ -5,10 +7,10 @@
         <li routerLinkActive="active" ><a routerLink="/admin/role">Роли</a> </li>
         <li routerLinkActive="active" ><a routerLink="/admin/product">Товары</a> </li>
         <li routerLinkActive="active"><a routerLink="/admin/category">Категории</a> </li>
-        <li routerLinkActive="active"><a routerLink="/admin/market">Магазин</a> </li>
-        <li routerLinkActive="active"><a routerLink="/admin/orders">Заказы</a> </li>
-        <li routerLinkActive="active"><a routerLink="/registration">Регистрация</a> </li>
-        <li routerLinkActive="active" class="right"><a routerLink="/auth">Авторизация</a> </li>
+        <li routerLinkActive="active" class="right"><a routerLink="/admin/orders">Заказы</a> </li>
+  <!--      <li routerLinkActive="active" class="right"><a routerLink="/admin/market">Магазин</a> </li>  -->
+        
+      
       </ul>
     </nav>
 </div>
@@ -16,6 +18,14 @@
     <router-outlet></router-outlet>
 
 </div>
+
+</div>
+<ng-template #noRights>
+<h1>Нет прав доступа ADMIN,SUPERADMIN</h1>
+</ng-template>
+
+
+
 
 
 

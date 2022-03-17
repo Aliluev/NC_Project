@@ -1,8 +1,12 @@
 <div *ngIf="submitStatus; else registr">
-   <h1> Registrate succcessfully </h1>
+ 
+   <div class="succesfulMessage">
+   <p>Registrate succcessfully</p>
+    <a href="">Sign In</a>
+  </div>
   </div>
    
-
+<!--
 <ng-template #registr>
 <h1>Registrate User</h1>
 <h3>Username</h3>
@@ -12,4 +16,18 @@
 <h3>Email</h3>
 <input type="text" name="email" [(ngModel)]="registration.email" >
 <button (click)="onSubmit(registration)">Зарегестрироваться</button>
+</ng-template>
+  -->
+  <ng-template #registr>
+<div class="login-page">
+  <div class="form">
+    <form class="register-form">
+      <input type="text" name="username" placeholder="username" [(ngModel)]="registration.username"/>
+      <input type="password" name="password" placeholder="password" [(ngModel)]="registration.password"/>
+      <input type="text" name="email" placeholder="email address" [(ngModel)]="registration.email"/>
+      <button (click)="onSubmit(registration)">create</button>
+      <p class="message">Already registered? <a href="">Sign In</a></p>
+    </form>
+  </div>
+</div>
 </ng-template>

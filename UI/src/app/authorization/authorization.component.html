@@ -2,6 +2,7 @@
   <market-component></market-component>
   </div>
    
+  <!--
   <ng-template #loggedOut>
     <div class="row col-sm-6" style="max-width:350px;">
       <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
@@ -31,3 +32,17 @@
       <hr />
     </div>
   </ng-template>
+-->
+
+<ng-template #loggedOut>
+  <div class="login-page">
+    <div class="form">
+      <form class="register-form">
+        <input type="text" name="username" placeholder="username"  [(ngModel)]="form.username"/>
+        <input type="password" name="password" placeholder="password" [(ngModel)]="form.password"/>
+        <button (click)="onSubmit()">Login</button>
+        <p class="message">Not registered? <a href="registration">registration</a></p>
+      </form>
+    </div>
+  </div>
+</ng-template>
