@@ -1,7 +1,7 @@
-export class Category{
+export class Category {
     constructor(
-        public name:string,
-        public product:string
-    ){}
+        public name: string,
+        public product: string
+    ) { }
 
 }

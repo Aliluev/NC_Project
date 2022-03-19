@@ -4,67 +4,69 @@ import { AuthLoginInfo } from "./login-info";
 import { TokenStorageService } from "./token-storage.service";
 
 @Component({
-    selector: 'authorization-component',
-    templateUrl: "./authorization.component.html",
-    styleUrls: ["./authorization.component.css"]
+  selector: 'authorization-component',
+  templateUrl: "./authorization.component.html",
+  styleUrls: ["./authorization.component.css"]
 })
-export class AuthorizationComponent implements OnInit{
+export class AuthorizationComponent implements OnInit {
 
-    form: any = {};
-    isLoggedIn = false;
-    isLoginFailed = false;
-    errorMessage = '';
-    roles: string[] = [];
-    private loginInfo: AuthLoginInfo|undefined;
-   
-    constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { 
-      //this.errorMessage="";
-      //this.board="";
+  form: any = {};
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+  private loginInfo: AuthLoginInfo | undefined;
+  buttonclick = false;
+
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+
+  board: string = "";
+  errorMessage2: string = "";
+
+
+  ngOnInit() {
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getAuthorities();
     }
-   
-    board: string="";
-    errorMessage2: string="";
+  }
 
 
-    ngOnInit() {
-      if (this.tokenStorage.getToken()) {
+
+  onSubmit() {
+    console.log('test this form');
+    console.log(this.form);
+    if (this.form.username == "" || this.form.password == "") {
+
+    }
+    this.loginInfo = new AuthLoginInfo(
+      this.form.username,
+      this.form.password);
+
+    this.authService.attemptAuth(this.loginInfo).subscribe(
+      data => {
+        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveUsername(data.username);
+        this.tokenStorage.saveAuthorities(data.roles);
+
+        this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getAuthorities();
+        this.reloadPage();
+      },
+      error => {
+        this.buttonclick = true;
+        console.log(error);
+        this.errorMessage = error.error.message;
+        this.isLoginFailed = true;
       }
-    }
+    );
+  }
 
 
-   
-    onSubmit() {
-      console.log('test this form');
-      console.log(this.form);
-   
-      this.loginInfo = new AuthLoginInfo(
-        this.form.username,
-        this.form.password);
-   
-      this.authService.attemptAuth(this.loginInfo).subscribe(
-        data => {
-          this.tokenStorage.saveToken(data.token);
-          this.tokenStorage.saveUsername(data.username);
-          this.tokenStorage.saveAuthorities(data.roles);
-   
-          this.isLoginFailed = false;
-          this.isLoggedIn = true;
-          this.roles = this.tokenStorage.getAuthorities();
-          this.reloadPage();
-        },
-        error => {
-          console.log(error);
-          this.errorMessage = error.error.message;
-          this.isLoginFailed = true;
-        }
-      );
-    }
-   
-    reloadPage() {
-      window.location.reload();
-    }
-  
-    
+  reloadPage() {
+    window.location.reload();
+  }
+
+
 }

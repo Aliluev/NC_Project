@@ -1,33 +1,32 @@
 <div *ngIf="submitStatus; else registr">
- 
-   <div class="succesfulMessage">
-   <p>Registrate succcessfully</p>
+  <div class="succesfulMessage">
+    <p>Registrate succcessfully</p>
     <a href="">Sign In</a>
   </div>
-  </div>
-   
-<!--
-<ng-template #registr>
-<h1>Registrate User</h1>
-<h3>Username</h3>
-<input type="text" name="username" [(ngModel)]="registration.username">
-<h3>Password</h3>
-<input type="password" name="password" [(ngModel)]="registration.password" >
-<h3>Email</h3>
-<input type="text" name="email" [(ngModel)]="registration.email" >
-<button (click)="onSubmit(registration)">Зарегестрироваться</button>
-</ng-template>
-  -->
-  <ng-template #registr>
-<div class="login-page">
-  <div class="form">
-    <form class="register-form">
-      <input type="text" name="username" placeholder="username" [(ngModel)]="registration.username"/>
-      <input type="password" name="password" placeholder="password" [(ngModel)]="registration.password"/>
-      <input type="text" name="email" placeholder="email address" [(ngModel)]="registration.email"/>
-      <button (click)="onSubmit(registration)">create</button>
-      <p class="message">Already registered? <a href="">Sign In</a></p>
-    </form>
-  </div>
 </div>
+
+
+<ng-template #registr>
+  <div class="login-page">
+    <div class="form">
+      <form class="register-form" (ngSubmit)="f.form.valid && onSubmit(registration)" #f="ngForm" novalidate>
+        <input type="text" name="username" placeholder="username" required maxlength="50"
+          [(ngModel)]="registration.username" #username="ngModel" />
+        <input type="password" name="password" placeholder="password" required pattern="^[ 0-9]+$" maxlength="50"
+          #password="ngModel" [(ngModel)]="registration.password" />
+        <input type="text" name="email" placeholder="email address" required pattern="\S+@[a-z]+.[a-z]+" maxlength="50"
+          [(ngModel)]="registration.email" />
+        <input type="text" placeholder="+7 (999) 999-99-99" pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}"
+          minlength="18" maxlength="18" name="phone" [(ngModel)]="registration.phone" />
+        <div *ngIf="(f.submitted && username.invalid) || (password.invalid && f.submitted) ">
+          <div class="messageS">data is required</div>
+        </div>
+        <button>create</button>
+        <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger">
+          {{errorMessage}}
+        </div>
+        <p class="message">Already registered? <a href="">Sign In</a></p>
+      </form>
+    </div>
+  </div>
 </ng-template>

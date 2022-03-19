@@ -17,19 +17,19 @@ export class TokenStorageService {
 
   public saveToken(token: string) {
     window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, 'Bearer '+token);
+    window.sessionStorage.setItem(TOKEN_KEY, 'Bearer ' + token);
   }
 
-  public getToken(): string|null {
-    return sessionStorage.getItem(TOKEN_KEY) ;
+  public getToken(): string | null {
+    return sessionStorage.getItem(TOKEN_KEY);
   }
-  
+
   public saveUsername(username: string) {
     window.sessionStorage.removeItem(USERNAME_KEY);
     window.sessionStorage.setItem(USERNAME_KEY, username);
   }
 
-  public getUsername(): string|null{
+  public getUsername(): string | null {
     return sessionStorage.getItem(USERNAME_KEY);
   }
 
@@ -41,21 +41,16 @@ export class TokenStorageService {
   }
 
   auth = <string>sessionStorage.getItem(AUTHORITIES_KEY);
-  massiv=[];
+  massiv = [];
   public getAuthorities(): string[] {
     this.roles = [];
-     
+
     if (sessionStorage.getItem(TOKEN_KEY)) {
       console.log('test');
       console.log(sessionStorage.getItem(AUTHORITIES_KEY));
-      /*
-     JSON.parse(<string>sessionStorage.getItem(AUTHORITIES_KEY)).forEach(authority => {
-        this.roles.push(authority);
-        })
-        */
-      this.massiv=JSON.parse(<string>sessionStorage.getItem(AUTHORITIES_KEY));
-      for(let i=0;i<this.massiv.length;i++){
-          this.roles.push(this.massiv[i]);
+      this.massiv = JSON.parse(<string>sessionStorage.getItem(AUTHORITIES_KEY));
+      for (let i = 0; i < this.massiv.length; i++) {
+        this.roles.push(this.massiv[i]);
       }
       return this.roles;
       ;

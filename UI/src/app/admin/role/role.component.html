@@ -1,38 +1,49 @@
 <div>
-<table border="1">
-    <tr class="hedder">
-        <th>id</th>
-        <th>name</th>
-    </tr>
-    <tr *ngFor="let item of roles; let idx=index">
-        <th>{{idx+1}}</th>
-        <th>{{item.name}}</th>
-    </tr>
+    <table border="1">
+        <tr class="hedder">
+            <th>id</th>
+            <th>name</th>
+        </tr>
+        <tr *ngFor="let item of roles; let idx=index">
+            <th>{{idx+1}}</th>
+            <th>{{item.name}}</th>
+        </tr>
     </table>
 </div>
 
 <div class="container">
-    <nav >
-      <ul class="navbar">
-        <li routerLinkActive="active" (click)="methodCanAddRole()" class="left" ><button>Добавить</button></li>
-        <li routerLinkActive="active" (click)="methodDeleteRole()" ><button>Удалить</button></li>   
-    </ul>
+    <nav>
+        <ul class="navbar">
+            <li routerLinkActive="active" (click)="methodCanAddRole()" class="left"><button>Add</button></li>
+            <li routerLinkActive="active" (click)="methodDeleteRole()"><button>Delete</button></li>
+        </ul>
     </nav>
 </div>
 
 <div *ngIf="buttonAdd" class="add-element">
-    <h1>Добавление</h1>
+    <h1>Add</h1>
     <div class="input-border">
-    <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="templateRole.name" >
-    <button (click)="postRole(templateRole)">Отправить</button>
-    </div>  
+        <form class="form" (ngSubmit)="f.form.valid && postRole(templateRole)" #f="ngForm" novalidate>
+            <input type="text" class="input-text" required placeholder="Name" maxlength="50" name="Name"
+                [(ngModel)]="templateRole.name">
+            <button>Add</button>
+            <div *ngIf="f.submitted && erors" class="alert alert-danger">
+                {{errorMessage}}
+            </div>
+        </form>
+    </div>
 </div>
 
-    
+
 <div *ngIf="buttonDelete" class="delete-border">
     <div class="input-border">
-        <h1>Удаление</h1>
-        <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="name" >
-        <button (click)="deleteRole(name)">Удалить</button>
-        </div>
+        <form class="form" (ngSubmit)="f.form.valid && deleteRole(name)" #f="ngForm" novalidate>
+            <h1>Delete</h1>
+            <input type="text" class="input-text" required placeholder="Name" name="Name" [(ngModel)]="name">
+            <button>Delete</button>
+            <div *ngIf="f.submitted && erorDelete" class="alert alert-danger">
+                {{errorMessage}}
+            </div>
+        </form>
+    </div>
 </div>

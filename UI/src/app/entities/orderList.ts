@@ -1,8 +1,8 @@
-export class OrderList{
+export class OrderList {
     constructor(
-        public userName:string,
-        public productName:string,
-        public count:string
-    ){}
+        public userName: string,
+        public productName: string,
+        public count: string
+    ) { }
 
 }

@@ -11,25 +11,22 @@ import { RegistrationComponent } from './registration/registration.component';
 import { BucketComponent } from './bucket/bucket.component';
 import { OrdersComponent } from './admin/orders/orders.component';
 
-const routes: Routes  = [
-  {path:'admin', component: AdminRole ,
-children:[
-  {path:'user', component:UserComponent},
-  {path:'role', component:RoleComponent},
-  {path:'product', component:ProductComponent},
-  {path:'category', component:CategoriesComponent},
-  {path:'orders',component:OrdersComponent},
-//  {path:'market', component:MarketComponent}
-]
-},
-{path:'', component:AuthorizationComponent},
-
-  {path:'bucket', component:BucketComponent},
-
-
-  {path:'market', component:MarketComponent},
-  {path:"auth", component:AuthorizationComponent},
-  {path:"registration", component:RegistrationComponent},
+const routes: Routes = [
+  {
+    path: 'admin', component: AdminRole,
+    children: [
+      { path: 'user', component: UserComponent },
+      { path: 'role', component: RoleComponent },
+      { path: 'product', component: ProductComponent },
+      { path: 'category', component: CategoriesComponent },
+      { path: 'orders', component: OrdersComponent },
+    ]
+  },
+  { path: '', component: AuthorizationComponent },
+  { path: 'bucket', component: BucketComponent },
+  { path: 'market', component: MarketComponent },
+  { path: "auth", component: AuthorizationComponent },
+  { path: "registration", component: RegistrationComponent },
 ];
 
 

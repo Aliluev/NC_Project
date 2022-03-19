@@ -9,58 +9,80 @@
             <th>image</th>
         </tr>
         <tr *ngFor="let item of products2; let idx=index">
-           <th>{{idx+1}}</th>
+            <th>{{idx+1}}</th>
             <th>{{item.name}}</th>
             <th>{{item.price}}</th>
             <th>{{item.category}}</th>
             <th>{{item.count}}</th>
-            <th><img src={{item.image}}  width="100" height="100"></th>
+            <th><img src={{item.image}} width="100" height="100"></th>
         </tr>
-        </table>
-        </div>
-    
-        <div class="container">
-            <nav >
-              <ul class="navbar">
-                <li routerLinkActive="active" (click)="methodCanAddProduct()" class="left" ><button>Добавить</button></li>
-                <li routerLinkActive="active" (click)="methodDeleteProduct()" ><button>Удалить</button></li>
-                <li routerLinkActive="active" (click)="methodUpdateProduct()" class="right"><button>Изменить</button></li>
-              </ul>
-            </nav>
-        </div>
+    </table>
+</div>
 
-        <div *ngIf="buttonAdd" class="add-element">
-            <h1>Добавление</h1>
-            <div class="input-border">
-            <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="product.name" >
-            
-            <input type="text" placeholder="Price" name="Price" [(ngModel)]="product.price" >
-            
-            <input type="text" placeholder="Category" name="Category" [(ngModel)]="product.category" >
-            <input type="text" placeholder="Count" name="Count" [(ngModel)]="product.count" >
-            <input type="file" (change)="onFileSelected($event)">
-            <button (click)="postProduct(product)">Отправить</button>
-            </div>  
-        </div>
-    
-        
-        <div *ngIf="buttonDelete" class="delete-border">
-            <div class="input-border">
-                <h1>Удаление</h1>
-                <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="name" >
-                <button (click)="deleteProduct(name)" >Удалить</button>
-                </div>
-        </div>
-    
-        <div class="update-element">
-    <div *ngIf="buttonUpdate" class="input-border">
-        <h1>Обновление</h1>
-        <input type="text" class="input-text" placeholder="Name" name="Name" [(ngModel)]="product.name" >   
-        <input type="number" placeholder="Price" name="Price" [(ngModel)]="product.price" >
-        <input type="text" placeholder="Category" name="Category" [(ngModel)]="product.category" >
-        <input type="number" placeholder="Count" name="Count" [(ngModel)]="product.count" >
-        <input type="text" placeholder="Image" name="Image" [(ngModel)]="product.image" >
-    <button (click)="updateProduct(product)">Изменить</button>
+<div class="container">
+    <nav>
+        <ul class="navbar">
+            <li routerLinkActive="active" (click)="methodCanAddProduct()" class="left"><button>Add</button></li>
+            <li routerLinkActive="active" (click)="methodDeleteProduct()"><button>Delete</button></li>
+            <li routerLinkActive="active" (click)="methodUpdateProduct()" class="right"><button>Update</button></li>
+        </ul>
+    </nav>
+</div>
+
+<div *ngIf="buttonAdd" class="add-element">
+    <h1>Add</h1>
+    <div class="input-border">
+        <form class="form" (ngSubmit)="f.form.valid && postProduct(product)" #f="ngForm" novalidate>
+            <input type="text" class="input-text" required placeholder="Name" name="Name" [(ngModel)]="product.name">
+            <input type="text" placeholder="Price" required pattern="^[ 0-9]+$" maxlength="50" name="Price"
+                [(ngModel)]="product.price">
+            <input type="text" placeholder="Category" required name="Category" [(ngModel)]="product.category">
+            <input type="text" placeholder="Count" pattern="^[ 0-9]+$" maxlength="50" required name="Count"
+                [(ngModel)]="product.count">
+            <input type="file" required (change)="onFileSelected($event)">
+            <button>Add</button>
+            <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger">
+                {{errorMessage}}
+            </div>
+        </form>
     </div>
-        </div>
-    
+</div>
+
+<div *ngIf="buttonDelete" class="delete-border">
+    <div class="input-border">
+        <form class="form" (ngSubmit)="f.form.valid && deleteProduct(name)" #f="ngForm" novalidate>
+            <h1>Delete</h1>
+            <input type="text" class="input-text" required maxlength="50" placeholder="Name" name="Name"
+                [(ngModel)]="name">
+            <button>Delete</button>
+            <div *ngIf="f.submitted && erorDelete" class="alert alert-danger">
+                {{errorMessage}}
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="update-element">
+    <div *ngIf="buttonUpdate" class="input-border">
+        <form class="form" (ngSubmit)="f.form.valid && updateProduct(productUpdate)" #f="ngForm" novalidate>
+            <h1>Update</h1>
+            <input type="text" class="input-text" required maxlength="50" placeholder="Name" name="Name"
+                [(ngModel)]="productUpdate.name">
+            <input type="text" placeholder="Price" required maxlength="50" pattern="^[ 0-9]+$" name="Price"
+                [(ngModel)]="productUpdate.price">
+            <input type="text" placeholder="Category" required maxlength="50" name="Category"
+                [(ngModel)]="productUpdate.category">
+            <input type="text" placeholder="Count" required maxlength="50" pattern="^[ 0-9]+$" name="Count"
+                [(ngModel)]="productUpdate.count">
+            <input type="file" required (change)="onFileSelectedUpdate($event)">
+            <button>Update</button>
+            <div *ngIf="f.submitted && updateEror" class="alert alert-danger">
+                {{errorMessage}}
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="footer">
+
+</div>

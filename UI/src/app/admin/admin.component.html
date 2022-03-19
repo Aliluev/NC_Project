@@ -1,104 +1,22 @@
 <div *ngIf="allowedToEnter;else noRights">
-
-<div class="container">
-    <nav>
-      <ul class="navbar">
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="left" ><a routerLink="/admin/user">Пользователи</a></li>
-        <li routerLinkActive="active" ><a routerLink="/admin/role">Роли</a> </li>
-        <li routerLinkActive="active" ><a routerLink="/admin/product">Товары</a> </li>
-        <li routerLinkActive="active"><a routerLink="/admin/category">Категории</a> </li>
-        <li routerLinkActive="active" class="right"><a routerLink="/admin/orders">Заказы</a> </li>
-  <!--      <li routerLinkActive="active" class="right"><a routerLink="/admin/market">Магазин</a> </li>  -->
-        
-      
-      </ul>
-    </nav>
-</div>
-<div class="data">
-    <router-outlet></router-outlet>
-
-</div>
-
+    <div class="container">
+        <nav>
+            <ul class="navbar">
+                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="left"><a
+                        routerLink="/admin/user">Users</a></li>
+                <li routerLinkActive="active"><a routerLink="/admin/role">Roles</a> </li>
+                <li routerLinkActive="active"><a routerLink="/admin/product">Products</a> </li>
+                <li routerLinkActive="active"><a routerLink="/admin/category">Categories</a> </li>
+                <li routerLinkActive="active" class="right"><a routerLink="/admin/orders">Orders</a> </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="data">
+        <router-outlet></router-outlet>
+    </div>
 </div>
 <ng-template #noRights>
-<h1>Нет прав доступа ADMIN,SUPERADMIN</h1>
+    <div class="notAdmin">
+        <p>NOT ADMIN</p>
+    </div>
 </ng-template>
-
-
-
-
-
-
-<!--
-
-<h1>Users</h1>
-<table border="1">
-    <tr>
-        <th>name</th>
-        <th>phone</th>
-        <th>email</th>
-        <th>roles</th>
-    </tr>
-    <tr *ngFor="let item of users| async">
-        <th>{{item.username}}</th>
-        <th>{{item.phone}}</th>
-        <th>{{item.email}}</th>
-        <th>{{item.roles}}</th>
-    </tr>
-    </table>
-
-    <h1>Input User</h1>
-    <h3>Username</h3>
-<input type="text" name="userName" [(ngModel)]="user.username" >
-<h3>User Phone</h3>
-<input type="text" name="userPhone" [(ngModel)]="user.phone" >
-<h3>User email</h3>
-<input type="text" name="email" [(ngModel)]="user.email" >
-<button (click)="methodPostUser(user)">Отправить</button>
-
-<h1>Delete User By ID</h1>
-<input type="text" name="UserID" [(ngModel)]="id" >
-<button (click)="methodDeleteUser(id)">Удалить</button>
-
-
-<h1>Update User</h1>
-<h3>User ID</h3>
-<input type="text" name="UserID" [(ngModel)]="id" >
-<h3>Username</h3>
-<input type="text" name="userName" [(ngModel)]="user.username" >
-<h3>User phone</h3>
-<input type="text" name="userPhone" [(ngModel)]="user.phone" >
-<h3>User email</h3>
-<input type="text" name="email" [(ngModel)]="user.email" >
-<h3> Roles </h3>
-<input type="text" name="userName" [(ngModel)]="user.roles" >
-<button (click)="methodUpdateUser(id, user)">Изменить</button>
-
-<h1>User-Role</h1>
-
-<table border="1">
-<tr>
-    <th>name</th>
-    <th>role</th>
-</tr>
-<tr *ngFor="let item of users| async">
-    <th>{{item.username}}</th>
-    <th>{{item.roles}}</th>
-</tr>
-</table>
-
-<h1>Role</h1>
-
-<table border="1">
-    <tr>
-        <th>id</th>
-        <th>name</th>
-    </tr>
-    <tr *ngFor="let item of roles| async">
-        <th>{{item.id}}</th>
-        <th>{{item.name}}</th>
-    </tr>
-    </table>
-
-
-     -->

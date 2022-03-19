@@ -2,21 +2,21 @@
     <table border="1">
         <tr class="hedder">
             <th>№</th>
-            <th>Продукт</th>
-            <th>Количество</th>
-            <th>Удалить</th>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Delete</th>
         </tr>
         <tr *ngFor="let item of bucket; let idx=index">
-           <th>{{idx+1}}</th>
+            <th>{{idx+1}}</th>
             <th>{{item.productName}}</th>
             <th>{{item.count}}</th>
-            <th><button (click)="deleteProduct(item.orderListId)">Удалить</button></th>
+            <th><button (click)="deleteProduct(item.orderListId)">Delete</button></th>
         </tr>
-        </table>
-        </div>
-    <div class="butt">
-        <button (click)="ordered()">Заказать</button>
-    </div>
-        <div class="rout">
-        <a routerLink="/">к товарам</a>
-        </div>
+    </table>
+</div>
+<div class="butt">
+    <button (click)="ordered()">Buy</button>
+</div>
+<div class="rout">
+    <a routerLink="/">Shop</a>
+</div>

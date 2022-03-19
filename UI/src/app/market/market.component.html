@@ -1,48 +1,28 @@
-<!-- 
-<div class="products">
-    <div *ngFor = 'let lst of  stringIdList' class="ng"> 
-    <ul class="product"> 
-       <li>
-         <a routerLink="/">
-           <img src={{lst}} width="200" height="200">
-         </a>
-           <h3>описание товара</h3>
-       </li>  
-    </ul> 
-    <div *ngFor = 'let lst of  stringIdList' class="ng"> 
- 
- </div>
-
- текст -->
-<!-- 
- <button (click)="addBucket()">Корзина</button>
-<div *ngIf="clickBucket">
-<bucket-component></bucket-component>
-</div>
--->
-
 <div class="rout">
-<a routerLink="/bucket">корзина</a>
+  <a routerLink="/bucket">Bucket</a>
 </div>
- <div class="products">
-  <div *ngFor = 'let lst of  products2 ;let idx=index' class="ng"> 
-  <ul class="product"> 
-     <li>
-       <div class="product-content">
-         <img src={{lst.image}} width="200" height="200">
-      
-         <h3>{{lst.name}}</h3>
-         <div class="product-text">
-         <p>Цена: {{lst.price}}</p>
-         <p>Категория: {{lst.category}}</p>
-         <p>Количество: {{lst.count}}</p>
-         <input type="text" name="count" placeholder="Количество" [(ngModel)]="count[idx]">
-         <button (click)="onSubmit(lst,count[idx])">В корзину</button>
-        </div>
-        </div>
-     </li>  
-  </ul> 
-  </div>
+<div class="products">
+  <div *ngFor='let lst of  products2 ;let idx=index' class="ng">
+    <ul class="product">
+      <li>
+        <div class="product-content">
 
+          <form class="form" (ngSubmit)="f.form.valid && onSubmit(lst,count[idx],idx)" #f="ngForm" novalidate>
+
+            <img src={{lst.image}} width="200" height="200">
+            <h3>{{lst.name}}</h3>
+            <div class="product-text">
+              <p>Price: {{lst.price}}</p>
+              <p>Category: {{lst.category}}</p>
+              <p>Сount: {{lst.count}}</p>
+              <input type="text" required pattern="^[ 0-9]+$" name="count" placeholder="Count" [(ngModel)]="count[idx]"
+                #counts="ngModel">
+              <button>Add</button>
+            </div>
+          </form>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
 

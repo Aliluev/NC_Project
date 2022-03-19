@@ -1,5 +1,5 @@
-export class Mussor{
+export class Mussor {
     constructor(
-        public count:string
-    ){}
+        public count: string
+    ) { }
 }

@@ -8,28 +8,30 @@
             <th>Date</th>
         </tr>
         <tr *ngFor="let item of orders; let idx=index">
-           <th>{{idx+1}}</th>
+            <th>{{idx+1}}</th>
             <th>{{item.userID}}</th>
-            <th><button (click)="getDetailsOrders(item.orderID)">Заказ</button></th>
+            <th><button (click)="getDetailsOrders(item.orderID)">order</button></th>
             <th>{{item.statusID}}</th>
             <th>{{item.date}}</th>
         </tr>
-        </table>
-        </div>
+    </table>
+</div>
 
-        
-        
-        <div *ngIf="buttonClick">
-            <div class="te"><h2>Детали заказа</h2></div>
-            <table border="1"> 
-                <tr class="hedder">
-                    <th>Product</th>
-                    <th>Count</th>
-                </tr>
-                <tr *ngFor="let item of detailsOrders; let idx=index">
-                  
-                    <th>{{item.productName}} </th>
-                    <th>{{item.count}}</th>
-                </tr>
-                </table>
-        </div>
+
+
+<div *ngIf="buttonClick">
+    <div class="te">
+        <h2>Order details</h2>
+    </div>
+    <table border="1">
+        <tr class="hedder">
+            <th>Product</th>
+            <th>Count</th>
+        </tr>
+        <tr *ngFor="let item of detailsOrders; let idx=index">
+
+            <th>{{item.productName}} </th>
+            <th>{{item.count}}</th>
+        </tr>
+    </table>
+</div>

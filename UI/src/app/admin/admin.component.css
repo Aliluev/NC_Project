@@ -36,3 +36,11 @@
     color: rgb(192, 157, 1);
 }
 
+.notAdmin{
+    padding-top: 100px;
+}
+.notAdmin p{
+    font-family: sans-serif;
+    text-align: center;
+    padding-top: 5px;
+}

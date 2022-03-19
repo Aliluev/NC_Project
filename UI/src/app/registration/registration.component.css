@@ -1,5 +1,3 @@
-
-
 .login-page {
     width: 360px;
     padding: 8% 0 0;
@@ -42,6 +40,16 @@
     color: #4CAF50;
     text-decoration: none;
   }
+
+  .form .messageS {
+    color: #8f8e8e;
+    font-size: 15px;
+  }
+  .form .messageS a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+ 
  
   .register-form input{
       margin: 5px;
@@ -67,4 +75,8 @@
   .succesfulMessage a {
     color: #8caf4c;
     text-decoration: none;
+  }
+
+  input:required:invalid {
+    border:1px solid red;
   }

@@ -12,7 +12,6 @@ import { CategoriesComponent } from './admin/categories/categories.component';
 import { MarketComponent } from './market/market.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { httpInterceptorProviders } from './authorization/auth-interceptor';
-import { PageComponent } from './page/page.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { BucketComponent } from './bucket/bucket.component';
 import { OrdersComponent } from './admin/orders/orders.component';
@@ -29,7 +28,6 @@ import { OrdersComponent } from './admin/orders/orders.component';
     CategoriesComponent,
     MarketComponent,
     AuthorizationComponent,
-    PageComponent,
     RegistrationComponent,
     BucketComponent,
     OrdersComponent

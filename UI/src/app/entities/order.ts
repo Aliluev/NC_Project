@@ -1,8 +1,8 @@
-export class Order{
+export class Order {
     constructor(
-        public orderID:string,
-        public userID:string,
-        public statusID:string,
-        public date:string
-    ){}
+        public orderID: string,
+        public userID: string,
+        public statusID: string,
+        public date: string
+    ) { }
 }

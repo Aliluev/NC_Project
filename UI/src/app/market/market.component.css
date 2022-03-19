@@ -2,23 +2,16 @@
 .products{
     font-family: sans-serif;
     text-align: center;
-    
-    
 }
 
 
 ul.product{
     margin: 0%;
-  
 }
 
 
 ul.product li  {
-    
     display: inline;
-  
-    
-    
 }
 
 ul.product img{
@@ -35,13 +28,19 @@ ul.product img{
     margin-right: auto;
     border: 1px solid #c0c0c0;
     display: inline-block; 
-    margin-top: 10px;
+    margin-top: 20px;
     background-color: rgb(240, 220, 184);
-    
 }
 
 .rout{
     text-align: right; 
     margin-right: 200px; 
     margin-top: 40px;
+  }
+
+  .form .message p {
+    color: #8f8e8e;
+    font-size: 15px;
+    margin-top: 0px;
+    margin: 0px 0px;
   }

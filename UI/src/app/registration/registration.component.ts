@@ -1,8 +1,6 @@
-
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { Registration } from "../entities/registration";
-
 
 
 @Component({
@@ -10,17 +8,23 @@ import { Registration } from "../entities/registration";
     templateUrl: "./registration.component.html",
     styleUrls: ["./registration.component.css"]
 })
-export class RegistrationComponent{
+export class RegistrationComponent {
 
-    submitStatus=false;
-    registration=new Registration("","","");
+    submitStatus = false;
+    registration = new Registration("", "", "", "");
+    isLoginFailed = false;
+    errorMessage = "";
 
-    onSubmit(registration:Registration) {
-        this.http.post('http://localhost:8080/api/auth/signup',registration).subscribe((data:any) => {this.submitStatus=true},
-        (error: any)=> console.log("eror"));
+    onSubmit(registration: Registration) {
+        this.http.post('http://localhost:8080/api/auth/signup', registration).subscribe((data: any) => { this.submitStatus = true },
+            (error: any) => {
+                console.log("eror");
+                this.errorMessage = error.error.message;
+                this.isLoginFailed = true;
+            });
     }
 
-    constructor(private http: HttpClient){ }
+    constructor(private http: HttpClient) { }
 
 
 }

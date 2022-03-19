@@ -9,13 +9,13 @@ import { TokenStorageService } from './token-storage.service';
 })
 
 
-export class UserService implements OnInit{
+export class UserService implements OnInit {
 
   private userUrl = 'http://localhost:8080/api/test/user';
   private pmUrl = 'http://localhost:8080/api/test/mod';
   private adminUrl = 'http://localhost:8080/api/test/admin';
 
-  constructor(private http: HttpClient,private token: TokenStorageService) { }
+  constructor(private http: HttpClient, private token: TokenStorageService) { }
 
   info: any;
   ngOnInit(): void {
@@ -28,16 +28,17 @@ export class UserService implements OnInit{
 
 
   getUserBoard(): Observable<string> {
-    var headers= new HttpHeaders({// 'Content-Type': 'application/json', 
-  Authorization: 'Bearer ' + this.info.token});
-  const httpOptions = {
-    headers: headers
-  };
-    return this.http.get<string>(this.userUrl,httpOptions);
+    var headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.info.token
+    });
+    const httpOptions = {
+      headers: headers
+    };
+    return this.http.get<string>(this.userUrl, httpOptions);
 
   }
 
- 
+
 
 
   getPMBoard(): Observable<string> {

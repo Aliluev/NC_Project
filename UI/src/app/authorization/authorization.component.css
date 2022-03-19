@@ -47,3 +47,12 @@
       margin: 5px;
       text-align: center;
   }
+
+  .form .messageP {
+    color: #b3b3b3;
+    font-size: 12px;
+  }
+  .form .messageP a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
