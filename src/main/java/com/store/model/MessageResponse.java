@@ -1,5 +1,6 @@
 package com.store.model;
 
+
 public class MessageResponse {
     private String message;
 
@@ -19,3 +20,5 @@ public class MessageResponse {
         this.message = message;
     }
 }
+
+
