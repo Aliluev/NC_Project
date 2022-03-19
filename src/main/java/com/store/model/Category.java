@@ -16,8 +16,8 @@ public class Category {
     private String name;
 
     @ManyToMany
-    @JoinTable(name="product_category",
-            joinColumns = @JoinColumn(name="categoryid"),
+    @JoinTable(name = "product_category",
+            joinColumns = @JoinColumn(name = "categoryid"),
             inverseJoinColumns = @JoinColumn(name = "productid"))
     private List<Product> product;
 
@@ -45,14 +45,15 @@ public class Category {
         this.product = product;
     }
 
-    public Category(){};
-
-    public Category(CategoryDTO categoryDTO ){
-        this.name=categoryDTO.getName();
+    public Category() {
     }
 
-    public Category(String string){
-        this.name=string;
+    public Category(CategoryDTO categoryDTO) {
+        this.name = categoryDTO.getName();
+    }
+
+    public Category(String string) {
+        this.name = string;
     }
 }
 

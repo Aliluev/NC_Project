@@ -31,20 +31,6 @@ public class ProductDTO {
         this.count = count;
     }
 
-
-    /*
-    private String storage;
-
-    public String getStorage() {
-        return storage;
-    }
-
-    public void setStorage(String storage) {
-        this.storage = storage;
-    }
-
-     */
-
     public String getCategory() {
         return category;
     }
@@ -69,42 +55,30 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public ProductDTO(Product product){
-        this.name= product.getName();
-        this.price=product.getPrice().toString();
-        if(product.getCount()==null){
-            this.count="0";
-        }else {
+    public ProductDTO(Product product) {
+        this.name = product.getName();
+        this.price = product.getPrice().toString();
+        if (product.getCount() == null) {
+            this.count = "0";
+        } else {
             this.count = product.getCount().toString();
         }
-        this.image=product.getImage();
+        this.image = product.getImage();
 
-        StringBuilder stringBuilder=new StringBuilder();
-        int i=0;
-        for(Category category: product.getCategory()){
-           if(i!=0) {
-               stringBuilder.append(",");
-           }
-            stringBuilder.append(category.getName());
-           // stringBuilder.append((category.getId()));
-           i++;
-        }
-        category=stringBuilder.toString();
-
-        /* Добавление магазина
-        StringBuilder storageString=new StringBuilder();
-        i=0;
-        for(Storage storage:product.getStorage()){
-            if(i!=0){
-                storageString.append(",");
+        StringBuilder stringBuilder = new StringBuilder();
+        int i = 0;
+        for (Category category : product.getCategory()) {
+            if (i != 0) {
+                stringBuilder.append(",");
             }
-            storageString.append(storage.getAddress());
+            stringBuilder.append(category.getName());
+            i++;
         }
-        storage=storageString.toString();
+        category = stringBuilder.toString();
 
-         */
     }
 
-    public ProductDTO(){}
+    public ProductDTO() {
+    }
 
 }

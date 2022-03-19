@@ -1,4 +1,5 @@
 package com.store.model;
+
 import com.store.dto.StatusDTO;
 
 import javax.persistence.*;

@@ -17,9 +17,13 @@ import java.util.List;
 @RequestMapping("/image")
 public class ImageController {
 
-    @Autowired
+
     ImageDbRepository imageDbRepository;
 
+    @Autowired
+    public ImageController(ImageDbRepository imageDbRepository) {
+        this.imageDbRepository = imageDbRepository;
+    }
 
     @PostMapping("/save")
     public void uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
@@ -27,48 +31,25 @@ public class ImageController {
         dbImage.setName(file.getOriginalFilename());
         dbImage.setContent(file.getBytes());
         imageDbRepository.save(dbImage);
-       // return imageDbRepository.save(dbImage)
-            //    .getId();
     }
 
-
-/*
-    @PostMapping("/save")
-    Long uploadImage(@RequestParam int i) throws Exception {
-        //Long uploadImage() throws Exception {
-        //     MultipartFile multipartImage=new MultiparFile();
-       String name="picture.jpeg";
-       String originalFilename="picture.jpeg";
-       String contentType="image";
-        Image dbImage = new Image();
-        dbImage.setName(name);
-        //dbImage.setContent(bytes);
-
-        return imageDbRepository.save(dbImage)
-                .getId();
-    }
-
- */
 
     @GetMapping(value = "/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
- //   @GetMapping(value = "/{imageId}")
-   public ByteArrayResource downloadImage(@PathVariable Integer imageId) {
-
-        Image image2=imageDbRepository.getById(imageId);
+    public ByteArrayResource downloadImage(@PathVariable Integer imageId) {
+        Image image2 = imageDbRepository.getById(imageId);
         byte[] image = imageDbRepository.findById(imageId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
                 .getContent();
-
         return new ByteArrayResource(image2.getContent());
     }
 
     @GetMapping(value = "/get-all-count-products")
     public int[] countProducts() {
-        List<Image> imageList=imageDbRepository.findAll();
-        int[] massiv=new int[imageList.size()];
-        int i=0;
-        for(Image image:imageList){
-            massiv[i]=image.getId();
+        List<Image> imageList = imageDbRepository.findAll();
+        int[] massiv = new int[imageList.size()];
+        int i = 0;
+        for (Image image : imageList) {
+            massiv[i] = image.getId();
             i++;
         }
         return massiv;
@@ -76,10 +57,9 @@ public class ImageController {
 
     @GetMapping(value = "/get-last-image")
     public int lastImage() {
-        List<Image> imageList=imageDbRepository.findAll();
+        List<Image> imageList = imageDbRepository.findAll();
         return (imageList.size());
     }
-
 
 
 }

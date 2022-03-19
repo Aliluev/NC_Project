@@ -18,7 +18,7 @@ public class OrderListDTO {
         this.orderID = orderID;
         this.productName = productName;
         this.count = count;
-        this.orderListId=orderListId;
+        this.orderListId = orderListId;
     }
 
     public String getOrderListId() {

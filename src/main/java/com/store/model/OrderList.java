@@ -12,11 +12,11 @@ public class OrderList {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="orderid")
+    @JoinColumn(name = "orderid")
     private Order orderID;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="productid")
+    @JoinColumn(name = "productid")
     private Product productID;
 
     @Column(name = "count")
@@ -57,3 +57,4 @@ public class OrderList {
         this.count = count;
     }
 }
+

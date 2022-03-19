@@ -11,7 +11,6 @@ import java.util.List;
 public class Role {
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,9 +21,9 @@ public class Role {
 
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(  name="users_roles",
-            joinColumns = @JoinColumn(name="roleid"),
-          inverseJoinColumns = @JoinColumn(name = "userid"))
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "roleid"),
+            inverseJoinColumns = @JoinColumn(name = "userid"))
     private List<User> users;
 
     public Integer getId() {
@@ -61,18 +60,17 @@ public class Role {
     public Role() {
     }
 
-    public Role(RoleDTO roleDTO){
-        this.id=roleDTO.getId();
-        this.name=roleDTO.getName();
+    public Role(RoleDTO roleDTO) {
+        this.id = roleDTO.getId();
+        this.name = roleDTO.getName();
     }
 
-    public Role(int id){
-        this.id=id;
+    public Role(int id) {
+        this.id = id;
     }
 
     public Role(String name) {
         this.name = name;
-        //this.id=1;// При создании всегда задаётся admin=1
     }
 
     public Role(String name, List<User> users) {

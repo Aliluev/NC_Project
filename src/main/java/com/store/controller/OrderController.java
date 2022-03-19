@@ -23,38 +23,26 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
 
-    @Autowired
+
     OrderRepository orderRepository;
-
-    @Autowired
     UserRepository userRepository;
-
-    @Autowired
     StatusRepository statusRepository;
 
-/*
-    @GetMapping("/get-all")
-    public ResponseEntity<List<OrderDTO>> getAllOrderDTO(){
-        List<Order> list= orderRepository.findAll();
-        List<OrderDTO> orderDTOS=new ArrayList<>();
-
-        for(Order order: list){
-            orderDTOS.add(new OrderDTO(order));
-        }
-
-        return ResponseEntity.ok(orderDTOS);
+    @Autowired
+    public OrderController(OrderRepository orderRepository, UserRepository userRepository, StatusRepository statusRepository) {
+        this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
+        this.statusRepository = statusRepository;
     }
 
- */
-
     @GetMapping("/get-ordered-order")
-    public ResponseEntity<List<OrderDTO>> getOrderedOrder(){
+    public ResponseEntity<List<OrderDTO>> getOrderedOrder() {
 
-        Status status=statusRepository.getByName("ordered").get(0);
-        List<Order> orderList=orderRepository.getByStatusid(status);
-        List<OrderDTO> orderDTOS=new ArrayList<>();
+        Status status = statusRepository.getByName("ordered").get(0);
+        List<Order> orderList = orderRepository.getByStatusid(status);
+        List<OrderDTO> orderDTOS = new ArrayList<>();
 
-        for(Order order: orderList){
+        for (Order order : orderList) {
             orderDTOS.add(new OrderDTO(order));
         }
 
@@ -63,32 +51,28 @@ public class OrderController {
 
 
     @PostMapping("/create")
-    public ResponseEntity createOrder(@RequestBody OrderDTO orderDTO){
-        User user=userRepository.findByUsername(orderDTO.getUserID()).get(0);
-        Status status=statusRepository.findByName(orderDTO.getStatusID()).get(0);
+    public ResponseEntity createOrder(@RequestBody OrderDTO orderDTO) {
+        User user = userRepository.findByUsername(orderDTO.getUserID()).get(0);
+        Status status = statusRepository.findByName(orderDTO.getStatusID()).get(0);
 
-        Order order=new Order();
+        Order order = new Order();
         order.setUserid(user);
         order.setStatusid(status);
         order.setDate(orderDTO.getDate());
-        //order.setId(1);
         orderRepository.save(order);
-        //statusRepository.save(status);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    //Удаление по id
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteOrder(@PathVariable(value = "id") Integer id ) {
+    public ResponseEntity deleteOrder(@PathVariable(value = "id") Integer id) {
         try {
-          orderRepository.delete(orderRepository.getById(id));
+            orderRepository.delete(orderRepository.getById(id));
             return (ResponseEntity.ok(HttpStatus.OK));
-        }catch (RuntimeException exception){
+        } catch (RuntimeException exception) {
             return new ResponseEntity<>(new ProductDTO(), HttpStatus.NOT_FOUND);
         }
     }
-
-
 
 
 }

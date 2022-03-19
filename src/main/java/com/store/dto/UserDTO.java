@@ -1,6 +1,8 @@
 package com.store.dto;
+
 import com.store.model.Role;
 import com.store.model.User;
+
 import java.util.Objects;
 
 public class UserDTO {
@@ -11,26 +13,24 @@ public class UserDTO {
     private String roles;
 
 
-    public UserDTO(){}
+    public UserDTO() {
+    }
 
     public UserDTO(User user) {
         this.username = user.getUsername();
         this.phone = user.getPhone();
         this.email = user.getEmail();
+        StringBuilder strRoles = new StringBuilder();
+        int i = 0;
 
-        StringBuilder strRoles=new StringBuilder();
-       // roles=new ArrayList<>();
-        int i=0;
-        for (Role role: user.getRoles()) {
-            if(i!=0){
+        for (Role role : user.getRoles()) {
+            if (i != 0) {
                 strRoles.append(",");
             }
-            //strRoles.append(role.getId());
             strRoles.append(role.getName());
             i++;
-            //this.roles.add(role.getId());
         }
-        roles=strRoles.toString();
+        roles = strRoles.toString();
 
 
     }
@@ -42,18 +42,6 @@ public class UserDTO {
     public void setRoles(String roles) {
         this.roles = roles;
     }
-/*
-
-    public List<Integer> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Integer> roles) {
-        this.roles = roles;
-    }
-
-
-     */
 
     public String getUsername() {
         return username;

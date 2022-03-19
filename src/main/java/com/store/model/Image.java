@@ -10,11 +10,6 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
-    //@Lob-это то, как мы сообщаем JPA
-    // о нашем намерении хранить
-    // потенциально большой двоичный файл
-   // @Lob
     private byte[] content;
 
     private String name;

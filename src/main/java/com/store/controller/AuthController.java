@@ -20,24 +20,24 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*" , maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
 
-    @Autowired
+
     AuthenticationManager authenticationManager;
-
-    @Autowired
     UserRepository userRespository;
-
-    @Autowired
     RoleRepository roleRepository;
-
-    @Autowired
     PasswordEncoder passwordEncoder;
-
-    @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRespository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+        this.authenticationManager = authenticationManager;
+        this.userRespository = userRespository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
+    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
@@ -49,24 +49,16 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
-        User user=userRespository.findByUsername(authentication.getName()).get(0);
-      //  UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        /*List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+        User user = userRespository.findByUsername(authentication.getName()).get(0);
 
-         */
-        List<String> roles =new ArrayList<>();
-        for(Role role:user.getRoles()){
+        List<String> roles = new ArrayList<>();
+        for (Role role : user.getRoles()) {
             roles.add(role.getName());
         }
-       // roles.add("Admin");
+
 
         return ResponseEntity.ok(new JwtResponse(jwt,
-     user.getId(),user.getUsername(),
-     //           userDetails.getId(),
-     //           userDetails.getUsername(),
-     //           userDetails.getEmail(),
+                user.getId(), user.getUsername(),
                 roles));
     }
 
@@ -79,46 +71,27 @@ public class AuthController {
                     .body(new MessageResponse("Error: Username is exist"));
         }
 
-        User user=new User(signupRequest);
+        User user = new User(signupRequest);
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
 
-        List<Role> roleList=new ArrayList<>();
+        List<Role> roleList = new ArrayList<>();
 
-        String string="ROLE_USER";
-        List<Role> roles=roleRepository.findByName(string);
-        if(roles.size()==1){
+        String string = "ROLE_USER";
+        List<Role> roles = roleRepository.findByName(string);
+        if (roles.size() == 1) {
             roleList.add(roles.get(0));
-        }else{
-            Role role=new Role(string);
+        } else {
+            Role role = new Role(string);
             roleRepository.save(role);
             roleList.add(roleRepository.findByName(string).get(0));
         }
-        /*
-        for(String string:signupRequest.getRoles()){
-            List<Role> roles=roleRepository.findByName(string);
-            if(roles.size()==1){
-                roleList.add(roles.get(0));
-            }else{
-                Role role=new Role(string);
-                roleRepository.save(role);
-                roleList.add(roleRepository.findByName(string).get(0));
-            }
-        }
 
-         */
         user.setRoles(roleList);
         userRespository.save(user);
 
         return ResponseEntity.ok().body(new UserDTO(user));
 
 
-
-
-
     }
-
-
-
-
 
 }

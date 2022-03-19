@@ -1,13 +1,11 @@
 package com.store.model;
 
-import java.util.List;
-
 public class SignupRequest {
 
     private String username;
     private String password;
     private String email;
-   // private List<String> roles;
+    private String phone;
 
     public SignupRequest() {
     }
@@ -16,7 +14,14 @@ public class SignupRequest {
         this.username = username;
         this.password = password;
         this.email = email;
-     //   this.roles = roles;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getUsername() {
@@ -43,11 +48,4 @@ public class SignupRequest {
         this.email = email;
     }
 
-  //  public List<String> getRoles() {
-  //      return roles;
-  //  }
-
-  //  public void setRoles(List<String> roles) {
-  //      this.roles = roles;
-  //  }
 }

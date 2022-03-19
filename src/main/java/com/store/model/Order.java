@@ -22,20 +22,9 @@ public class Order {
 
     @Column(name = "order_date")
     String date;
-    //Date date;
-
-    /*
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "order_list",
-            joinColumns = @JoinColumn(name = "orderid"),
-            inverseJoinColumns = @JoinColumn(name = "productid")
-    )
-
-     */
 
 
-
-    @OneToMany(mappedBy = "orderID",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orderID", cascade = CascadeType.ALL)
     private List<OrderList> orderLists;
 
 
@@ -83,17 +72,8 @@ public class Order {
         this.date = date;
     }
 
-    /*
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-     */
 }
+
 
 
 

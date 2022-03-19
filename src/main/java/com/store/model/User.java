@@ -1,5 +1,7 @@
 package com.store.model;
+
 import com.store.dto.UserDTO;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -27,13 +29,13 @@ public class User {
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="users_roles",
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name="roleid")
+            inverseJoinColumns = @JoinColumn(name = "roleid")
     )
     private List<Role> roles;
 
-    @OneToMany(mappedBy = "userid",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userid", cascade = CascadeType.ALL)
     private List<Order> order;
 
     public List<Order> getOrder() {
@@ -113,17 +115,17 @@ public class User {
         this.email = email;
     }
 
-    public User(UserDTO userDTO){
-        this.username=userDTO.getUsername();
-        this.phone=userDTO.getPhone();
-        this.email=userDTO.getEmail();
+    public User(UserDTO userDTO) {
+        this.username = userDTO.getUsername();
+        this.phone = userDTO.getPhone();
+        this.email = userDTO.getEmail();
     }
 
-    public User(SignupRequest signupRequest){
+    public User(SignupRequest signupRequest) {
 
-        this.username=signupRequest.getUsername();
-        //this.password Пароль установить с шифрованием с помощью сервиса!!!
-        this.email=signupRequest.getEmail();
+        this.username = signupRequest.getUsername();
+        this.phone = signupRequest.getPhone();
+        this.email = signupRequest.getEmail();
     }
 
 

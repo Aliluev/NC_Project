@@ -43,13 +43,13 @@ public class JwtResponse {
         this.username = username;
     }
 
-  public String getEmail() {
+    public String getEmail() {
         return email;
-   }
+    }
 
-   public void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
-  }
+    }
 
     public List<String> getRoles() {
         return roles;
@@ -63,7 +63,6 @@ public class JwtResponse {
         this.token = token;
         this.id = id;
         this.username = username;
-   //     this.email = email;
         this.roles = roles;
     }
 }

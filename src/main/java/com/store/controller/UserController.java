@@ -1,6 +1,7 @@
 package com.store.controller;
+
 import com.store.dto.UserDTO;
-import com.store.model.Category;
+import com.store.model.MessageResponse;
 import com.store.model.Role;
 import com.store.model.User;
 import com.store.repository.RoleRepository;
@@ -20,20 +21,24 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    UserRepository repository;
 
-    @Autowired
+    UserRepository repository;
     RoleRepository roleRepository;
 
 
-    @GetMapping("/get-all")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<List<UserDTO>> getAllUserDTO() {
-        List<User> list= repository.findAll();
-        List<UserDTO> userDTOS=new ArrayList<>();
+    @Autowired
+    public UserController(UserRepository repository, RoleRepository roleRepository) {
+        this.repository = repository;
+        this.roleRepository = roleRepository;
+    }
 
-        for(User user: list){
+
+    @GetMapping("/get-all")
+    public ResponseEntity<List<UserDTO>> getAllUserDTO() {
+        List<User> list = repository.findAll();
+        List<UserDTO> userDTOS = new ArrayList<>();
+
+        for (User user : list) {
             userDTOS.add(new UserDTO(user));
         }
 
@@ -41,137 +46,66 @@ public class UserController {
 
     }
 
-    @PostMapping("/create")
-    public ResponseEntity createUser(@RequestBody UserDTO userDTO){
-
-        User user=new User(userDTO);
-        String[] strings=userDTO.getRoles().split(",");
-        List<Role> roleList=new ArrayList<>();
-        for(String string:strings){
-            List<Role> roles=roleRepository.findByName(string);
-            if(roles.size()==1){
-                roleList.add(roles.get(0));
-            }else{
-                Role role=new Role(string);
-                roleRepository.save(role);
-                roleList.add(roleRepository.findByName(string).get(0));
-            }
-        }
-
-       // User user=new User(userDTO);
-        user.setRoles(roleList);
-        repository.save(user);
-        return ResponseEntity.ok(HttpStatus.OK);
-
-    }
-
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable(value = "id") Integer id){
-      try {
-          User user = repository.getById(id);
-          UserDTO userDTO = new UserDTO(user);
-          return ResponseEntity.ok(userDTO);
-      }catch (RuntimeException exception){
-          return new ResponseEntity<>(new UserDTO(),HttpStatus.NOT_FOUND);
-      }
+    public ResponseEntity<UserDTO> getUserById(@PathVariable(value = "id") Integer id) {
+        try {
+            User user = repository.getById(id);
+            UserDTO userDTO = new UserDTO(user);
+            return ResponseEntity.ok(userDTO);
+        } catch (RuntimeException exception) {
+            return new ResponseEntity<>(new UserDTO(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/delete/{name}")
-    public ResponseEntity deleteUser(@PathVariable(value = "name") String name ){
-        try{
-            List<User> userList=repository.findByUsername(name);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity deleteUser(@PathVariable(value = "name") String name) {
+        try {
+            List<User> userList = repository.findByUsername(name);
             repository.delete(userList.get(0));
             return ResponseEntity.ok(HttpStatus.OK);
-        }catch (RuntimeException runtimeException){
-            return new ResponseEntity<>(new UserDTO(),HttpStatus.NOT_FOUND);
+        } catch (RuntimeException runtimeException) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Name of User not Found"));
         }
     }
 
-    /*
-    @PatchMapping("/customer/{id}")
-    public HashMap<String, Boolean> updateCustomer(@PathVariable(value = "id") Integer id, @RequestBody Customer customer)throws ResourceNotFoundException{
-        service.update(id,customer);
-        HashMap<String,Boolean> responce=new HashMap<>();
-        responce.put("Update", true);
-        return responce;
-    }
-
-     */
-
-    /*
-    @PutMapping("/update-user/{name}")
-    public ResponseEntity updateUser(@PathVariable(value = "name") String name, @RequestBody UserDTO userDTO){
-
-       try {
-           User user = repository.findByUsername(name).get(0);
-           // !!!!  Использовать Objects.nonNull(); !!!!
-           if (userDTO.getUsername().equals(new String("")) == false) {
-               user.setUsername(userDTO.getUsername());
-           }
-           if (userDTO.getPhone().equals(new String("")) == false) {
-               user.setPhone(userDTO.getPhone());
-           }
-           if (userDTO.getEmail().equals(new String("")) == false) {
-               user.setEmail(userDTO.getEmail());
-           }
-           if (userDTO.getRoles().equals(new String("")) == false) {
-
-               List<Role> listRole = new ArrayList<>();
-               String[] strRoles = userDTO.getRoles().split(",");
-               for (String str : strRoles) {
-                   // Integer.
-                   listRole.add(new Role(Integer.getInteger(str)));
-               }
-               user.setRoles(listRole);
-           }
-
-           repository.save(user);
-           return ResponseEntity.ok(HttpStatus.OK);
-       }catch (RuntimeException runtimeException){
-           return new ResponseEntity<>(new UserDTO(),HttpStatus.NOT_FOUND);
-       }
-
-    }
-
-     */
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity updateUser(@RequestBody UserDTO userDTO) {
 
-       // User user=new User(userDTO);
-        String[] strings=userDTO.getRoles().split(",");
-        List<Role> roleList=new ArrayList<>();
-        for(String string:strings){
-            List<Role> roles=roleRepository.findByName(string);
-            if(roles.size()==1){
+        List<User> findUser = repository.findByUsername(userDTO.getUsername());
+        if (findUser.size() == 0) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: User Not Found"));
+        }
+
+
+        String[] strings = userDTO.getRoles().split(",");
+        List<Role> roleList = new ArrayList<>();
+        for (String string : strings) {
+            List<Role> roles = roleRepository.findByName(string);
+            if (roles.size() == 1) {
                 roleList.add(roles.get(0));
-            }else{
-                Role role=new Role(string);
+            } else {
+                Role role = new Role(string);
                 roleRepository.save(role);
                 roleList.add(roleRepository.findByName(string).get(0));
             }
         }
 
-        List<User> findUser=repository.findByUsername(userDTO.getUsername());
-        //Если имя не новое
-        if(findUser.size()>0){
-            User user=findUser.get(0);
-            user.setUsername(userDTO.getUsername());
-            user.setPhone(userDTO.getPhone());
-            user.setEmail(userDTO.getEmail());
-            user.setRoles(roleList);
-            repository.save(user);
-        }else{
-            User user=new User(userDTO);
-            user.setRoles(roleList);
-            repository.save(user);
-        }
-
+        findUser = repository.findByUsername(userDTO.getUsername());
+        User user = findUser.get(0);
+        user.setUsername(userDTO.getUsername());
+        user.setPhone(userDTO.getPhone());
+        user.setEmail(userDTO.getEmail());
+        user.setRoles(roleList);
+        repository.save(user);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-
-
-
-    }
+}

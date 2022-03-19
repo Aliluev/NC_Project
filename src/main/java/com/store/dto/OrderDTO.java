@@ -15,18 +15,18 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(String userID, String statusID, String data,String orderID) {
+    public OrderDTO(String userID, String statusID, String data, String orderID) {
         this.userID = userID;
         this.statusID = statusID;
         this.date = data;
-        this.orderID=orderID;
+        this.orderID = orderID;
     }
 
     public OrderDTO(Order order) {
-        this.orderID=order.getId().toString();
-        this.userID=order.getUserid().getUsername();
-        this.statusID=order.getStatusid().getName();
-        this.date= order.getDate();
+        this.orderID = order.getId().toString();
+        this.userID = order.getUserid().getUsername();
+        this.statusID = order.getStatusid().getName();
+        this.date = order.getDate();
     }
 
     public String getOrderID() {

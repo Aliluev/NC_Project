@@ -1,14 +1,18 @@
 package com.store.controller;
+
 import com.store.dto.ProductDTO;
 import com.store.model.Category;
 import com.store.model.Image;
+import com.store.model.MessageResponse;
 import com.store.model.Product;
 import com.store.repository.CategoryRepository;
 import com.store.repository.ImageDbRepository;
 import com.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,22 +24,27 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-    @Autowired
-    ProductRepository repository;
 
-    @Autowired
+    ProductRepository productRepository;
     CategoryRepository categoryRepository;
-
-    @Autowired
     ImageDbRepository imageDbRepository;
 
+    @Value("${app.imageUrl}")
+    private String imageUrl;
+
+    @Autowired
+    public ProductController(ProductRepository repository, CategoryRepository categoryRepository, ImageDbRepository imageDbRepository) {
+        this.productRepository = repository;
+        this.categoryRepository = categoryRepository;
+        this.imageDbRepository = imageDbRepository;
+    }
 
     @GetMapping("/get-all")
-    public ResponseEntity<List<ProductDTO>> getAllUserDTO(){
-        List<Product> list= repository.findAll();
-        List<ProductDTO> productDTOS=new ArrayList<>();
+    public ResponseEntity<List<ProductDTO>> getAllUserDTO() {
+        List<Product> list = productRepository.findAll();
+        List<ProductDTO> productDTOS = new ArrayList<>();
 
-        for(Product product: list){
+        for (Product product : list) {
             productDTOS.add(new ProductDTO(product));
         }
 
@@ -43,17 +52,44 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<HttpStatus> createProduct(@RequestBody ProductDTO productDTO){
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity createProduct(@RequestBody ProductDTO productDTO) {
 
-        Product product=new Product(productDTO);
-        List<Image> imageList=imageDbRepository.findAll();
-        Image image=imageList.get(imageList.size()-1);
-        product.setImage("http://localhost:8080/image/"+image.getId());
-        String[] strings=productDTO.getCategory().split(",");
-        //List<Category> findCategory=categoryRepository.findByName(productDTO.getCategory());
-        List<Category> categoryList=new ArrayList<>();
-        for(String string:strings) {
-            List<Category> findCategory=categoryRepository.findByName(string);
+        try {
+            Integer checkInt = Integer.parseInt(productDTO.getCount());
+            checkInt = Integer.parseInt(productDTO.getPrice());
+        } catch (RuntimeException exception) {
+            return new ResponseEntity<>("Wrong input count or price", HttpStatus.BAD_REQUEST);
+        }
+
+        if ((Integer.parseInt(productDTO.getCount()) == 0) || Integer.parseInt(productDTO.getPrice()) == 0) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Count or Price should be > 0"));
+        }
+
+        if (productRepository.existsByName(productDTO.getName())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Name of Product is exist"));
+        }
+
+        if (productDTO.getImage().equals("false")) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Image not load"));
+        }
+
+        Product product = new Product(productDTO);
+        List<Image> imageList = imageDbRepository.findAll();
+
+        Image image = imageList.get(imageList.size() - 1);
+        product.setImage(imageUrl + image.getId());
+
+        String[] strings = productDTO.getCategory().split(",");
+        List<Category> categoryList = new ArrayList<>();
+        for (String string : strings) {
+            List<Category> findCategory = categoryRepository.findByName(string);
             if (findCategory.size() == 1) {
                 categoryList.add(findCategory.get(0));
             } else {
@@ -65,68 +101,86 @@ public class ProductController {
         }
 
         product.setCategory(categoryList);
-        repository.save(product);
+        productRepository.save(product);
         return ResponseEntity.ok(HttpStatus.OK);
-        /*
-        //Установить магазин
-        String[] strStore=productDTO.getStorage().split(",");
-        List<Storage> storages=new ArrayList<>();
-        for(String string:strStore){
-            storages.add(storageRepository.findByName(string).get(0));
-        }
-         */
-
     }
 
-    //Удаление по названию
+
     @DeleteMapping("/delete/{name}")
-    public ResponseEntity deleteProduct(@PathVariable(value = "name") String name ) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity deleteProduct(@PathVariable(value = "name") String name) {
         try {
-            List<Product> productList = repository.findByName(name);
-            repository.delete(productList.get(0));
-           return (ResponseEntity.ok(HttpStatus.OK));
-        }catch (RuntimeException exception){
-            return new ResponseEntity<>(new ProductDTO(), HttpStatus.NOT_FOUND);
+            List<Product> productList = productRepository.findByName(name);
+            productRepository.delete(productList.get(0));
+            return (ResponseEntity.ok(HttpStatus.OK));
+        } catch (RuntimeException exception) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Product Not Found"));
         }
     }
 
 
-
-    //Если мы меняем имя мы во фронте будем вызывать метод обновления, если после этого имена будут не совпадать вызову удаление старого по имени
     @PutMapping("/update")
-    public ResponseEntity updateProduct(@RequestBody ProductDTO productDTO){
-        // Product.category в моей концепции не может быть пустой
-        String[] strings=productDTO.getCategory().split(",");
-        List<Category> categories=new ArrayList<>();
-        int i=0;
-        for(String string:strings){
-            List<Category> findCategory=categoryRepository.findByName(strings[i]);
-            if(findCategory.size()==1){
+    public ResponseEntity updateProduct(@RequestBody ProductDTO productDTO) {
+
+
+        try {
+            Integer checkInt = Integer.parseInt(productDTO.getCount());
+            checkInt = Integer.parseInt(productDTO.getPrice());
+        } catch (RuntimeException exception) {
+            return new ResponseEntity<>("Wrong input count or price", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!productRepository.existsByName(productDTO.getName())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Product is not exists"));
+        }
+
+        String[] strings = productDTO.getCategory().split(",");
+        List<Category> categories = new ArrayList<>();
+
+        int i = 0;
+
+        for (String string : strings) {
+            List<Category> findCategory = categoryRepository.findByName(strings[i]);
+            if (findCategory.size() == 1) {
                 categories.add(findCategory.get(0));
                 i++;
-            }else {
+            } else {
                 Category category = new Category(string);
                 categoryRepository.save(category);
-                List<Category> findNewCategory=categoryRepository.findByName(string);
+                List<Category> findNewCategory = categoryRepository.findByName(string);
                 categories.add(findNewCategory.get(0));
                 i++;
             }
 
         }
-        List<Product> findProduct=repository.findByName(productDTO.getName());
-        //Если имя не новое
-        if(findProduct.size()>0) {
+        List<Product> findProduct = productRepository.findByName(productDTO.getName());
+
+        String newImageUrl;
+        if (productDTO.getImage().equals("true")) {
+            List<Image> imageList = imageDbRepository.findAll();
+            Image image = imageList.get(imageList.size() - 1);
+            newImageUrl = imageUrl + image.getId();
+        } else {
+            newImageUrl = productDTO.getImage();
+        }
+
+
+        if (findProduct.size() > 0) {
             Product product = findProduct.get(0);
             product.setPrice(Integer.parseInt(productDTO.getPrice()));
             product.setCount(Integer.parseInt(productDTO.getCount()));
             product.setCategory(categories);
-
-            product.setImage(productDTO.getImage());
-            repository.save(product);
-        }else{
-            Product product=new Product(productDTO);
+            product.setImage(newImageUrl);
+            productRepository.save(product);
+        } else {
+            Product product = new Product(productDTO);
+            product.setImage(newImageUrl);
             product.setCategory(categories);
-            repository.save(product);
+            productRepository.save(product);
         }
         return ResponseEntity.ok(HttpStatus.OK);
     }

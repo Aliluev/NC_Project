@@ -1,8 +1,6 @@
 package com.store.model;
 
 
-
-
 import com.store.dto.ProductDTO;
 
 import javax.persistence.*;
@@ -25,7 +23,6 @@ public class Product {
 
     private String image;
 
-
     public String getImage() {
         return image;
     }
@@ -43,20 +40,13 @@ public class Product {
     }
 
     @ManyToMany
-    @JoinTable(name="product_category",
-            joinColumns = @JoinColumn(name="productid"),
+    @JoinTable(name = "product_category",
+            joinColumns = @JoinColumn(name = "productid"),
             inverseJoinColumns = @JoinColumn(name = "categoryid"))
     private List<Category> category;
 
-    /*
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "order_list",
-            joinColumns = @JoinColumn(name = "productid"),
-            inverseJoinColumns = @JoinColumn(name = "orderid")
-    )
 
-     */
-    @OneToMany(mappedBy = "productID",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "productID", cascade = CascadeType.ALL)
     private List<OrderList> orderList;
 
     public List<OrderList> getOrderList() {
@@ -66,23 +56,6 @@ public class Product {
     public void setOrderList(List<OrderList> orderList) {
         this.orderList = orderList;
     }
-
-
-    /*
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Storage> storage;
-
-    public List<Storage> getStorage() {
-        return storage;
-    }
-
-    public void setStorage(List<Storage> storage) {
-        this.storage = storage;
-    }
-
-
-     */
-
 
     public Integer getId() {
         return id;
@@ -116,20 +89,21 @@ public class Product {
         this.category = category;
     }
 
-    public void setCategory(String string){
-        Category category=new Category(string);
+    public void setCategory(String string) {
+        Category category = new Category(string);
         category.setName(string);
-        this.category=new ArrayList<>();
+        this.category = new ArrayList<>();
         this.category.add(category);
     }
 
-    public Product(){}
+    public Product() {
+    }
 
-    public Product(ProductDTO productDTO){
-        this.name=productDTO.getName();
-        this.price=Integer.parseInt(productDTO.getPrice());
-        this.count=Integer.parseInt(productDTO.getCount());
-        this.image=productDTO.getImage();
+    public Product(ProductDTO productDTO) {
+        this.name = productDTO.getName();
+        this.price = Integer.parseInt(productDTO.getPrice());
+        this.count = Integer.parseInt(productDTO.getCount());
+        this.image = productDTO.getImage();
     }
 
 
