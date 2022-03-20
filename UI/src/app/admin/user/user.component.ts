@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { User } from "src/app/entities/user";
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: 'user-component',
@@ -55,7 +56,7 @@ export class UserComponent {
 
     updateUser(user: User) {
 
-        this.http.put('http://localhost:8080/user/update', user).subscribe((data: any) => { console.log("ok") },
+        this.http.put(environment.backendUrl + '/user/update', user).subscribe((data: any) => { console.log("ok") },
             (error: any) => console.log("eror"));
         let temUser = new User(user.username, user.phone, user.email, user.roles);
         this.users = this.users.filter(c => (c.username !== user.username));
@@ -66,7 +67,7 @@ export class UserComponent {
 
 
     deleteUser(name: string | string) {
-        this.http.delete('http://localhost:8080/user/delete/' + name).subscribe((data: any) => {
+        this.http.delete(environment.backendUrl + '/user/delete/' + name).subscribe((data: any) => {
             console.log("ok");
             this.users = this.users.filter(c => (c.username !== name));
         },

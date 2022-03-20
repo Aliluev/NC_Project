@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { Observable } from "rxjs";
 import { Category } from "src/app/entities/category";
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: 'categories-component',
@@ -26,24 +27,24 @@ export class CategoriesComponent {
         this.selectedFile = <File>event.target.files[0];
         const fd = new FormData();
         fd.append('file', this.selectedFile, this.selectedFile?.name);
-        this.http.post('http://localhost:8080/image/save', fd).subscribe((data: any) => { console.log("ok") },
+        this.http.post(environment.backendUrl + '/image/save', fd).subscribe((data: any) => { console.log("ok") },
             (error: any) => console.log("eror"));
     }
 
     image: any;
 
     loadImage() {
-        this.http.get('http://localhost:8080/image/1', this.image).subscribe((data: any) => { console.log("ok") },
+        this.http.get(environment.backendUrl + '/image/1', this.image).subscribe((data: any) => { console.log("ok") },
             (error: any) => console.log("eror"));
     }
 
     clickBackend(username: string, password: string) {
-        this.http.post('http://localhost:8080/login/login', { username, password }).subscribe((data: any) => { console.log("ok") },
+        this.http.post(environment.backendUrl + '/login/login', { username, password }).subscribe((data: any) => { console.log("ok") },
             (error: any) => console.log("eror"));
     }
 
     Pampam() {
-        this.http.post<Observable<boolean>>("http://localhost:8080/api/auth/signin", {
+        this.http.post<Observable<boolean>>(environment.backendUrl + '/api/auth/signin', {
             username: this.username,
             password: this.password
         }).subscribe((data: any) => { console.log("ok") },
@@ -54,7 +55,7 @@ export class CategoriesComponent {
 
     perem = "";
     Uploadd() {
-        this.http.get<string>('http://localhost:8080/user').subscribe((data: string) => this.perem = data);
+        this.http.get<string>(environment.backendUrl + '/user').subscribe((data: string) => this.perem = data);
 
     }
 
@@ -82,7 +83,7 @@ export class CategoriesComponent {
     name = "";
 
     getCategories() {
-        return this.http.get<Category[]>('http://localhost:8080/category/get-all');
+        return this.http.get<Category[]>(environment.backendUrl + '/category/get-all');
     }
 
     loadCategories() {
@@ -96,7 +97,7 @@ export class CategoriesComponent {
     }
 
     deleteCategory(name: string | string) {
-        this.http.delete('http://localhost:8080/category/delete/' + name).subscribe((data: any) => { console.log("ok") },
+        this.http.delete(environment.backendUrl + '/category/delete/' + name).subscribe((data: any) => { console.log("ok") },
             (error: any) => {
                 this.deleteEror = true;
                 console.log("eror");
@@ -108,7 +109,7 @@ export class CategoriesComponent {
     }
 
     postCategory(category: Category) {
-        this.http.post('http://localhost:8080/category/create', category).subscribe((data: any) => {
+        this.http.post(environment.backendUrl + '/category/create', category).subscribe((data: any) => {
             console.log("ok");
             let temCategory = new Category(category.name, category.product);
             this.categories.push(temCategory);

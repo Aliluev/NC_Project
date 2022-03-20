@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { Role } from "src/app/entities/role";
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: 'role-component',
@@ -21,7 +22,7 @@ export class RoleComponent {
     erorDelete = false;
 
     getRoles() {
-        return this.http.get<Role[]>('http://localhost:8080/role/get-all-role');
+        return this.http.get<Role[]>(environment.backendUrl + '/role/get-all-role');
     }
 
     loadRoles() {
@@ -49,7 +50,7 @@ export class RoleComponent {
 
 
     deleteRole(name: string | string) {
-        this.http.delete('http://localhost:8080/role/delete/' + name).subscribe((data: any) => { console.log("ok") },
+        this.http.delete(environment.backendUrl + '/role/delete/' + name).subscribe((data: any) => { console.log("ok") },
             (error: any) => {
                 console.log("eror");
                 this.erorDelete = true;
@@ -60,7 +61,7 @@ export class RoleComponent {
     }
 
     postRole(role: Role) {
-        this.http.post('http://localhost:8080/role/create', role).subscribe((data: any) => {
+        this.http.post(environment.backendUrl + '/role/create', role).subscribe((data: any) => {
             console.log("ok");
             let temRole = new Role(role.id, role.name);
             this.roles.push(temRole);

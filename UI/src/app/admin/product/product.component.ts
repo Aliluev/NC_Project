@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { Product } from "src/app/entities/product";
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: 'product-component',
@@ -21,7 +22,7 @@ export class ProductComponent {
     products2: Product[] = [];
     templateProduct: Product = new Product("", "", "", "", "");
 
-    products = this.http.get<Product[]>('http://localhost:8080/product/get-all');
+    products = this.http.get<Product[]>(environment.backendUrl + '/product/get-all');
     product: Product = new Product("", "", "", "", "");
     productUpdate: Product = new Product("", "", "", "", "");
     name = "";
@@ -35,7 +36,7 @@ export class ProductComponent {
         this.selectedFile = <File>event.target.files[0];
         const fd = new FormData();
         fd.append('file', this.selectedFile, this.selectedFile?.name);
-        this.http.post('http://localhost:8080/image/save', fd).subscribe((data: any) => {
+        this.http.post(environment.backendUrl + '/image/save', fd).subscribe((data: any) => {
             this.fileLoad = "true";
             console.log("ok")
         },
@@ -49,7 +50,7 @@ export class ProductComponent {
         this.selectedFile = <File>event.target.files[0];
         const fd = new FormData();
         fd.append('file', this.selectedFile, this.selectedFile?.name);
-        this.http.post('http://localhost:8080/image/save', fd).subscribe((data: any) => {
+        this.http.post(environment.backendUrl + '/image/save', fd).subscribe((data: any) => {
             this.fileUpdate = "true";
             console.log("ok")
         },
@@ -84,7 +85,7 @@ export class ProductComponent {
 
 
     getProducts() {
-        return this.http.get<Product[]>('http://localhost:8080/product/get-all');
+        return this.http.get<Product[]>(environment.backendUrl + '/product/get-all');
     }
 
     loadProducts() {
@@ -97,7 +98,7 @@ export class ProductComponent {
 
 
     deleteProduct(name: string | string) {
-        this.http.delete('http://localhost:8080/product/delete/' + name).subscribe((data: any) => { console.log("ok"); },
+        this.http.delete(environment.backendUrl + '/product/delete/' + name).subscribe((data: any) => { console.log("ok"); },
             (error: any) => {
                 console.log("eror");
                 this.erorDelete = true;
@@ -108,10 +109,10 @@ export class ProductComponent {
 
     postProduct(product: Product) {
         product.image = this.fileLoad;
-        this.http.post('http://localhost:8080/product/create', product).subscribe((data: any) => {
+        this.http.post(environment.backendUrl + '/product/create', product).subscribe((data: any) => {
             console.log("ok");
             let temProduct = new Product(product.name, product.price, product.category, product.count, product.image);
-            this.http.get<number>('http://localhost:8080/image/get-last-image').subscribe((data: number) => temProduct.image = "http://localhost:8080/image/" + data);
+            this.http.get<number>(environment.backendUrl + '/image/get-last-image').subscribe((data: number) => temProduct.image = "http://localhost:8080/image/" + data);
             this.products2.push(temProduct);
             this.isLoginFailed = false;
         },
@@ -127,11 +128,11 @@ export class ProductComponent {
 
     updateProduct(product: Product) {
         product.image = this.fileUpdate;
-        this.http.put('http://localhost:8080/product/update'
+        this.http.put(environment.backendUrl + '/product/update'
             , product).subscribe((data: any) => {
                 console.log("ok");
                 let temProduct = new Product(product.name, product.price, product.category, product.count, product.image);
-                this.http.get<number>('http://localhost:8080/image/get-last-image').subscribe((data: number) => temProduct.image = "http://localhost:8080/image/" + data);
+                this.http.get<number>(environment.backendUrl + '/image/get-last-image').subscribe((data: number) => temProduct.image = "http://localhost:8080/image/" + data);
                 this.products2 = this.products2.filter(c => (c.name !== product.name));
                 this.products2.push(temProduct);
             },

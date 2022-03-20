@@ -3,6 +3,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from './token-storage.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,9 @@ import { TokenStorageService } from './token-storage.service';
 
 export class UserService implements OnInit {
 
-  private userUrl = 'http://localhost:8080/api/test/user';
-  private pmUrl = 'http://localhost:8080/api/test/mod';
-  private adminUrl = 'http://localhost:8080/api/test/admin';
+  private userUrl = environment.backendUrl + '/api/test/user';
+  private pmUrl = environment.backendUrl + '/api/test/mod';
+  private adminUrl = environment.backendUrl + '/api/test/admin';
 
   constructor(private http: HttpClient, private token: TokenStorageService) { }
 

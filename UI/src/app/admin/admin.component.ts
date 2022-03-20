@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { User } from '../entities/user';
 import { Role } from "../entities/role";
 import { TokenStorageService } from "../authorization/token-storage.service";
+import { environment } from "src/environments/environment";
 
 
 @Component({
@@ -13,9 +14,9 @@ import { TokenStorageService } from "../authorization/token-storage.service";
 
 export class AdminRole implements OnInit {
   id = "";
-  users = this.http.get<User[]>('http://localhost:8080/user/get-all');
+  users = this.http.get<User[]>(environment.backendUrl + '/user/get-all');
 
-  roles = this.http.get<Role[]>('http://localhost:8080/role/get-all-role');
+  roles = this.http.get<Role[]>(environment.backendUrl + '/role/get-all-role');
 
   allowedToEnter = false;
   roleAdmin = false;
@@ -36,18 +37,18 @@ export class AdminRole implements OnInit {
   user: User = new User("", "", "", "");
 
   methodPostUser(user: User) {
-    this.http.post('http://localhost:8080/user/create', user).subscribe((data: any) => { console.log("ok") },
+    this.http.post(environment.backendUrl + '/user/create', user).subscribe((data: any) => { console.log("ok") },
       (error: any) => console.log("eror"));
   }
 
   methodDeleteUser(id: number | string) {
-    this.http.delete('http://localhost:8080/user/delete/' + id
+    this.http.delete(environment.backendUrl + '/user/delete/' + id
     ).subscribe((data: any) => { console.log("ok") },
       (error: any) => console.log("eror"));
   }
 
   methodUpdateUser(user: User | undefined) {
-    this.http.put('http://localhost:8080/user/update', user).subscribe((data: any) => { console.log("ok") },
+    this.http.put(environment.backendUrl + '/user/update', user).subscribe((data: any) => { console.log("ok") },
       (error: any) => console.log("eror"));
   }
 

@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Order } from "src/app/entities/order";
 import { Bucket } from "src/app/entities/bucket";
+import { environment } from "src/environments/environment";
 
 
 
@@ -23,13 +24,13 @@ export class OrdersComponent {
     detailsOrders: Bucket[] = [];
 
     getOrderes() {
-        this.http.get<Order[]>('http://localhost:8080/order/get-ordered-order').subscribe((data: Order[]) => this.orders = data);
+        this.http.get<Order[]>(environment.backendUrl + '/order/get-ordered-order').subscribe((data: Order[]) => this.orders = data);
 
     }
 
     getDetailsOrders(id: string) {
         this.buttonClick = true;
-        this.http.get<Bucket[]>('http://localhost:8080/order-list/get-order-list-ordered/' + id).subscribe((data: Bucket[]) => this.detailsOrders = data);
+        this.http.get<Bucket[]>(environment.backendUrl + '/order-list/get-order-list-ordered/' + id).subscribe((data: Bucket[]) => this.detailsOrders = data);
 
     }
 

@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
+import { environment } from "src/environments/environment";
 import { TokenStorageService } from "../authorization/token-storage.service";
 import { Bucket } from "../entities/bucket";
 
@@ -16,6 +17,7 @@ export class BucketComponent {
 
   user = "";
   bucket: Bucket[] = [];
+  emptyBacket: Bucket[] = [];
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
@@ -24,11 +26,11 @@ export class BucketComponent {
   }
 
   getBucket() {
-    this.http.get<Bucket[]>('http://localhost:8080/order-list/get-order-list/' + this.tokenStorage.getUsername()).subscribe((data: Bucket[]) => this.bucket = data);
+    this.http.get<Bucket[]>(environment.backendUrl + '/order-list/get-order-list/' + this.tokenStorage.getUsername()).subscribe((data: Bucket[]) => this.bucket = data);
   }
 
   deleteProduct(orderListId: string) {
-    this.http.delete('http://localhost:8080/order-list/delete/' + orderListId
+    this.http.delete(environment.backendUrl + '/order-list/delete/' + orderListId
     ).subscribe((data: any) => { console.log("ok") },
       (error: any) => console.log("eror"));
     this.bucket = this.bucket.filter(c => (c.orderListId !== orderListId));
@@ -38,8 +40,14 @@ export class BucketComponent {
 
 
   ordered() {
-    this.http.post('http://localhost:8080/status/status-ordered', this.tokenStorage.getUsername()).subscribe((data: any) => { console.log("ok"); this.bucket = []; },
-      (error: any) => console.log("eror"));
+    this.http.post(environment.backendUrl + '/status/status-ordered', this.tokenStorage.getUsername()).subscribe((data: any) => {
+      this.bucket = this.emptyBacket;
+      this.getBucket();
+    },
+      (error: any) => {
+        this.bucket = this.emptyBacket;
+        this.getBucket();
+      });
     this.getBucket();
   }
 }
