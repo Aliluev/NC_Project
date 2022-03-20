@@ -28,6 +28,10 @@ public class StatusController {
     UserRepository userRepository;
     ProductRepository productRepository;
 
+    private final String plannedStatus="planned";
+    private final String proccesedStatus="proccesed";
+
+
     @Autowired
     public StatusController(StatusRepository statusRepository, OrderRepository orderRepository, UserRepository userRepository, ProductRepository productRepository) {
         this.statusRepository = statusRepository;
@@ -38,10 +42,10 @@ public class StatusController {
 
     @GetMapping("/get-all")
     public ResponseEntity<List<StatusDTO>> getAllStatus() {
-        List<Status> list = statusRepository.findAll();
+        List<Status> statusList = statusRepository.findAll();
         List<StatusDTO> statusDTOS = new ArrayList<>();
 
-        for (Status status : list) {
+        for (Status status : statusList) {
             statusDTOS.add(new StatusDTO(status.getName()));
         }
 
@@ -50,22 +54,22 @@ public class StatusController {
     }
 
     @PostMapping("/status-ordered")
-    public ResponseEntity nextstatus(@RequestBody String name) {
+    public ResponseEntity nextStatus(@RequestBody String name) {
 
         User user = userRepository.getByUsername(name).get(0);
-        Order order = orderRepository.getByUseridAndStatusid(user, statusRepository.getByName("begin").get(0)).get(0);
-        List<OrderList> orderList = order.getOrderLists();
-        for (OrderList orderList1 : orderList) {
-            Product product = orderList1.getProductID();
-            product.setCount(product.getCount() - orderList1.getCount());
+        Order order = orderRepository.getByUseridAndStatusid(user, statusRepository.getByName(plannedStatus).get(0)).get(0);
+        List<OrderList> orderDetails = order.getOrderLists();
+        for (OrderList orderList : orderDetails) {
+            Product product = orderList.getProductID();
+            product.setCount(product.getCount() - orderList.getCount());
             productRepository.save(product);
         }
-        if (statusRepository.getByName("ordered").size() == 0) {
+        if (statusRepository.getByName(proccesedStatus).size() == 0) {
             Status status = new Status();
-            status.setName("ordered");
+            status.setName(proccesedStatus);
             statusRepository.save(status);
         }
-        Status status = statusRepository.getByName("ordered").get(0);
+        Status status = statusRepository.getByName(proccesedStatus).get(0);
         order.setStatusid(status);
         order.setDate(new Date().toString());
         orderRepository.save(order);

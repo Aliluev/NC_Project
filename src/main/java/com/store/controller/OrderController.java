@@ -1,10 +1,8 @@
 package com.store.controller;
 
-
 import com.store.dto.OrderDTO;
 import com.store.dto.ProductDTO;
 import com.store.model.Order;
-import com.store.model.Product;
 import com.store.model.Status;
 import com.store.model.User;
 import com.store.repository.OrderRepository;
@@ -23,6 +21,7 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
 
+    private final String proccesedStatus="proccesed";
 
     OrderRepository orderRepository;
     UserRepository userRepository;
@@ -38,7 +37,7 @@ public class OrderController {
     @GetMapping("/get-ordered-order")
     public ResponseEntity<List<OrderDTO>> getOrderedOrder() {
 
-        Status status = statusRepository.getByName("ordered").get(0);
+        Status status = statusRepository.getByName(proccesedStatus).get(0);
         List<Order> orderList = orderRepository.getByStatusid(status);
         List<OrderDTO> orderDTOS = new ArrayList<>();
 

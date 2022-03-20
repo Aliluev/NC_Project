@@ -1,6 +1,9 @@
 <div class="rout">
   <a routerLink="/bucket">Bucket</a>
 </div>
+<div class="logout">
+  <button (click)="endSession()" >Logout</button>
+  </div>
 <div class="products">
   <div *ngFor='let lst of  products2 ;let idx=index' class="ng">
     <ul class="product">
@@ -25,4 +28,5 @@
     </ul>
   </div>
 </div>
+
 

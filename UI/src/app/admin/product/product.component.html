@@ -64,7 +64,7 @@
 
 <div class="update-element">
     <div *ngIf="buttonUpdate" class="input-border">
-        <form class="form" (ngSubmit)="f.form.valid && updateProduct(productUpdate)" #f="ngForm" novalidate>
+        <form class="form" (ngSubmit)="f.form.valid && updateProduct(productUpdate,productUpdate.name)" #f="ngForm" novalidate>
             <h1>Update</h1>
             <input type="text" class="input-text" required maxlength="50" placeholder="Name" name="Name"
                 [(ngModel)]="productUpdate.name">

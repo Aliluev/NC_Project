@@ -12,9 +12,7 @@ public class RoleDTO {
         this.id = role.getId();
     }
 
-    public RoleDTO() {
-
-    }
+    public RoleDTO() {}
 
     public Integer getId() {
         return id;

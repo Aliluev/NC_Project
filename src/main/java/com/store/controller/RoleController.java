@@ -29,13 +29,13 @@ public class RoleController {
 
     @GetMapping("/get-all-role")
     public ResponseEntity<List<RoleDTO>> getAllRoleDTO() {
-        List<Role> list = roleRepository.findAll();
-        List<RoleDTO> roleDTOS = new ArrayList<>();
+        List<Role> roleList = roleRepository.findAll();
+        List<RoleDTO> roleDTOSlist = new ArrayList<>();
 
-        for (Role role : list) {
-            roleDTOS.add(new RoleDTO(role));
+        for (Role role : roleList) {
+            roleDTOSlist.add(new RoleDTO(role));
         }
-        return ResponseEntity.ok(roleDTOS);
+        return ResponseEntity.ok(roleDTOSlist);
 
     }
 

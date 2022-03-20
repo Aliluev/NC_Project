@@ -58,11 +58,7 @@ public class ProductDTO {
     public ProductDTO(Product product) {
         this.name = product.getName();
         this.price = product.getPrice().toString();
-        if (product.getCount() == null) {
-            this.count = "0";
-        } else {
-            this.count = product.getCount().toString();
-        }
+        this.count = product.getCount().toString();
         this.image = product.getImage();
 
         StringBuilder stringBuilder = new StringBuilder();

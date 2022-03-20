@@ -117,7 +117,7 @@ export class ProductComponent {
         this.http.post(environment.backendUrl + '/product/create', product).subscribe((data: any) => {
             console.log("ok");
             let temProduct = new Product(product.name, product.price, product.category, product.count, product.image);
-            this.http.get<number>(environment.backendUrl + '/image/get-last-image').subscribe((data: number) => temProduct.image = "http://localhost:8080/image/" + data);
+            this.http.get<number>(environment.backendUrl + '/image/get-last-image').subscribe((data: number) => temProduct.image = environment.backendUrl + "/image/" + data);
             this.products2.push(temProduct);
             this.isLoginFailed = false;
         },
@@ -130,23 +130,30 @@ export class ProductComponent {
 
     }
 
-
-    updateProduct(product: Product) {
+    templateImage = "";
+    updateProduct(product: Product, name: string) {
         product.image = this.fileUpdate;
         this.http.put(environment.backendUrl + '/product/update'
             , product).subscribe((data: any) => {
                 console.log("ok");
                 let temProduct = new Product(product.name, product.price, product.category, product.count, product.image);
-                this.http.get<number>(environment.backendUrl + '/image/get-last-image').subscribe((data: number) => temProduct.image = "http://localhost:8080/image/" + data);
-                this.products2 = this.products2.filter(c => (c.name !== product.name));
-                this.products2.push(temProduct);
+                for (let i = 0; i < this.products2.length; i++) {
+                    if (this.products2[i].name == name) {
+                        if (product.image == "false") {
+                            temProduct.image = this.products2[i].image;
+                            this.products2[i] = temProduct;
+                        } else {
+                            this.http.get<number>(environment.backendUrl + '/image/get-last-image').subscribe((data: number) => this.products2[i].image = environment.backendUrl + "/image/" + data);
+                            this.products2[i] = temProduct;
+                        }
+                    }
+                }
                 this.updateEror = false;
             },
                 (error: any) => {
                     console.log("eror");
                     this.updateEror = true;
                     this.errorMessage = error.error.message;
-
                 });
 
     }

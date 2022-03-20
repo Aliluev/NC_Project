@@ -29,6 +29,7 @@ public class CategoryDTO {
         this.name = category.getName();
         StringBuilder stringBuilder = new StringBuilder();
         int i = 0;
+
         for (Product product : category.getProduct()) {
             if (i != 0) {
                 stringBuilder.append(",");

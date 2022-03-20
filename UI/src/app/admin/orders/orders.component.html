@@ -10,7 +10,7 @@
         <tr *ngFor="let item of orders; let idx=index">
             <th>{{idx+1}}</th>
             <th>{{item.userID}}</th>
-            <th><button (click)="getDetailsOrders(item.orderID)">order</button></th>
+            <th><button (click)="getDetailsOrders(item.orderID)">details</button></th>
             <th>{{item.statusID}}</th>
             <th>{{item.date}}</th>
         </tr>

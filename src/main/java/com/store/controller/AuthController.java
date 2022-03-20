@@ -25,15 +25,17 @@ public class AuthController {
 
 
     AuthenticationManager authenticationManager;
-    UserRepository userRespository;
+    UserRepository userRepository;
     RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
     JwtUtils jwtUtils;
 
+    private final String defaultUserRole = "ROLE_USER";
+
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRespository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
-        this.userRespository = userRespository;
+        this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
@@ -49,13 +51,12 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
-        User user = userRespository.findByUsername(authentication.getName()).get(0);
+        User user = userRepository.findByUsername(authentication.getName()).get(0);
 
         List<String> roles = new ArrayList<>();
         for (Role role : user.getRoles()) {
             roles.add(role.getName());
         }
-
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 user.getId(), user.getUsername(),
@@ -65,7 +66,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
-        if (userRespository.existsByUsername(signupRequest.getUsername())) {
+        if (userRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is exist"));
@@ -76,18 +77,17 @@ public class AuthController {
 
         List<Role> roleList = new ArrayList<>();
 
-        String string = "ROLE_USER";
-        List<Role> roles = roleRepository.findByName(string);
+        List<Role> roles = roleRepository.findByName(defaultUserRole);
         if (roles.size() == 1) {
             roleList.add(roles.get(0));
         } else {
-            Role role = new Role(string);
+            Role role = new Role(defaultUserRole);
             roleRepository.save(role);
-            roleList.add(roleRepository.findByName(string).get(0));
+            roleList.add(roleRepository.findByName(defaultUserRole).get(0));
         }
 
         user.setRoles(roleList);
-        userRespository.save(user);
+        userRepository.save(user);
 
         return ResponseEntity.ok().body(new UserDTO(user));
 

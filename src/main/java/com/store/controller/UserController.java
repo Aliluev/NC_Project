@@ -22,23 +22,23 @@ import java.util.List;
 public class UserController {
 
 
-    UserRepository repository;
+    UserRepository userRepository;
     RoleRepository roleRepository;
 
 
     @Autowired
     public UserController(UserRepository repository, RoleRepository roleRepository) {
-        this.repository = repository;
+        this.userRepository = repository;
         this.roleRepository = roleRepository;
     }
 
 
     @GetMapping("/get-all")
     public ResponseEntity<List<UserDTO>> getAllUserDTO() {
-        List<User> list = repository.findAll();
+        List<User> userList = userRepository.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();
 
-        for (User user : list) {
+        for (User user : userList) {
             userDTOS.add(new UserDTO(user));
         }
 
@@ -50,7 +50,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable(value = "id") Integer id) {
         try {
-            User user = repository.getById(id);
+            User user = userRepository.getById(id);
             UserDTO userDTO = new UserDTO(user);
             return ResponseEntity.ok(userDTO);
         } catch (RuntimeException exception) {
@@ -62,8 +62,8 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteUser(@PathVariable(value = "name") String name) {
         try {
-            List<User> userList = repository.findByUsername(name);
-            repository.delete(userList.get(0));
+            List<User> userList = userRepository.findByUsername(name);
+            userRepository.delete(userList.get(0));
             return ResponseEntity.ok(HttpStatus.OK);
         } catch (RuntimeException runtimeException) {
             return ResponseEntity
@@ -77,34 +77,34 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity updateUser(@RequestBody UserDTO userDTO) {
 
-        List<User> findUser = repository.findByUsername(userDTO.getUsername());
-        if (findUser.size() == 0) {
+        List<User> userList = userRepository.findByUsername(userDTO.getUsername());
+        if (userList.size() == 0) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: User Not Found"));
         }
 
 
-        String[] strings = userDTO.getRoles().split(",");
+        String[] userRoleArray = userDTO.getRoles().split(",");
         List<Role> roleList = new ArrayList<>();
-        for (String string : strings) {
-            List<Role> roles = roleRepository.findByName(string);
+        for (String roleName : userRoleArray) {
+            List<Role> roles = roleRepository.findByName(roleName);
             if (roles.size() == 1) {
                 roleList.add(roles.get(0));
             } else {
-                Role role = new Role(string);
+                Role role = new Role(roleName);
                 roleRepository.save(role);
-                roleList.add(roleRepository.findByName(string).get(0));
+                roleList.add(roleRepository.findByName(roleName).get(0));
             }
         }
 
-        findUser = repository.findByUsername(userDTO.getUsername());
-        User user = findUser.get(0);
+        userList = userRepository.findByUsername(userDTO.getUsername());
+        User user = userList.get(0);
         user.setUsername(userDTO.getUsername());
         user.setPhone(userDTO.getPhone());
         user.setEmail(userDTO.getEmail());
         user.setRoles(roleList);
-        repository.save(user);
+        userRepository.save(user);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

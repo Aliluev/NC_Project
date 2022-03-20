@@ -14,7 +14,7 @@
           [(ngModel)]="registration.username" #username="ngModel" />
         <input type="password" name="password" placeholder="password" required pattern="^[ 0-9]+$" maxlength="50"
           #password="ngModel" [(ngModel)]="registration.password" />
-        <input type="text" name="email" placeholder="email address" required pattern="\S+@[a-z]+.[a-z]+" maxlength="50"
+        <input type="text" name="email" placeholder="email address" required pattern="\S+@[a-z]+[\.][a-z]+" maxlength="50"
           [(ngModel)]="registration.email" />
         <input type="text" placeholder="+7 (999) 999-99-99" pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}"
           minlength="18" maxlength="18" name="phone" [(ngModel)]="registration.phone" />

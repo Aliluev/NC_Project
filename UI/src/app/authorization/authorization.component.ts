@@ -18,7 +18,7 @@ export class AuthorizationComponent implements OnInit {
   private loginInfo: AuthLoginInfo | undefined;
   buttonclick = false;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { this.isLoggedIn=false;}
 
   board: string = "";
   errorMessage2: string = "";
@@ -34,11 +34,6 @@ export class AuthorizationComponent implements OnInit {
 
 
   onSubmit() {
-    console.log('test this form');
-    console.log(this.form);
-    if (this.form.username == "" || this.form.password == "") {
-
-    }
     this.loginInfo = new AuthLoginInfo(
       this.form.username,
       this.form.password);
@@ -67,6 +62,7 @@ export class AuthorizationComponent implements OnInit {
   reloadPage() {
     window.location.reload();
   }
+
 
 
 }

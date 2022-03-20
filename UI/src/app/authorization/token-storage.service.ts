@@ -46,7 +46,6 @@ export class TokenStorageService {
     this.roles = [];
 
     if (sessionStorage.getItem(TOKEN_KEY)) {
-      console.log('test');
       console.log(sessionStorage.getItem(AUTHORITIES_KEY));
       this.massiv = JSON.parse(<string>sessionStorage.getItem(AUTHORITIES_KEY));
       for (let i = 0; i < this.massiv.length; i++) {

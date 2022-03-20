@@ -96,8 +96,10 @@ export class MarketComponent {
         this.getProducts().subscribe((data: Product[]) => this.products2 = data);
     }
 
-
-
-
+    endSession(){
+        console.log("Почистил")
+        this.tokenStorage.signOut();
+        window.location.reload();
+      }
 
 }

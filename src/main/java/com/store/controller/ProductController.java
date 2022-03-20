@@ -41,10 +41,10 @@ public class ProductController {
 
     @GetMapping("/get-all")
     public ResponseEntity<List<ProductDTO>> getAllUserDTO() {
-        List<Product> list = productRepository.findAll();
+        List<Product> productList = productRepository.findAll();
         List<ProductDTO> productDTOS = new ArrayList<>();
 
-        for (Product product : list) {
+        for (Product product : productList) {
             productDTOS.add(new ProductDTO(product));
         }
 
@@ -56,8 +56,8 @@ public class ProductController {
     public ResponseEntity createProduct(@RequestBody ProductDTO productDTO) {
 
         try {
-            Integer checkInt = Integer.parseInt(productDTO.getCount());
-            checkInt = Integer.parseInt(productDTO.getPrice());
+            Integer checkCount = Integer.parseInt(productDTO.getCount());
+            Integer checkPrice = Integer.parseInt(productDTO.getPrice());
         } catch (RuntimeException exception) {
             return new ResponseEntity<>("Wrong input count or price", HttpStatus.BAD_REQUEST);
         }
@@ -86,9 +86,9 @@ public class ProductController {
         Image image = imageList.get(imageList.size() - 1);
         product.setImage(imageUrl + image.getId());
 
-        String[] strings = productDTO.getCategory().split(",");
+        String[] productCategoryList = productDTO.getCategory().split(",");
         List<Category> categoryList = new ArrayList<>();
-        for (String string : strings) {
+        for (String string : productCategoryList) {
             List<Category> findCategory = categoryRepository.findByName(string);
             if (findCategory.size() == 1) {
                 categoryList.add(findCategory.get(0));
@@ -124,10 +124,10 @@ public class ProductController {
     @PutMapping("/update")
     public ResponseEntity updateProduct(@RequestBody ProductDTO productDTO) {
 
-
+         // Price and count validation
         try {
             Integer checkInt = Integer.parseInt(productDTO.getCount());
-            checkInt = Integer.parseInt(productDTO.getPrice());
+            Integer checkPrice = Integer.parseInt(productDTO.getPrice());
         } catch (RuntimeException exception) {
             return new ResponseEntity<>("Wrong input count or price", HttpStatus.BAD_REQUEST);
         }
@@ -138,23 +138,20 @@ public class ProductController {
                     .body(new MessageResponse("Error: Product is not exists"));
         }
 
-        String[] strings = productDTO.getCategory().split(",");
-        List<Category> categories = new ArrayList<>();
+        String[] productCategoryList = productDTO.getCategory().split(",");
+        List<Category> productCategoryCollection = new ArrayList<>();
 
         int i = 0;
 
-        for (String string : strings) {
-            List<Category> findCategory = categoryRepository.findByName(strings[i]);
-            if (findCategory.size() == 1) {
-                categories.add(findCategory.get(0));
-                i++;
-            } else {
-                Category category = new Category(string);
+        for (String categoryName : productCategoryList) {
+            List<Category> findCategory = categoryRepository.findByName(productCategoryList[i]);
+            if (findCategory.size() != 1) {
+                Category category = new Category(categoryName);
                 categoryRepository.save(category);
-                List<Category> findNewCategory = categoryRepository.findByName(string);
-                categories.add(findNewCategory.get(0));
-                i++;
+                findCategory = categoryRepository.findByName(categoryName);
             }
+            productCategoryCollection.add(findCategory.get(0));
+            i++;
 
         }
         List<Product> findProduct = productRepository.findByName(productDTO.getName());
@@ -165,23 +162,40 @@ public class ProductController {
             Image image = imageList.get(imageList.size() - 1);
             newImageUrl = imageUrl + image.getId();
         } else {
-            newImageUrl = productDTO.getImage();
+            //newImageUrl = productDTO.getImage();
+            newImageUrl=findProduct.get(0).getImage();
         }
 
-
+/*
         if (findProduct.size() > 0) {
             Product product = findProduct.get(0);
             product.setPrice(Integer.parseInt(productDTO.getPrice()));
             product.setCount(Integer.parseInt(productDTO.getCount()));
-            product.setCategory(categories);
+            product.setCategory(productCategoryCollection);
             product.setImage(newImageUrl);
             productRepository.save(product);
         } else {
             Product product = new Product(productDTO);
             product.setImage(newImageUrl);
-            product.setCategory(categories);
+            product.setCategory(productCategoryCollection);
             productRepository.save(product);
         }
+
+ */
+
+        Product product;
+        if (findProduct.size() > 0){
+            product = findProduct.get(0);
+            product.setPrice(Integer.parseInt(productDTO.getPrice()));
+            product.setCount(Integer.parseInt(productDTO.getCount()));
+        }else {
+            product = new Product(productDTO);
+        }
+        product.setImage(newImageUrl);
+        product.setCategory(productCategoryCollection);
+        productRepository.save(product);
+
+
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

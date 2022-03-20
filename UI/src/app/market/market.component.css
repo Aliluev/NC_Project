@@ -44,3 +44,13 @@ ul.product img{
     margin-top: 0px;
     margin: 0px 0px;
   }
+
+
+  .logout{
+    text-align: left; 
+    margin-left: 60px;
+    margin-top: -20px;
+  }
+  .logout button{
+    border-radius: 10px;
+  }

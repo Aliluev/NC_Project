@@ -32,14 +32,14 @@ public class CategoryController {
 
     @GetMapping("/get-all")
     public ResponseEntity<List<CategoryDTO>> getAllUserDTO() {
-        List<Category> list = categoryRepository.findAll();
-        List<CategoryDTO> categoryDTOS = new ArrayList<>();
+        List<Category> categoryList = categoryRepository.findAll();
+        List<CategoryDTO> categoryDTOList = new ArrayList<>();
 
-        for (Category category : list) {
-            categoryDTOS.add(new CategoryDTO(category));
+        for (Category category : categoryList) {
+            categoryDTOList.add(new CategoryDTO(category));
         }
 
-        return ResponseEntity.ok(categoryDTOS);
+        return ResponseEntity.ok(categoryDTOList);
     }
 
 
