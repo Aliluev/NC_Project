@@ -46,7 +46,7 @@
             <h1>Update</h1>
             <input type="text" placeholder="Name" required maxlength="50" name="userName"
                 [(ngModel)]="templateUser.username">
-            <input type="text" placeholder="+7 (999) 999-99-99" required
+            <input type="text" placeholder="+7 (999) 999-99-99"
                 pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" minlength="18" maxlength="18"
                 name="userPhone" [(ngModel)]="templateUser.phone">
             <input type="text" placeholder="Email" required pattern="\S+@[a-z]+.[a-z]+" maxlength="50" name="email"
@@ -54,6 +54,9 @@
             <input type="text" placeholder="Roles" required maxlength="50" name="userName"
                 [(ngModel)]="templateUser.roles">
             <button>Update</button>
+            <div *ngIf="f.submitted && updateEror" class="alert alert-danger">
+                {{errorMessage}}
+            </div>
         </form>
     </div>
 </div>

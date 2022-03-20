@@ -98,7 +98,12 @@ export class ProductComponent {
 
 
     deleteProduct(name: string | string) {
-        this.http.delete(environment.backendUrl + '/product/delete/' + name).subscribe((data: any) => { console.log("ok"); },
+        this.http.delete(environment.backendUrl + '/product/delete/' + name).subscribe((data: any) => {
+            console.log("ok");
+            if (this.erorDelete = true) {
+                this.erorDelete = false;
+            }
+        },
             (error: any) => {
                 console.log("eror");
                 this.erorDelete = true;
@@ -135,6 +140,7 @@ export class ProductComponent {
                 this.http.get<number>(environment.backendUrl + '/image/get-last-image').subscribe((data: number) => temProduct.image = "http://localhost:8080/image/" + data);
                 this.products2 = this.products2.filter(c => (c.name !== product.name));
                 this.products2.push(temProduct);
+                this.updateEror = false;
             },
                 (error: any) => {
                     console.log("eror");

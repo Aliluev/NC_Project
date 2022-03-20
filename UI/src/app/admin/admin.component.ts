@@ -26,30 +26,11 @@ export class AdminRole implements OnInit {
 
   allowed() {
     for (var i = 0; i < this.rolesUser.length; i++) {
-      console.log("Зашёл")
       if (this.rolesUser[i] == "ROLE_ADMIN" || this.rolesUser[i] == "ROLE_SUPERADMIN") {
         this.allowedToEnter = true;
       }
     }
     this.perem = this.rolesUser[0];
-  }
-
-  user: User = new User("", "", "", "");
-
-  methodPostUser(user: User) {
-    this.http.post(environment.backendUrl + '/user/create', user).subscribe((data: any) => { console.log("ok") },
-      (error: any) => console.log("eror"));
-  }
-
-  methodDeleteUser(id: number | string) {
-    this.http.delete(environment.backendUrl + '/user/delete/' + id
-    ).subscribe((data: any) => { console.log("ok") },
-      (error: any) => console.log("eror"));
-  }
-
-  methodUpdateUser(user: User | undefined) {
-    this.http.put(environment.backendUrl + '/user/update', user).subscribe((data: any) => { console.log("ok") },
-      (error: any) => console.log("eror"));
   }
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {

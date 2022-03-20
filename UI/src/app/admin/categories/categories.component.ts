@@ -97,13 +97,16 @@ export class CategoriesComponent {
     }
 
     deleteCategory(name: string | string) {
-        this.http.delete(environment.backendUrl + '/category/delete/' + name).subscribe((data: any) => { console.log("ok") },
+        this.http.delete(environment.backendUrl + '/category/delete/' + name).subscribe((data: any) => {
+            console.log("ok");
+            if (this.deleteEror = true) {
+                this.deleteEror = false;
+            }
+        },
             (error: any) => {
                 this.deleteEror = true;
                 console.log("eror");
                 this.errorMessage = error.error.message;
-
-
             });
         this.categories = this.categories.filter(c => (c.name !== name));
     }
@@ -113,6 +116,9 @@ export class CategoriesComponent {
             console.log("ok");
             let temCategory = new Category(category.name, category.product);
             this.categories.push(temCategory);
+            if (this.addEror = true) {
+                this.addEror = false;
+            }
         },
             (error: any) => {
                 console.log("eror");

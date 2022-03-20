@@ -50,7 +50,10 @@ export class RoleComponent {
 
 
     deleteRole(name: string | string) {
-        this.http.delete(environment.backendUrl + '/role/delete/' + name).subscribe((data: any) => { console.log("ok") },
+        this.http.delete(environment.backendUrl + '/role/delete/' + name).subscribe((data: any) => {
+            console.log("ok");
+            this.erorDelete = false;
+        },
             (error: any) => {
                 console.log("eror");
                 this.erorDelete = true;
@@ -65,6 +68,7 @@ export class RoleComponent {
             console.log("ok");
             let temRole = new Role(role.id, role.name);
             this.roles.push(temRole);
+            this.erors = false;
         },
             (error: any) => {
                 console.log("eror");

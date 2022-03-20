@@ -54,13 +54,23 @@ export class UserComponent {
         this.loadUsers();
     }
 
+    updateEror = false;
+
     updateUser(user: User) {
 
-        this.http.put(environment.backendUrl + '/user/update', user).subscribe((data: any) => { console.log("ok") },
-            (error: any) => console.log("eror"));
-        let temUser = new User(user.username, user.phone, user.email, user.roles);
-        this.users = this.users.filter(c => (c.username !== user.username));
-        this.users.push(temUser);
+        this.http.put(environment.backendUrl + '/user/update', user).subscribe((data: any) => {
+            console.log("ok");
+            this.updateEror = false;
+            let temUser = new User(user.username, user.phone, user.email, user.roles);
+            this.users = this.users.filter(c => (c.username !== user.username));
+            this.users.push(temUser);
+        },
+            (error: any) => {
+                console.log("eror");
+                this.errorMessage = error.error.message;
+                this.updateEror = true;
+            });
+
     }
 
     errorMessage = "";
@@ -70,6 +80,7 @@ export class UserComponent {
         this.http.delete(environment.backendUrl + '/user/delete/' + name).subscribe((data: any) => {
             console.log("ok");
             this.users = this.users.filter(c => (c.username !== name));
+            this.isEror = false;
         },
             (error: any) => {
                 console.log("eror");
