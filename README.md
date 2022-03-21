@@ -20,7 +20,7 @@
 
 ### Roles
 * id
-* name (Guest, Admin, Manager)
+* name (USER,ADMIN)
 
 ### Product 
 * id
