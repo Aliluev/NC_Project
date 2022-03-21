@@ -7,7 +7,6 @@
 * Roles
 * Product
 * Order
-* Storage
 * Category(Product)
 * Status
 
