@@ -31,7 +31,7 @@
 * id
 * userID
 * statusID
-* data
+* date
 
 
 ### Category
