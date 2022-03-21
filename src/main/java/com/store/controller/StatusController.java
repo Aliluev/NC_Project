@@ -22,15 +22,13 @@ import java.util.List;
 @RequestMapping("/status")
 public class StatusController {
 
-
     StatusRepository statusRepository;
     OrderRepository orderRepository;
     UserRepository userRepository;
     ProductRepository productRepository;
 
-    private final String plannedStatus="planned";
-    private final String proccesedStatus="proccesed";
-
+    private final String plannedStatus = "planned";
+    private final String proccesedStatus = "proccesed";
 
     @Autowired
     public StatusController(StatusRepository statusRepository, OrderRepository orderRepository, UserRepository userRepository, ProductRepository productRepository) {
@@ -97,6 +95,5 @@ public class StatusController {
             return new ResponseEntity<>(new ProductDTO(), HttpStatus.NOT_FOUND);
         }
     }
-
 
 }

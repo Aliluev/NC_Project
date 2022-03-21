@@ -19,7 +19,6 @@ import java.util.List;
 @RequestMapping("/role")
 public class RoleController {
 
-
     RoleRepository roleRepository;
 
     @Autowired
@@ -52,7 +51,6 @@ public class RoleController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-
     @DeleteMapping("/delete/{name}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteRole(@PathVariable(value = "name") String name) {
@@ -66,6 +64,5 @@ public class RoleController {
                     .body(new MessageResponse("Error: Role not found"));
         }
     }
-
 
 }

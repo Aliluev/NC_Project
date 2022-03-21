@@ -20,13 +20,10 @@ public class JwtUtils {
 
 
     public String generateJwtToken(Authentication authentication) {
-
         String name = authentication.getName();
         return Jwts.builder().setSubject(name).setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
-
-
     }
 
 
@@ -46,6 +43,5 @@ public class JwtUtils {
     public String getUserNameFromJwtToken(String jwt) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt).getBody().getSubject();
     }
-
 
 }

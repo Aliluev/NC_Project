@@ -4,7 +4,6 @@ package com.store.model;
 public class MessageResponse {
     private String message;
 
-
     public MessageResponse() {
     }
 

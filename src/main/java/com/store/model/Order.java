@@ -27,10 +27,8 @@ public class Order {
     @OneToMany(mappedBy = "orderID", cascade = CascadeType.ALL)
     private List<OrderList> orderLists;
 
-
     public Order() {
     }
-
 
     public List<OrderList> getOrderLists() {
         return orderLists;

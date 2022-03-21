@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
 
-    private final String proccesedStatus="proccesed";
+    private final String proccesedStatus = "proccesed";
 
     OrderRepository orderRepository;
     UserRepository userRepository;

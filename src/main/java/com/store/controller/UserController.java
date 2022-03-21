@@ -21,10 +21,8 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-
     UserRepository userRepository;
     RoleRepository roleRepository;
-
 
     @Autowired
     public UserController(UserRepository repository, RoleRepository roleRepository) {
@@ -45,7 +43,6 @@ public class UserController {
         return ResponseEntity.ok(userDTOS);
 
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable(value = "id") Integer id) {
@@ -72,7 +69,6 @@ public class UserController {
         }
     }
 
-
     @PutMapping("/update")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity updateUser(@RequestBody UserDTO userDTO) {
@@ -83,7 +79,6 @@ public class UserController {
                     .badRequest()
                     .body(new MessageResponse("Error: User Not Found"));
         }
-
 
         String[] userRoleArray = userDTO.getRoles().split(",");
         List<Role> roleList = new ArrayList<>();

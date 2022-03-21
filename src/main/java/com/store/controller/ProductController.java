@@ -124,7 +124,7 @@ public class ProductController {
     @PutMapping("/update")
     public ResponseEntity updateProduct(@RequestBody ProductDTO productDTO) {
 
-         // Price and count validation
+        // Price and count validation
         try {
             Integer checkInt = Integer.parseInt(productDTO.getCount());
             Integer checkPrice = Integer.parseInt(productDTO.getPrice());
@@ -162,33 +162,15 @@ public class ProductController {
             Image image = imageList.get(imageList.size() - 1);
             newImageUrl = imageUrl + image.getId();
         } else {
-            //newImageUrl = productDTO.getImage();
-            newImageUrl=findProduct.get(0).getImage();
+            newImageUrl = findProduct.get(0).getImage();
         }
-
-/*
-        if (findProduct.size() > 0) {
-            Product product = findProduct.get(0);
-            product.setPrice(Integer.parseInt(productDTO.getPrice()));
-            product.setCount(Integer.parseInt(productDTO.getCount()));
-            product.setCategory(productCategoryCollection);
-            product.setImage(newImageUrl);
-            productRepository.save(product);
-        } else {
-            Product product = new Product(productDTO);
-            product.setImage(newImageUrl);
-            product.setCategory(productCategoryCollection);
-            productRepository.save(product);
-        }
-
- */
 
         Product product;
-        if (findProduct.size() > 0){
+        if (findProduct.size() > 0) {
             product = findProduct.get(0);
             product.setPrice(Integer.parseInt(productDTO.getPrice()));
             product.setCount(Integer.parseInt(productDTO.getCount()));
-        }else {
+        } else {
             product = new Product(productDTO);
         }
         product.setImage(newImageUrl);

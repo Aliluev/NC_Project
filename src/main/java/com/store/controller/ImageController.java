@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/image")
 public class ImageController {
 
-
     ImageDbRepository imageDbRepository;
 
     @Autowired
@@ -31,14 +30,11 @@ public class ImageController {
         imageDbRepository.save(dbImage);
     }
 
-
     @GetMapping(value = "/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ByteArrayResource downloadImage(@PathVariable Integer imageId) {
         Image image2 = imageDbRepository.getById(imageId);
         return new ByteArrayResource(image2.getContent());
     }
-
-
 
     @GetMapping(value = "/get-all-count-products")
     public int[] countProducts() {
@@ -57,6 +53,5 @@ public class ImageController {
         List<Image> imageList = imageDbRepository.findAll();
         return (imageList.size());
     }
-
 
 }

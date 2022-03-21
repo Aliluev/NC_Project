@@ -10,7 +10,6 @@ import java.util.List;
 @Table(name = "roles")
 public class Role {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -18,7 +17,6 @@ public class Role {
 
     @Column(name = "name")
     private String name;
-
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
@@ -33,7 +31,6 @@ public class Role {
     public void setId(Integer id) {
         this.id = id;
     }
-
 
     public String getName() {
         return name;

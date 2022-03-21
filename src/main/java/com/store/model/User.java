@@ -128,7 +128,6 @@ public class User {
         this.email = signupRequest.getEmail();
     }
 
-
     public User() {
     }
 }

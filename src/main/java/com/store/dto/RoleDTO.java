@@ -2,7 +2,6 @@ package com.store.dto;
 
 import com.store.model.Role;
 
-
 public class RoleDTO {
     private Integer id;
     private String name;
@@ -12,7 +11,8 @@ public class RoleDTO {
         this.id = role.getId();
     }
 
-    public RoleDTO() {}
+    public RoleDTO() {
+    }
 
     public Integer getId() {
         return id;

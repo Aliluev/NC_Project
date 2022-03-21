@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/order-list")
 public class OrderListController {
 
-    private final String plannedStatus="planned";
+    private final String plannedStatus = "planned";
 
     OrderListRepository orderListRepository;
     ProductRepository productRepository;
@@ -132,7 +132,7 @@ public class OrderListController {
     }
 
 
-    private List<OrderListDTO> getOrderDTO(Order order){
+    private List<OrderListDTO> getOrderDTO(Order order) {
         List<OrderList> orderLists = orderListRepository.findByOrderID(order);
         List<OrderListDTO> orderListDTOS = new ArrayList<>();
         for (OrderList orderList1 : orderLists) {
@@ -145,6 +145,5 @@ public class OrderListController {
         }
         return orderListDTOS;
     }
-
 
 }

@@ -23,7 +23,6 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
 
-
     AuthenticationManager authenticationManager;
     UserRepository userRepository;
     RoleRepository roleRepository;
@@ -90,7 +89,6 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok().body(new UserDTO(user));
-
 
     }
 
