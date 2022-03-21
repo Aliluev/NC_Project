@@ -30,8 +30,6 @@ export class RoleComponent {
         this.getRoles().subscribe((data: Role[]) => this.roles = data);
     }
 
-
-
     methodCanAddRole() {
         if (this.buttonAdd == false) {
             this.buttonAdd = true;
@@ -47,7 +45,6 @@ export class RoleComponent {
             this.buttonDelete = false;
         }
     }
-
 
     deleteRole(name: string | string) {
         this.http.delete(environment.backendUrl + '/role/delete/' + name).subscribe((data: any) => {
@@ -77,7 +74,6 @@ export class RoleComponent {
             });
 
     }
-
 
     constructor(private http: HttpClient) { this.loadRoles(); };
 }

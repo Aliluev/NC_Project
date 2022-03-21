@@ -79,8 +79,6 @@ export class CategoriesComponent {
                 this.errorMessage = error.error.message;
                 this.addEror = true;
             });
-
-
     }
 
 }

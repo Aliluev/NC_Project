@@ -23,7 +23,6 @@ export class MarketComponent {
         }
     }
 
-
     count = new Array();
 
     imageIdList: number[] = [];
@@ -43,7 +42,6 @@ export class MarketComponent {
             });
 
     }
-
 
     getCountImages() {
         return this.http.get<number[]>(environment.backendUrl + '/image/get-all-count-products');
@@ -96,10 +94,10 @@ export class MarketComponent {
         this.getProducts().subscribe((data: Product[]) => this.products2 = data);
     }
 
-    endSession(){
+    endSession() {
         console.log("Почистил")
         this.tokenStorage.signOut();
         window.location.reload();
-      }
+    }
 
 }

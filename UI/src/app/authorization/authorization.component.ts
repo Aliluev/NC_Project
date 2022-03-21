@@ -18,11 +18,10 @@ export class AuthorizationComponent implements OnInit {
   private loginInfo: AuthLoginInfo | undefined;
   buttonclick = false;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { this.isLoggedIn=false;}
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { this.isLoggedIn = false; }
 
   board: string = "";
   errorMessage2: string = "";
-
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
@@ -30,8 +29,6 @@ export class AuthorizationComponent implements OnInit {
       this.roles = this.tokenStorage.getAuthorities();
     }
   }
-
-
 
   onSubmit() {
     this.loginInfo = new AuthLoginInfo(
@@ -58,11 +55,7 @@ export class AuthorizationComponent implements OnInit {
     );
   }
 
-
   reloadPage() {
     window.location.reload();
   }
-
-
-
 }

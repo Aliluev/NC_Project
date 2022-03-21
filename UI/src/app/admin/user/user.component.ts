@@ -9,10 +9,6 @@ import { environment } from "src/environments/environment";
     styleUrls: ['./user.component.css']
 })
 export class UserComponent {
-
-
-
-
     buttonDelete = false;
     buttonUpdate = false;
     user: User = new User("", "", "", "");
@@ -21,6 +17,7 @@ export class UserComponent {
     templateUser: User = new User("", "", "", "");
     name = "";
     isEror = false;
+    errorMessage = "";
 
     methodDeleteUser() {
         if (this.buttonDelete == false) {
@@ -39,7 +36,6 @@ export class UserComponent {
         }
 
     }
-
 
     getUsers() {
         return this.http.get<User[]>('http://localhost:8080/user/get-all');
@@ -73,9 +69,6 @@ export class UserComponent {
 
     }
 
-    errorMessage = "";
-
-
     deleteUser(name: string | string) {
         this.http.delete(environment.backendUrl + '/user/delete/' + name).subscribe((data: any) => {
             console.log("ok");
@@ -88,6 +81,4 @@ export class UserComponent {
                 this.errorMessage = error.error.message;
             });
     }
-
-
 }

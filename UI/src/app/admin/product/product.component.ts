@@ -43,7 +43,6 @@ export class ProductComponent {
             (error: any) => console.log("eror"));
     }
 
-
     fileUpdate = "false";
 
     onFileSelectedUpdate(event: any) {
@@ -83,7 +82,6 @@ export class ProductComponent {
 
     }
 
-
     getProducts() {
         return this.http.get<Product[]>(environment.backendUrl + '/product/get-all');
     }
@@ -92,10 +90,6 @@ export class ProductComponent {
 
         this.getProducts().subscribe((data: Product[]) => this.products2 = data);
     }
-
-
-
-
 
     deleteProduct(name: string | string) {
         this.http.delete(environment.backendUrl + '/product/delete/' + name).subscribe((data: any) => {
@@ -155,9 +149,7 @@ export class ProductComponent {
                     this.updateEror = true;
                     this.errorMessage = error.error.message;
                 });
-
     }
-
 
     constructor(private http: HttpClient) {
         this.loadProducts();

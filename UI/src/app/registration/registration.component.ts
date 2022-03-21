@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
+import { environment } from "src/environments/environment";
 import { Registration } from "../entities/registration";
 
 
@@ -16,7 +17,7 @@ export class RegistrationComponent {
     errorMessage = "";
 
     onSubmit(registration: Registration) {
-        this.http.post('http://localhost:8080/api/auth/signup', registration).subscribe((data: any) => { this.submitStatus = true },
+        this.http.post(environment.backendUrl + '/api/auth/signup', registration).subscribe((data: any) => { this.submitStatus = true },
             (error: any) => {
                 console.log("eror");
                 this.errorMessage = error.error.message;
@@ -25,6 +26,5 @@ export class RegistrationComponent {
     }
 
     constructor(private http: HttpClient) { }
-
 
 }

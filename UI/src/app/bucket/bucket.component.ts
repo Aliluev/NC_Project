@@ -36,9 +36,6 @@ export class BucketComponent {
     this.bucket = this.bucket.filter(c => (c.orderListId !== orderListId));
   }
 
-
-
-
   ordered() {
     this.http.post(environment.backendUrl + '/status/status-ordered', this.tokenStorage.getUsername()).subscribe((data: any) => {
       this.bucket = this.emptyBacket;
