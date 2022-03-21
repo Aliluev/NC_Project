@@ -41,7 +41,7 @@
 
 ### Status
 * id
-* name
+* name(Planned, Proccesed)
 
 ### User-Role(composite key)
 * userID
