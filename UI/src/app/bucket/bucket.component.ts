@@ -15,6 +15,7 @@ export class BucketComponent {
     this.getBucket();
   }
 
+  message="";
   user = "";
   bucket: Bucket[] = [];
   emptyBacket: Bucket[] = [];
@@ -40,10 +41,12 @@ export class BucketComponent {
     this.http.post(environment.backendUrl + '/status/status-ordered', this.tokenStorage.getUsername()).subscribe((data: any) => {
       this.bucket = this.emptyBacket;
       this.getBucket();
+      this.message = "";
     },
       (error: any) => {
         this.bucket = this.emptyBacket;
         this.getBucket();
+        this.message = error.error.message;
       });
     this.getBucket();
   }

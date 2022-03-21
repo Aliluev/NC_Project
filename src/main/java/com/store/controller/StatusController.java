@@ -53,12 +53,28 @@ public class StatusController {
 
     @PostMapping("/status-ordered")
     public ResponseEntity nextStatus(@RequestBody String name) {
-
         User user = userRepository.getByUsername(name).get(0);
-        Order order = orderRepository.getByUseridAndStatusid(user, statusRepository.getByName(plannedStatus).get(0)).get(0);
+        Order order;
+        try {
+            order = orderRepository.getByUseridAndStatusid(user, statusRepository.getByName(plannedStatus).get(0)).get(0);
+        } catch (RuntimeException exception) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Didn't order anything"));
+        }
         List<OrderList> orderDetails = order.getOrderLists();
+        if (orderDetails.size() == 0) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Product not ordered"));
+        }
         for (OrderList orderList : orderDetails) {
             Product product = orderList.getProductID();
+            if (product.getCount() < orderList.getCount()) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error:" + product.getName() + " in store has chanched, please remove the item"));
+            }
             product.setCount(product.getCount() - orderList.getCount());
             productRepository.save(product);
         }
