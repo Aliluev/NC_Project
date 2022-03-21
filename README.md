@@ -2,8 +2,6 @@
 
 ![Entyties](https://github.com/Aliluev/NC_Project/blob/main/finalEntities.png)
 
-Entity Shop removed and added count to Product Entity
-
 ## Entities
 * User
 * Roles
