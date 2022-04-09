@@ -3,6 +3,7 @@ package com.store.controller;
 import com.store.dto.CategoryDTO;
 import com.store.model.Category;
 import com.store.model.MessageResponse;
+import com.store.model.Response;
 import com.store.repository.CategoryRepository;
 import com.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,8 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
 
-
-    CategoryRepository categoryRepository;
-    ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
+    private ProductRepository productRepository;
 
     @Autowired
     public CategoryController(CategoryRepository categoryRepository, ProductRepository productRepository) {
@@ -47,13 +47,11 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity createCategory(@RequestBody CategoryDTO categoryDTO) {
         if (categoryRepository.existsByName(categoryDTO.getName())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Category is exists"));
+            return new Response().myResponseBadRequest(new MessageResponse("Error: Category is exists"));
         }
         Category category = new Category(categoryDTO);
         categoryRepository.save(category);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new Response().myResponseOK();
     }
 
     @DeleteMapping("/delete/{name}")
@@ -62,11 +60,9 @@ public class CategoryController {
         try {
             List<Category> categories = categoryRepository.findByName(name);
             categoryRepository.delete(categories.get(0));
-            return ResponseEntity.ok(HttpStatus.OK);
+            return new Response().myResponseOK();
         } catch (RuntimeException exception) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Category not found"));
+            return new Response().myResponseNotFound(new MessageResponse("Error: Category not found"));
         }
     }
 

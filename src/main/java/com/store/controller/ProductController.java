@@ -1,16 +1,12 @@
 package com.store.controller;
 
 import com.store.dto.ProductDTO;
-import com.store.model.Category;
-import com.store.model.Image;
-import com.store.model.MessageResponse;
-import com.store.model.Product;
+import com.store.model.*;
 import com.store.repository.CategoryRepository;
 import com.store.repository.ImageDbRepository;
 import com.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,20 +20,20 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-
-    ProductRepository productRepository;
-    CategoryRepository categoryRepository;
-    ImageDbRepository imageDbRepository;
+    private ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
+    private ImageDbRepository imageDbRepository;
 
     @Value("${app.imageUrl}")
     private String imageUrl;
 
     @Autowired
-    public ProductController(ProductRepository repository, CategoryRepository categoryRepository, ImageDbRepository imageDbRepository) {
-        this.productRepository = repository;
+    public ProductController(ProductRepository productRepository, CategoryRepository categoryRepository, ImageDbRepository imageDbRepository) {
+        this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.imageDbRepository = imageDbRepository;
     }
+
 
     @GetMapping("/get-all")
     public ResponseEntity<List<ProductDTO>> getAllUserDTO() {
@@ -59,25 +55,19 @@ public class ProductController {
             Integer checkCount = Integer.parseInt(productDTO.getCount());
             Integer checkPrice = Integer.parseInt(productDTO.getPrice());
         } catch (RuntimeException exception) {
-            return new ResponseEntity<>("Wrong input count or price", HttpStatus.BAD_REQUEST);
+            return new Response().myResponseBadRequest(new MessageResponse("Wrong input count or price"));
         }
 
         if ((Integer.parseInt(productDTO.getCount()) == 0) || Integer.parseInt(productDTO.getPrice()) == 0) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Count or Price should be > 0"));
+            return new Response().myResponseBadRequest(new MessageResponse("Error: Count or Price should be > 0"));
         }
 
         if (productRepository.existsByName(productDTO.getName())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Name of Product is exist"));
+            return new Response().myResponseBadRequest(new MessageResponse("Error: Name of Product is exist"));
         }
 
         if (productDTO.getImage().equals("false")) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Image not load"));
+            return new Response().myResponseBadRequest(new MessageResponse("Error: Image not load"));
         }
 
         Product product = new Product(productDTO);
@@ -102,7 +92,7 @@ public class ProductController {
 
         product.setCategory(categoryList);
         productRepository.save(product);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new Response().myResponseOK();
     }
 
 
@@ -112,11 +102,9 @@ public class ProductController {
         try {
             List<Product> productList = productRepository.findByName(name);
             productRepository.delete(productList.get(0));
-            return (ResponseEntity.ok(HttpStatus.OK));
+            return new Response().myResponseOK();
         } catch (RuntimeException exception) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Product Not Found"));
+            return new Response().myResponseNotFound(new MessageResponse("Error: Product Not Found"));
         }
     }
 
@@ -129,13 +117,11 @@ public class ProductController {
             Integer checkInt = Integer.parseInt(productDTO.getCount());
             Integer checkPrice = Integer.parseInt(productDTO.getPrice());
         } catch (RuntimeException exception) {
-            return new ResponseEntity<>("Wrong input count or price", HttpStatus.BAD_REQUEST);
+            return new Response().myResponseBadRequest(new MessageResponse("Wrong input count or price"));
         }
 
         if (!productRepository.existsByName(productDTO.getName())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Product is not exists"));
+            return new Response().myResponseBadRequest(new MessageResponse("Error: Product is not exists"));
         }
 
         String[] productCategoryList = productDTO.getCategory().split(",");
@@ -176,9 +162,7 @@ public class ProductController {
         product.setImage(newImageUrl);
         product.setCategory(productCategoryCollection);
         productRepository.save(product);
-
-
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new Response().myResponseOK();
     }
 
 }

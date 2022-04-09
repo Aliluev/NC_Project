@@ -2,12 +2,12 @@ package com.store.controller;
 
 import com.store.dto.UserDTO;
 import com.store.model.MessageResponse;
+import com.store.model.Response;
 import com.store.model.Role;
 import com.store.model.User;
 import com.store.repository.RoleRepository;
 import com.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +21,8 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    UserRepository userRepository;
-    RoleRepository roleRepository;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     public UserController(UserRepository repository, RoleRepository roleRepository) {
@@ -51,7 +51,7 @@ public class UserController {
             UserDTO userDTO = new UserDTO(user);
             return ResponseEntity.ok(userDTO);
         } catch (RuntimeException exception) {
-            return new ResponseEntity<>(new UserDTO(), HttpStatus.NOT_FOUND);
+            return new Response().myResponseNotFound(new MessageResponse("Error: User Not Found"));
         }
     }
 
@@ -61,11 +61,9 @@ public class UserController {
         try {
             List<User> userList = userRepository.findByUsername(name);
             userRepository.delete(userList.get(0));
-            return ResponseEntity.ok(HttpStatus.OK);
+            return new Response().myResponseOK();
         } catch (RuntimeException runtimeException) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Name of User not Found"));
+         return new Response().myResponseBadRequest(new MessageResponse("Error: Name of User not Found"));
         }
     }
 
@@ -75,9 +73,7 @@ public class UserController {
 
         List<User> userList = userRepository.findByUsername(userDTO.getUsername());
         if (userList.size() == 0) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: User Not Found"));
+            return new Response().myResponseNotFound(new MessageResponse("Error: User Not Found"));
         }
 
         String[] userRoleArray = userDTO.getRoles().split(",");
@@ -100,7 +96,7 @@ public class UserController {
         user.setEmail(userDTO.getEmail());
         user.setRoles(roleList);
         userRepository.save(user);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new Response().myResponseOK();
     }
 
 }

@@ -21,11 +21,11 @@ public class OrderListController {
 
     private final String plannedStatus = "planned";
 
-    OrderListRepository orderListRepository;
-    ProductRepository productRepository;
-    OrderRepository orderRepository;
-    UserRepository userRepository;
-    StatusRepository statusRepository;
+    private OrderListRepository orderListRepository;
+    private ProductRepository productRepository;
+    private OrderRepository orderRepository;
+    private UserRepository userRepository;
+    private StatusRepository statusRepository;
 
     @Autowired
     public OrderListController(OrderListRepository orderListRepository, ProductRepository productRepository, OrderRepository orderRepository, UserRepository userRepository, StatusRepository statusRepository) {
@@ -39,13 +39,13 @@ public class OrderListController {
     @PostMapping("/add-product")
     public ResponseEntity<String> addProductFromOrderList(@RequestBody AddProductDTO addProductDTO) {
         OrderList orderList = new OrderList();
-        Product product = productRepository.findByName(addProductDTO.getProductName()).get(0);
+        Product product = this.productRepository.findByName(addProductDTO.getProductName()).get(0);
         User user = userRepository.findByUsername(addProductDTO.getUserName()).get(0);
 
         try {
             Integer checkInt = Integer.parseInt(addProductDTO.getCount());
         } catch (RuntimeException exception) {
-            return new ResponseEntity<>("Wrong input count", HttpStatus.BAD_REQUEST);
+            return new Response().myResponseBadRequest(new MessageResponse("Wrong input count"));
         }
 
         if (statusRepository.getByName(plannedStatus).size() == 0) {
@@ -71,9 +71,7 @@ public class OrderListController {
             OrderList productOrder = orderDetailsList.get(0);
             productOrder.setCount(productOrder.getCount() + Integer.parseInt(addProductDTO.getCount()));
             if ((productOrder.getCount() > product.getCount()) || (productOrder.getCount() == 0)) {
-                return new ResponseEntity<>(
-                        "Count product is less then ordered",
-                        HttpStatus.BAD_REQUEST);
+                return new Response().myResponseBadRequest(new MessageResponse("Count product is less then ordered"));
             }
             orderListRepository.save(productOrder);
         } else {
@@ -81,18 +79,17 @@ public class OrderListController {
             orderList.setProductID(product);
             orderList.setCount(Integer.parseInt(addProductDTO.getCount()));
             if ((orderList.getCount() > product.getCount()) || (orderList.getCount() == 0)) {
-                return new ResponseEntity<>(
-                        "Count product is less then ordered",
-                        HttpStatus.BAD_REQUEST);
+
+                return new Response().myResponseBadRequest(new MessageResponse("Count product is less then ordered"));
             }
             orderListRepository.save(orderList);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new Response().myResponseOK();
     }
 
 
     @GetMapping("/get-order-list/{name}")
-    public List<OrderListDTO> getOrderListByUserName(@PathVariable(value = "name") String name) {
+    public ResponseEntity<List<OrderListDTO>> getOrderListByUserName(@PathVariable(value = "name") String name) {
         User user = userRepository.getByUsername(name).get(0);
         Status status = statusRepository.getByName(plannedStatus).get(0);
         if (orderRepository.getByUseridAndStatusid(user, status).size() == 0) {
@@ -104,18 +101,17 @@ public class OrderListController {
 
         List<Order> orderList = orderRepository.getByUseridAndStatusid(user, status);
         if (orderList.size() == 0) {
-            return new ArrayList<OrderListDTO>();
+            return ResponseEntity.ok(new ArrayList<OrderListDTO>());
         }
         Order order = orderRepository.getByUseridAndStatusid(user, status).get(0);
-        return getOrderDTO(order);
+        return ResponseEntity.ok(getOrderDTO(order));
 
     }
 
     @GetMapping("/get-order-list-ordered/{id}")
-    public List<OrderListDTO> getOrderedOrderListByUserName(@PathVariable(value = "id") String id) {
-
+    public ResponseEntity<List<OrderListDTO>> getOrderedOrderListByUserName(@PathVariable(value = "id") String id) {
         Order order = orderRepository.getById(Integer.parseInt(id));
-        return getOrderDTO(order);
+        return ResponseEntity.ok(getOrderDTO(order));
 
     }
 
@@ -125,9 +121,9 @@ public class OrderListController {
         try {
             OrderList orderList = orderListRepository.getById(id);
             orderListRepository.delete(orderList);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new Response().myResponseOK();
         } catch (RuntimeException exception) {
-            return new ResponseEntity<>("ID not found", HttpStatus.NOT_FOUND);
+            return new Response().myResponseNotFound(new MessageResponse("ID not found"));
         }
     }
 

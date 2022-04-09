@@ -2,9 +2,7 @@ package com.store.controller;
 
 import com.store.dto.OrderDTO;
 import com.store.dto.ProductDTO;
-import com.store.model.Order;
-import com.store.model.Status;
-import com.store.model.User;
+import com.store.model.*;
 import com.store.repository.OrderRepository;
 import com.store.repository.StatusRepository;
 import com.store.repository.UserRepository;
@@ -23,9 +21,9 @@ public class OrderController {
 
     private final String proccesedStatus = "proccesed";
 
-    OrderRepository orderRepository;
-    UserRepository userRepository;
-    StatusRepository statusRepository;
+    private OrderRepository orderRepository;
+    private UserRepository userRepository;
+    private StatusRepository statusRepository;
 
     @Autowired
     public OrderController(OrderRepository orderRepository, UserRepository userRepository, StatusRepository statusRepository) {
@@ -59,7 +57,7 @@ public class OrderController {
         order.setStatusid(status);
         order.setDate(orderDTO.getDate());
         orderRepository.save(order);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new Response().myResponseOK();
     }
 
 
@@ -67,9 +65,9 @@ public class OrderController {
     public ResponseEntity deleteOrder(@PathVariable(value = "id") Integer id) {
         try {
             orderRepository.delete(orderRepository.getById(id));
-            return (ResponseEntity.ok(HttpStatus.OK));
+            return new Response().myResponseOK();
         } catch (RuntimeException exception) {
-            return new ResponseEntity<>(new ProductDTO(), HttpStatus.NOT_FOUND);
+            return new Response().myResponseNotFound(new MessageResponse("Order not found"));
         }
     }
 

@@ -2,6 +2,7 @@ package com.store.controller;
 
 import com.store.dto.RoleDTO;
 import com.store.model.MessageResponse;
+import com.store.model.Response;
 import com.store.model.Role;
 import com.store.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/role")
 public class RoleController {
 
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     public RoleController(RoleRepository repository) {
@@ -42,13 +42,11 @@ public class RoleController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity createUser(@RequestBody RoleDTO roleDTO) {
         if (roleRepository.existsByName(roleDTO.getName())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Name of Role is exist"));
+            return new Response().myResponseBadRequest(new MessageResponse("Error: Name of Role is exist"));
         }
         Role role = new Role(roleDTO);
         roleRepository.save(role);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new Response().myResponseOK();
     }
 
     @DeleteMapping("/delete/{name}")
@@ -59,9 +57,7 @@ public class RoleController {
             roleRepository.delete(roleList.get(0));
             return ResponseEntity.ok(HttpStatus.OK);
         } catch (RuntimeException exception) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Role not found"));
+            return new Response().myResponseNotFound(new MessageResponse("Error: Role not found"));
         }
     }
 

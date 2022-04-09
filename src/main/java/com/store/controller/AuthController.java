@@ -23,11 +23,11 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
 
-    AuthenticationManager authenticationManager;
-    UserRepository userRepository;
-    RoleRepository roleRepository;
-    PasswordEncoder passwordEncoder;
-    JwtUtils jwtUtils;
+    private AuthenticationManager authenticationManager;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
+    private JwtUtils jwtUtils;
 
     private final String defaultUserRole = "ROLE_USER";
 
@@ -66,9 +66,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is exist"));
+            return new Response().myResponseBadRequest(new MessageResponse("Error: Username is exist"));
         }
 
         User user = new User(signupRequest);

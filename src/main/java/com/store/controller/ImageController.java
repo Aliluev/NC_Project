@@ -1,10 +1,12 @@
 package com.store.controller;
 
 import com.store.model.Image;
+import com.store.model.Response;
 import com.store.repository.ImageDbRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @RequestMapping("/image")
 public class ImageController {
 
-    ImageDbRepository imageDbRepository;
+    private ImageDbRepository imageDbRepository;
 
     @Autowired
     public ImageController(ImageDbRepository imageDbRepository) {
@@ -23,11 +25,12 @@ public class ImageController {
     }
 
     @PostMapping("/save")
-    public void uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
+    public ResponseEntity uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
         Image dbImage = new Image();
         dbImage.setName(file.getOriginalFilename());
         dbImage.setContent(file.getBytes());
         imageDbRepository.save(dbImage);
+        return new Response().myResponseOK();
     }
 
     @GetMapping(value = "/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
