@@ -17,11 +17,15 @@ export class CategoriesComponent {
     errorMessage = "";
 
     methodDeleteCategory() {
+
+        this.buttonDelete=!this.buttonDelete;
+/*
         if (this.buttonDelete == false) {
             this.buttonDelete = true;
         } else {
             this.buttonDelete = false;
         }
+        */
     }
 
     methodCanAddCategory() {
@@ -53,9 +57,7 @@ export class CategoriesComponent {
     deleteCategory(name: string | string) {
         this.http.delete(environment.backendUrl + '/category/delete/' + name).subscribe((data: any) => {
             console.log("ok");
-            if (this.deleteEror = true) {
                 this.deleteEror = false;
-            }
         },
             (error: any) => {
                 this.deleteEror = true;
@@ -70,7 +72,7 @@ export class CategoriesComponent {
             console.log("ok");
             let temCategory = new Category(category.name, category.product);
             this.categories.push(temCategory);
-            if (this.addEror = true) {
+            if (this.addEror) {
                 this.addEror = false;
             }
         },

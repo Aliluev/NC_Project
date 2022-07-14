@@ -7,6 +7,8 @@ import com.store.model.Role;
 import com.store.model.User;
 import com.store.repository.RoleRepository;
 import com.store.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,9 +19,11 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/user")
 public class UserController {
+
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -51,6 +55,7 @@ public class UserController {
             UserDTO userDTO = new UserDTO(user);
             return ResponseEntity.ok(userDTO);
         } catch (RuntimeException exception) {
+            logger.info("Error: User Not Found");
             return new Response().myResponseNotFound(new MessageResponse("Error: User Not Found"));
         }
     }
@@ -63,6 +68,7 @@ public class UserController {
             userRepository.delete(userList.get(0));
             return new Response().myResponseOK();
         } catch (RuntimeException runtimeException) {
+            logger.warn("When delete user not found");
          return new Response().myResponseBadRequest(new MessageResponse("Error: Name of User not Found"));
         }
     }
@@ -73,6 +79,7 @@ public class UserController {
 
         List<User> userList = userRepository.findByUsername(userDTO.getUsername());
         if (userList.size() == 0) {
+            logger.warn("Error: User Not Found");
             return new Response().myResponseNotFound(new MessageResponse("Error: User Not Found"));
         }
 

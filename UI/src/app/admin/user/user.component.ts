@@ -38,7 +38,7 @@ export class UserComponent {
     }
 
     getUsers() {
-        return this.http.get<User[]>('http://localhost:8080/user/get-all');
+        return this.http.get<User[]>(environment.backendUrl +'/user/get-all');
     }
 
     loadUsers() {

@@ -130,4 +130,30 @@ public class User {
 
     public User() {
     }
+
+    public User( String username, String password, String phone, String email, List<Role> roles, List<Order> order) {
+        this.username = username;
+        this.password = password;
+        this.phone = phone;
+        this.email = email;
+        this.roles = roles;
+        this.order = order;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder userRoles=new StringBuilder();
+        int i=0;
+        for(Role role:roles){
+            userRoles.append(role.getName());
+            if(roles.size()>1 && i<roles.size()-1){
+                userRoles.append(", ");
+                i++;
+            }
+        }
+        return "User{" +
+                "username='" + username + '\'' +
+                ", roles=" + userRoles +
+                '}';
+    }
 }

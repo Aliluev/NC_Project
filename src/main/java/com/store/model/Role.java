@@ -18,12 +18,6 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "roleid"),
-            inverseJoinColumns = @JoinColumn(name = "userid"))
-    private List<User> users;
-
     public Integer getId() {
         return id;
     }
@@ -40,18 +34,9 @@ public class Role {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public Role(Integer id, String name, List<User> users) {
+    public Role(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.users = users;
     }
 
     public Role() {
@@ -72,6 +57,5 @@ public class Role {
 
     public Role(String name, List<User> users) {
         this.name = name;
-        this.users = users;
     }
 }

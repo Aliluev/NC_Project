@@ -32,7 +32,10 @@ export class BucketComponent {
 
   deleteProduct(orderListId: string) {
     this.http.delete(environment.backendUrl + '/order-list/delete/' + orderListId
-    ).subscribe((data: any) => { console.log("ok") },
+    ).subscribe((data: any) => {
+      console.log("ok");
+      this.message = "";
+    },
       (error: any) => console.log("eror"));
     this.bucket = this.bucket.filter(c => (c.orderListId !== orderListId));
   }

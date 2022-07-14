@@ -1,0 +1,22 @@
+version: "3.3"
+services:
+ postgres:
+    image: postgres:13
+    container_name: java-postgres
+    environment:
+      POSTGRES_PASSWORD: 6575065750v
+      POSTGRES_USER: postgres
+      POSTGRES_DB: Store
+ app:
+    image: backend
+    container_name: java-app
+    ports:
+      - 8080:8080
+    environment:
+      DATABASE_USER: postgres
+      DATABASE_URL: //postgres:5432/Store
+      DATABASE_PASS: 6575065750v
+
+
+
+

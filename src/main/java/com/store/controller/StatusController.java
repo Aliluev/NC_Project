@@ -6,6 +6,8 @@ import com.store.repository.OrderRepository;
 import com.store.repository.ProductRepository;
 import com.store.repository.StatusRepository;
 import com.store.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,9 +18,11 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/status")
 public class StatusController {
+
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private StatusRepository statusRepository;
     private OrderRepository orderRepository;
@@ -56,16 +60,19 @@ public class StatusController {
         try {
             order = orderRepository.getByUseridAndStatusid(user, statusRepository.getByName(plannedStatus).get(0)).get(0);
         } catch (RuntimeException exception) {
+            logger.warn("Error: Didn't order anything");
             return new Response().myResponseBadRequest(new MessageResponse("Error: Didn't order anything"));
         }
         List<OrderList> orderDetails = order.getOrderLists();
         if (orderDetails.size() == 0) {
+            logger.warn("Error: Product not ordered");
             return new Response().myResponseBadRequest(new MessageResponse("Error: Product not ordered"));
         }
 
         for (OrderList orderList : orderDetails) {
             Product product = orderList.getProductID();
             if (product.getCount() < orderList.getCount()) {
+                logger.warn(product.getName() + " in store has chanched");
                 return new Response().myResponseBadRequest(new MessageResponse("Error:" + product.getName() + " in store has chanched, please remove the item"));
             }
             product.setCount(product.getCount() - orderList.getCount());
@@ -101,6 +108,7 @@ public class StatusController {
             statusRepository.delete(statusRepository.findByName(name).get(0));
             return new Response().myResponseOK();
         } catch (RuntimeException exception) {
+            logger.warn("Product not found");
             return new Response().myResponseNotFound(new MessageResponse("Product not found"));
         }
     }

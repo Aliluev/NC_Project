@@ -5,6 +5,8 @@ import com.store.dto.UserDTO;
 import com.store.model.*;
 import com.store.repository.RoleRepository;
 import com.store.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +24,8 @@ import java.util.List;
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
+
+    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
@@ -42,11 +46,11 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
-
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()));
+        logger.info("Start authentication");
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -56,7 +60,7 @@ public class AuthController {
         for (Role role : user.getRoles()) {
             roles.add(role.getName());
         }
-
+        logger.info("Authentication was success "+user);
         return ResponseEntity.ok(new JwtResponse(jwt,
                 user.getId(), user.getUsername(),
                 roles));
@@ -66,6 +70,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
+            logger.info("Username is exist");
             return new Response().myResponseBadRequest(new MessageResponse("Error: Username is exist"));
         }
 
@@ -85,6 +90,7 @@ public class AuthController {
 
         user.setRoles(roleList);
         userRepository.save(user);
+        logger.info("Registration succes");
 
         return ResponseEntity.ok().body(new UserDTO(user));
 
