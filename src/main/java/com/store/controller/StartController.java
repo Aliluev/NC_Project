@@ -21,6 +21,9 @@ public class StartController {
     private PasswordEncoder passwordEncoder;
     private RoleRepository roleRepository;
 
+    private final String defaultUserRole = "ROLE_USER";
+    private final String defaultAdminRole = "ROLE_ADMIN";
+
     @Autowired
     public StartController(UserRepository userRepository,PasswordEncoder passwordEncoder,RoleRepository roleRepository) {
         this.userRepository = userRepository;
@@ -31,12 +34,22 @@ public class StartController {
     @PostMapping("/api")
     public ResponseEntity startStore() {
         List<Role> roleList=new ArrayList<>();
-        Role roleUser=new Role("ROLE_USER");
-        Role roleAdmin=new Role("ROLE_ADMIN");
-        roleRepository.save(roleUser);
-        roleRepository.save(roleAdmin);
-        roleList.add(roleUser);
-        roleList.add(roleAdmin);
+        List<Role> roleUser = roleRepository.findByName(defaultUserRole);
+        if (roleUser.size() == 1) {
+            roleList.add(roleUser.get(0));
+        } else {
+            Role role = new Role(defaultUserRole);
+            roleRepository.save(role);
+            roleList.add(roleRepository.findByName(defaultUserRole).get(0));
+        }
+        List<Role> roleAdmin = roleRepository.findByName(defaultAdminRole);
+        if (roleAdmin.size() == 1) {
+            roleList.add(roleAdmin.get(0));
+        } else {
+            Role role = new Role(defaultAdminRole);
+            roleRepository.save(role);
+            roleList.add(roleRepository.findByName(defaultAdminRole).get(0));
+        }
         User user=new User("Admin","100","+79999999999","tema@gmail.com",roleList,new ArrayList<Order>());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
